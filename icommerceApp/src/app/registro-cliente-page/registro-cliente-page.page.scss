@@ -1,0 +1,11 @@
+ion-content{
+    --background: none;
+    background: linear-gradient(25deg, #ff7373, #72cbf3);
+    background-SIZE: 400% 400%;
+    animation: colorchange 25s ease-out infinite;
+}
+@keyframes colorchange{
+    0%{background-position: 0% 99%;}
+    50%{background-position: 100% 1%;}
+    100%{background-position: 10% 90%;}
+}
