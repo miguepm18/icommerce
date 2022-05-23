@@ -1,59 +1,49 @@
 <ion-content class="bg">
-  <ion-item>
-    <ion-label position="floating">Nombre</ion-label>
-    <ion-input [(ngModel)]="name" type="text"></ion-input>
-    <ion-icon name="text-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Apellidos</ion-label>
-    <ion-input [(ngModel)]="email" type="text"></ion-input>
-    <ion-icon name="text-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Usuario</ion-label>
-    <ion-input [(ngModel)]="password" type="text"></ion-input>
-    <ion-icon name="person-circle-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input [(ngModel)]="confirm_password" type="text"></ion-input>
-    <ion-icon name="key-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating">Repite contraseña</ion-label>
-    <ion-input [(ngModel)]="confirm_password" type="text"></ion-input>
-    <ion-icon name="key-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Dirección</ion-label>
-    <ion-input [(ngModel)]="confirm_password" type="text"></ion-input>
-    <ion-icon name="compass-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">E-mail</ion-label>
-    <ion-input [(ngModel)]="confirm_password" type="text"></ion-input>
-    <ion-icon name="at-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">DNI</ion-label>
-    <ion-input [(ngModel)]="confirm_password" type="text"></ion-input>
-    <ion-icon name="id-card-outline" slot="end" style="margin-top: 15px;"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Fecha de nacimiento</ion-label>
-    <ion-icon name="calendar-outline" position="floating" slot="end" style="margin-top: 15px;"></ion-icon>
-    <ion-input [(ngModel)]="confirm_password" type="text"></ion-input>
-  </ion-item>
-
-  <ion-button type="submit" expand="block" (click)="onSubmit()">
-    Crear cuenta
-  </ion-button>
+<form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+    <ion-item>
+      <ion-label position="floating" color="primary">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+      <ion-icon name="text-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Apellidos</ion-label>
+      <ion-input type="text" formControlName="apellidos"></ion-input>
+      <ion-icon name="text-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Usuario</ion-label>
+      <ion-input type="text" formControlName="usuario"></ion-input>
+      <ion-icon name="person-circle-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Contraseña</ion-label>
+      <ion-input type="password" formControlName="contraseña"></ion-input>
+      <ion-icon name="key-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Confirma contraseña</ion-label>
+      <ion-input type="password" formControlName="confirmaContraseña"></ion-input>
+      <ion-icon name="key-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Dirección</ion-label>
+      <ion-input type="text" formControlName="direccion"></ion-input>
+      <ion-icon name="compass-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">E-mail</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+      <ion-icon name="at-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">DNI</ion-label>
+      <ion-input type="text" formControlName="dni"></ion-input>
+      <ion-icon name="id-card-outline" slot="end" style="margin-top: 15px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Fecha de nacimiento</ion-label>
+      <ion-input type="date" formControlName="fechaNacimiento"></ion-input>
+    </ion-item>
+    <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">Submit data</ion-button>
+</form>
 </ion-content>

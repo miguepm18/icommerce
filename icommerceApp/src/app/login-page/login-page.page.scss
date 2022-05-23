@@ -1,0 +1,69 @@
+ion-content {
+    --background: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/header1.png?alt=media&token=3dc0b200-7410-485c-93c0-183487a2a402') no-repeat;
+    background: #9ad7fe;
+    background-SIZE: 400% 400%;
+    animation: colorchange 25s ease-out infinite;   
+    overflow-y: hidden; 
+  }
+  @keyframes colorchange{
+      0%{background-position: 0% 99%;}
+      50%{background-position: 100% 1%;}
+      100%{background-position: 10% 90%;}
+}
+.formContainer{
+    border: 10px gray;
+    width: 10 10 20 20;
+    background-color: white;
+    margin-top: 100%;
+}
+.titulo{
+    text-align: center;
+    margin-top: 40%;
+    font-size: 20px;
+    color:white;
+    font-weight: 600;
+  }
+.texto{
+    text-align: center;
+    font-size:12px;
+    color:#898585;
+    font-weight: 300;
+    margin-top: 60%;
+}
+
+.clienteCard{
+    width: 100px;
+    background-color: #d1f1f7;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow:  3px 5px 0px rgba(0,0,0,0.75);
+    
+    overflow: visible;
+    background-SIZE: 100%;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/iconoCliente.png?alt=media&token=26e3ffdc-08a3-4ad8-b8f0-46b1ab5382cf');
+}
+.empleadoCard{
+    width: 100px;
+    background-color: #d1f1f7;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow:  3px 5px 0px rgba(0,0,0,0.75);
+    
+    overflow: visible;
+    background-SIZE: 90%;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/iconoEmpleado.png?alt=media&token=cd830d7d-a6ec-45d7-8487-4928890c10f5');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+.textoCliente{
+    margin-left: 35%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.textoEmpleado{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.iconoSeparador{
+    margin-top: 60px;
+    margin-left: 17px;
+}
