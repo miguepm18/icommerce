@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+      
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Alimento</title>
+    
+  </head>
+  <body>    
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">GRAMOS PROTEINAS</th>
+          <th scope="col">GRAMOS GRASAS</th>
+          <th scope="col">GRAMOS HIDRATOS</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+  
+  <tbody>        
+        <div th:each="alimento:${alimentos}">
+            <tr>
+              <th scope="row" th:text="${alimento.idAlimento}"></th>
+              <td scope="row" th:text="${alimento.nombre}"></td>
+              <td scope="row" th:text="${alimento.grprot}"></td>
+              <td scope="row" th:text="${alimento.grgrasa}"></td>
+              <td scope="row" th:text="${alimento.grhidratos}"></td>
+              <td><a class="btn btn-danger" th:href="@{/alimento/eliminar/}+${alimento.idAlimento}" role="button">Eliminar</a></td>
+              <td scope="row"><a href="/alimento/modificar"><button class="btn btn-primary">Modificar</button></a></td>
+            </tr>
+        </div>
+        
+  </tbody>
+  
+</table>
+      <a href="/alimento/crear"><button class="btn btn-primary">Crear alimento</button></a>
+      <a href="/"><button class="btn btn-primary">Inicio</button></a>
+    </body>
+</html>

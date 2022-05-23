@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com_icommerce_jar_0.0.1PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.icommerce.modelo.MenuHasProducto</class>
+    <class>com.icommerce.modelo.Mesa</class>
+    <class>com.icommerce.modelo.Cliente</class>
+    <class>com.icommerce.modelo.PedidoHasMenu</class>
+    <class>com.icommerce.modelo.PedidoHasProducto</class>
+    <class>com.icommerce.modelo.Empleado</class>
+    <class>com.icommerce.modelo.Pedido</class>
+    <class>com.icommerce.modelo.Menu</class>
+    <class>com.icommerce.modelo.Fichaje</class>
+    <class>com.icommerce.modelo.Producto</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/icommerce?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>
