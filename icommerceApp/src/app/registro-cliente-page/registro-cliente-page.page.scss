@@ -1,11 +1,26 @@
-ion-content{
-    --background: none;
-    background: linear-gradient(25deg, #ff7373, #72cbf3);
+ion-content {
+    --background: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/header1.png?alt=media&token=3dc0b200-7410-485c-93c0-183487a2a402') no-repeat;
+    background: #9ad7fe;
     background-SIZE: 400% 400%;
-    animation: colorchange 25s ease-out infinite;
+    animation: colorchange 25s ease-out infinite;   
+    overflow-y: hidden; 
+  }
+  @keyframes colorchange{
+      0%{background-position: 0% 99%;}
+      50%{background-position: 100% 1%;}
+      100%{background-position: 10% 90%;}
 }
-@keyframes colorchange{
-    0%{background-position: 0% 99%;}
-    50%{background-position: 100% 1%;}
-    100%{background-position: 10% 90%;}
+#botonRegistro{
+    width: 95%;
+    margin-left: 10px;
+}
+.formCard{
+    margin-top: 50%;
+}
+.mensaje{
+    text-align: center;
+    margin-top: 40%;
+    font-size: 20px;
+    color:white;
+    font-weight: 600;
 }
