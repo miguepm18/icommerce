@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { Cliente } from '../modelo/Cliente';
 
 @Component({
   selector: 'app-registro-cliente-page',
@@ -15,13 +17,16 @@ export class RegistroClientePagePage implements OnInit {
   direccionEmail:boolean;
   dniFechaNacimiento:boolean;
   allCorrect:boolean;
+  usuarioValido:boolean;
   mensaje:string;
-  constructor(public formBuilder: FormBuilder) { }
+
+  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider) { }
 
   ngOnInit() {
     //BOLEANOS PARA CONTROLAR QUE CAMPO SE MUESTRA
     this.nombreApellidos = true;
     this.usuario = false;
+    this.usuarioValido = null;
     this.passwords = false;
     this.direccionEmail = false;
     this.dniFechaNacimiento = false;
@@ -61,6 +66,8 @@ export class RegistroClientePagePage implements OnInit {
         Validators.required
       ]))
       });
+
+
   }
 
   onSubmit(values){
@@ -75,8 +82,7 @@ export class RegistroClientePagePage implements OnInit {
   }
 
   //METODO QUE COMPRUEBA Y CAMBIA QUE CAMPOS SE MUESTRAN
-  siguiente(){
-
+  siguiente(fcUsuario:string){
     if(this.dniFechaNacimiento && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.direccionEmail)){ //REQUISITOS PARA QUE PASE A LA PANTALLA DE INFORMACION GENERAL DEL FORMULARIO
       this.dniFechaNacimiento = false;
       this.allCorrect = true;
@@ -95,10 +101,13 @@ export class RegistroClientePagePage implements OnInit {
       
     }
     if(this.usuario && (!this.nombreApellidos && !this.passwords && !this.direccionEmail && !this.dniFechaNacimiento)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE CONTRASEÑAS
-      this.usuario = false;
-      this.passwords = true;
-      this.mensaje = "Introduce tu contraseña";
-      
+        this.usuario = false;
+        this.passwords = true;
+        this.mensaje = "Introduce tu contraseña";
+        this.usuarioValido=true;
+        console.log(this.usuarioValido);
+        
+           
     }
     if(this.nombreApellidos && (!this.usuario && !this.passwords && !this.direccionEmail && !this.dniFechaNacimiento)){ //REQUISITOS PARA QUE PASE A LA PANTALLA DE USUARIO
       this.usuario = true;
@@ -107,4 +116,15 @@ export class RegistroClientePagePage implements OnInit {
     }
   }
 
+  compruebaUsuario(fcUsuario:string){     
+    let enc:boolean = false;
+    this.apiService.compruebaUsuarioCliente(fcUsuario)
+      .then( (respuesta:boolean)=> {          
+          this.usuarioValido=!respuesta;          
+      })
+      .catch( (error:string) => {
+          console.log(error);
+      });
+    return enc;
+  }
 }

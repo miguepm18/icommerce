@@ -9,15 +9,15 @@ import lombok.Setter;
 @Getter @Setter
 public class ClienteDTO {
 
-	private Integer idCliente;
-	private String nombre;
-	private String apellidos;
-    private String usuario;
-    private String password;
-    private String direccion;
-    private String email;
-    private String dni;
-    private Date fechaNacimiento;
-    private String cuentaBanco;
-    private String fechaCaducidadCuenta;
+	public Integer idCliente;
+	public String nombre;
+	public String apellidos;
+	public String usuario;
+    public String password;
+    public String direccion;
+    public String email;
+    public String dni;
+    public Date fechanacimiento;
+    public String cuentabanco;
+    public String fechacaducidadcuenta;
 }
