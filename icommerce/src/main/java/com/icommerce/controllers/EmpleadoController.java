@@ -1,10 +1,5 @@
 package com.icommerce.controllers;
 
-import com.icommerce.DTO.cliente.ClienteDTO;
-import com.icommerce.DTO.cliente.ClienteDTOConverter;
-import com.icommerce.modelo.Cliente;
-import com.icommerce.repository.ClienteRepository;
-import com.icommerce.service.ClienteService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,44 +13,49 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.icommerce.DTO.empleado.EmpleadoDTO;
+import com.icommerce.DTO.empleado.EmpleadoDTOConverter;
+import com.icommerce.modelo.Empleado;
+import com.icommerce.repository.EmpleadoRepository;
+import com.icommerce.service.EmpleadoService;
 
 import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
-public class ClienteController {
+public class EmpleadoController {
 
-	private final ClienteRepository clienteRepository;
-	private final ClienteDTOConverter clienteDTOConverter;
-	private final ClienteService clienteService;
+	private final EmpleadoRepository empleadoRepository;
+	private final EmpleadoDTOConverter empleadoDTOConverter;
+	private final EmpleadoService empleadoService;
 	
-	public ClienteController(ClienteRepository clienteRepository, ClienteDTOConverter clienteDTOConverter, ClienteService clienteService) {
-		this.clienteDTOConverter=clienteDTOConverter;
-		this.clienteRepository=clienteRepository;
-		this.clienteService = clienteService;
+	public EmpleadoController(EmpleadoRepository empleadoRepository, EmpleadoDTOConverter empleadoDTOConverter, EmpleadoService empleadoService) {
+		this.empleadoDTOConverter=empleadoDTOConverter;
+		this.empleadoRepository=empleadoRepository;
+		this.empleadoService = empleadoService;
 		
 	}
-	@GetMapping("/clientes")
-	public ResponseEntity<?> obtenerClientes() {
-		List<Cliente> result = this.clienteService.obtenerTodosLosClientes();
+	
+	
+	@GetMapping("/empleados")
+	public ResponseEntity<?> obtenerEmpleados() {
+		List<Empleado> result = this.empleadoService.obtenerTodosLosEmpleados();
 		if(result.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}else {
-			List<ClienteDTO> dtoList = result.stream().map(clienteDTOConverter::convertirADto).collect(Collectors.toList());
-			
+			List<EmpleadoDTO> dtoList = result.stream().map(empleadoDTOConverter::convertirADto).collect(Collectors.toList());
 			return ResponseEntity.ok(dtoList);
 		}
 	}
-	@GetMapping("/clientes/checkUsername/{usuario}")
-	public ResponseEntity<?> compruebaUsuarioClientes(@PathVariable String usuario) {
+	
+	@GetMapping("/empleados/checkUsername/{usuario}")
+	public ResponseEntity<?> compruebaUsuarioEmpleado(@PathVariable String usuario) {
 		boolean enc=false;
-		List<Cliente> result = this.clienteService.obtenerTodosLosClientes();
-		for (Cliente cliente : result) {
-			if(cliente.getUsuario().equalsIgnoreCase(usuario)) {
+		List<Empleado> result = this.empleadoService.obtenerTodosLosEmpleados();
+		for (Empleado empleado : result) {
+			if(empleado.getUsuario().equalsIgnoreCase(usuario)) {
 				enc=true;
 			}
 		}
@@ -63,32 +63,33 @@ public class ClienteController {
 	}
 	
 	
-	@GetMapping("/clientes/{id}")
-	public ResponseEntity<?> obtenerClienteID(@PathVariable int id){
-		Cliente result = this.clienteService.obtenerClienteById(id);
+	@GetMapping("/empleados/{id}")
+	public ResponseEntity<?> obtenerEmpleadoID(@PathVariable int id){
+		Empleado result = this.empleadoService.obtenerEmpleadoById(id);
 		if(result==null) {
 			return ResponseEntity.notFound().build();
 		}else {
-			return ResponseEntity.ok(this.clienteDTOConverter.convertirADto(result));
+			return ResponseEntity.ok(this.empleadoDTOConverter.convertirADto(result));
 		}		
 	}
+	
 	@CrossOrigin(origins = "http://localhost:8100")
-	@PostMapping("/clientes/registrarCliente")
-	public ResponseEntity<?> nuevoCliente(@RequestBody Cliente nuevoCliente){
-		Cliente saved = clienteRepository.save(nuevoCliente);
+	@PostMapping("/empleados/registrarEmpleado")
+	public ResponseEntity<?> nuevoEmpleado(@RequestBody Empleado nuevoEmpleado){
+		Empleado saved = empleadoRepository.save(nuevoEmpleado);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 	
-	@GetMapping("/clientes/logIn/{username}/{password}")
+	@GetMapping("/empleados/logIn/{username}/{password}")
 	public ResponseEntity<?> logIn(@PathVariable String username, @PathVariable String password){
 		boolean enc=false;
-		Cliente clienteEnc=null;
-		List<Cliente> clientes = clienteService.obtenerTodosLosClientes();
-		for (Cliente cliente : clientes) {
-			if(cliente.getUsuario().equalsIgnoreCase(username) && cliente.getPassword().equalsIgnoreCase(password)) {
+		Empleado empleadoEnc=null;
+		List<Empleado> empleados = empleadoService.obtenerTodosLosEmpleados();
+		for (Empleado empleado : empleados) {
+			if(empleado.getUsuario().equalsIgnoreCase(username) && empleado.getPassword().equalsIgnoreCase(password)) {
 				enc=true;
-				clienteEnc=cliente;
-				return ResponseEntity.ok(clienteDTOConverter.convertirADto(clienteEnc));
+				empleadoEnc=empleado;
+				return ResponseEntity.ok(empleadoDTOConverter.convertirADto(empleadoEnc));
 			}
 		}
 		

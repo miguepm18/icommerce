@@ -26,6 +26,14 @@ const routes: Routes = [
     path: 'login-empleado-page',
     loadChildren: () => import('./login-empleado-page/login-empleado-page.module').then( m => m.LoginEmpleadoPagePageModule)
   },
+  {
+    path: 'home-cliente',
+    loadChildren: () => import('./home-cliente/home-cliente.module').then( m => m.HomeClientePageModule)
+  },
+  {
+    path: 'home-empleado',
+    loadChildren: () => import('./home-empleado/home-empleado.module').then( m => m.HomeEmpleadoPageModule)
+  },
 
 ];
 

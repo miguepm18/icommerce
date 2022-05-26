@@ -15,9 +15,6 @@ public class ClienteDTOConverter {
 	public ClienteDTO convertirADto(Cliente cliente) {
 		return modelMapper.map(cliente, ClienteDTO.class);
 	}
-	
-	public Cliente convertirACliente(CreateClienteDTO createClienteDTO) {
-		return modelMapper.map(createClienteDTO, Cliente.class);
-	}
+
         
 }

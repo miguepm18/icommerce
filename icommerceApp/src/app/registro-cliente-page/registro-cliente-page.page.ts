@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { Cliente } from '../modelo/Cliente';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registro-cliente-page',
@@ -9,6 +10,7 @@ import { Cliente } from '../modelo/Cliente';
   styleUrls: ['./registro-cliente-page.page.scss'],
 })
 export class RegistroClientePagePage implements OnInit {
+  [x: string]: any;
 
   validations_form: FormGroup;
   nombreApellidos:boolean;
@@ -18,9 +20,10 @@ export class RegistroClientePagePage implements OnInit {
   dniFechaNacimiento:boolean;
   allCorrect:boolean;
   usuarioValido:boolean;
+  contrasenaValida:boolean;
   mensaje:string;
 
-  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider) { }
+  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private navCtrl: NavController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     //BOLEANOS PARA CONTROLAR QUE CAMPO SE MUESTRA
@@ -31,6 +34,8 @@ export class RegistroClientePagePage implements OnInit {
     this.direccionEmail = false;
     this.dniFechaNacimiento = false;
     this.allCorrect = false;
+    this.contrasenaValida = null;
+
 
     //MENSAJE DE INFORMACIÓN PARA EL USUARIO
     this.mensaje = "Introduzca su nombre y apellidos";
@@ -60,33 +65,36 @@ export class RegistroClientePagePage implements OnInit {
         Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')
       ])),
       dni: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.pattern('^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$')
       ])),
       fechaNacimiento: new FormControl('', Validators.compose([
         Validators.required
       ]))
       });
 
-
   }
 
   onSubmit(values){
     console.log(values);
-    /*let navigationExtras: NavigationExtras = {
-    queryParams: {
-    user: JSON.stringify(values),
-    numero: 3
-    }
-    };
-    this.navCtrl.navigateForward('/user', navigationExtras);*/
+    let nuevoCliente:Cliente = new Cliente(null, values['nombre'], values['apellidos'], values['usuario'], values['contraseña'], values['direccion'], values['email'], values['dni'], values['fechaNacimiento'], null, null);
+    this.apiService.registrarCliente(nuevoCliente)
+      .then( (respuesta:any)=> {          
+          this.mostrarAlert();
+      })
+      .catch( (error:string) => {
+          console.log(error);
+      });
   }
 
   //METODO QUE COMPRUEBA Y CAMBIA QUE CAMPOS SE MUESTRAN
   siguiente(fcUsuario:string){
     if(this.dniFechaNacimiento && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.direccionEmail)){ //REQUISITOS PARA QUE PASE A LA PANTALLA DE INFORMACION GENERAL DEL FORMULARIO
-      this.dniFechaNacimiento = false;
       this.allCorrect = true;
+      this.dniFechaNacimiento = false;
       this.mensaje = "Informacion general";
+      console.log(this.validations_form.controls['fechaNacimiento'].value);
+      
     }
     if(this.direccionEmail && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.dniFechaNacimiento)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE DNI/FECHA DE NACIMIENTO
       this.direccionEmail = false;
@@ -104,9 +112,7 @@ export class RegistroClientePagePage implements OnInit {
         this.usuario = false;
         this.passwords = true;
         this.mensaje = "Introduce tu contraseña";
-        this.usuarioValido=true;
-        console.log(this.usuarioValido);
-        
+        this.usuarioValido=true;       
            
     }
     if(this.nombreApellidos && (!this.usuario && !this.passwords && !this.direccionEmail && !this.dniFechaNacimiento)){ //REQUISITOS PARA QUE PASE A LA PANTALLA DE USUARIO
@@ -126,5 +132,32 @@ export class RegistroClientePagePage implements OnInit {
           console.log(error);
       });
     return enc;
+  }
+  compruebaContrasena(pass:string, confirmPass:string){
+    if(pass.toLocaleLowerCase()===confirmPass.toLowerCase()){
+      this.contrasenaValida=true;
+    }else{
+      this.contrasenaValida=false;
+    }
+  }
+  reiniciaPage(){
+    this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' });
+  }
+  async mostrarAlert(){
+    this.alertCtrl.create({
+      header: 'Información', 
+      message:'Usuario creado correctamente',
+      buttons:[
+        {
+          text: 'Aceptar',
+          id: 'confirm-button',
+          handler: () => {
+            this.reiniciaPage();
+          }
+        }
+      ]
+    }).then(alertEt =>{
+     alertEt.present();
+    })
   }
 }

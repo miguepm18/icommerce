@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author Miguel
@@ -72,6 +74,7 @@ public class Cliente implements Serializable {
     @Column(name = "DNI")
     private String dni;
     @Basic(optional = false)
+    @JsonProperty("fechaNacimiento")
     @Column(name = "Fecha_nacimiento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechanacimiento;
