@@ -28,7 +28,7 @@ public class EmpleadoService {
         empleadoRepository.save(empleado);
     }
     
-    public Empleado obtenerEmpleadoById(int id) {
+    public Empleado obtenerEmpleadoById(Long id) {
     	return empleadoRepository.findById(id).orElse(null);
     }
 

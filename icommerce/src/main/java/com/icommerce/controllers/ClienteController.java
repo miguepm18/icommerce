@@ -1,8 +1,9 @@
 package com.icommerce.controllers;
 
-import com.icommerce.DTO.cliente.ClienteDTO;
-import com.icommerce.DTO.cliente.ClienteDTOConverter;
+import com.icommerce.DTO.ClienteDTO;
+import com.icommerce.DTO.ClienteDTOConverter;
 import com.icommerce.modelo.Cliente;
+import com.icommerce.modelo.Pedido;
 import com.icommerce.repository.ClienteRepository;
 import com.icommerce.service.ClienteService;
 
@@ -24,24 +25,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "")
 @RestController
-@RequiredArgsConstructor
 public class ClienteController {
 
-	private final ClienteRepository clienteRepository;
 	private final ClienteDTOConverter clienteDTOConverter;
 	private final ClienteService clienteService;
 	
-	public ClienteController(ClienteRepository clienteRepository, ClienteDTOConverter clienteDTOConverter, ClienteService clienteService) {
+	public ClienteController(ClienteDTOConverter clienteDTOConverter, ClienteService clienteService) {
 		this.clienteDTOConverter=clienteDTOConverter;
-		this.clienteRepository=clienteRepository;
 		this.clienteService = clienteService;
-		
 	}
+	
 	@GetMapping("/clientes")
 	public ResponseEntity<?> obtenerClientes() {
+		System.out.println("Entra");
 		List<Cliente> result = this.clienteService.obtenerTodosLosClientes();
+		
 		if(result.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}else {
@@ -50,6 +50,7 @@ public class ClienteController {
 			return ResponseEntity.ok(dtoList);
 		}
 	}
+	
 	@GetMapping("/clientes/checkUsername/{usuario}")
 	public ResponseEntity<?> compruebaUsuarioClientes(@PathVariable String usuario) {
 		boolean enc=false;
@@ -64,7 +65,7 @@ public class ClienteController {
 	
 	
 	@GetMapping("/clientes/{id}")
-	public ResponseEntity<?> obtenerClienteID(@PathVariable int id){
+	public ResponseEntity<?> obtenerClienteID(@PathVariable Long id){
 		Cliente result = this.clienteService.obtenerClienteById(id);
 		if(result==null) {
 			return ResponseEntity.notFound().build();
@@ -72,12 +73,13 @@ public class ClienteController {
 			return ResponseEntity.ok(this.clienteDTOConverter.convertirADto(result));
 		}		
 	}
+	/*
 	@CrossOrigin(origins = "http://localhost:8100")
 	@PostMapping("/clientes/registrarCliente")
 	public ResponseEntity<?> nuevoCliente(@RequestBody Cliente nuevoCliente){
 		Cliente saved = clienteRepository.save(nuevoCliente);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-	}
+	}*/
 	
 	@GetMapping("/clientes/logIn/{username}/{password}")
 	public ResponseEntity<?> logIn(@PathVariable String username, @PathVariable String password){

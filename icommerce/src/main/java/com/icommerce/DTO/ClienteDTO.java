@@ -1,15 +1,19 @@
-package com.icommerce.DTO.cliente;
+package com.icommerce.DTO;
 
 
 
 import java.util.Date;
+import java.util.List;
+
+import com.icommerce.modelo.Pedido;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class ClienteDTO {
 
-	public Integer idCliente;
+	public Long id;
 	public String nombre;
 	public String apellidos;
 	public String usuario;
@@ -20,4 +24,5 @@ public class ClienteDTO {
     public Date fechanacimiento;
     public String cuentabanco;
     public String fechacaducidadcuenta;
+    public List<Pedido> pedidoList;
 }

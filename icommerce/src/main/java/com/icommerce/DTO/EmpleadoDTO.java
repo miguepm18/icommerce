@@ -1,4 +1,4 @@
-package com.icommerce.DTO.empleado;
+package com.icommerce.DTO;
 
 
 

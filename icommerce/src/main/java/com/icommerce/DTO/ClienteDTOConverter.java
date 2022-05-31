@@ -1,4 +1,4 @@
-package com.icommerce.DTO.cliente;
+package com.icommerce.DTO;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

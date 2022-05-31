@@ -27,7 +27,7 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
     
-    public Cliente obtenerClienteById(int id) {
+    public Cliente obtenerClienteById(Long id) {
     	return clienteRepository.findById(id).orElse(null);
     }
 

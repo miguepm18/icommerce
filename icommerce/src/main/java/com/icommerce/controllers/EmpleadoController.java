@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.icommerce.DTO.empleado.EmpleadoDTO;
-import com.icommerce.DTO.empleado.EmpleadoDTOConverter;
+import com.icommerce.DTO.EmpleadoDTO;
+import com.icommerce.DTO.EmpleadoDTOConverter;
 import com.icommerce.modelo.Empleado;
 import com.icommerce.repository.EmpleadoRepository;
 import com.icommerce.service.EmpleadoService;
@@ -24,7 +24,6 @@ import com.icommerce.service.EmpleadoService;
 import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 @RestController
-@RequiredArgsConstructor
 public class EmpleadoController {
 
 	private final EmpleadoRepository empleadoRepository;
@@ -64,7 +63,7 @@ public class EmpleadoController {
 	
 	
 	@GetMapping("/empleados/{id}")
-	public ResponseEntity<?> obtenerEmpleadoID(@PathVariable int id){
+	public ResponseEntity<?> obtenerEmpleadoID(@PathVariable Long id){
 		Empleado result = this.empleadoService.obtenerEmpleadoById(id);
 		if(result==null) {
 			return ResponseEntity.notFound().build();
