@@ -1,7 +1,5 @@
 {
   "name": "icommerceApp",
-  "integrations": {
-    "cordova": {}
-  },
+  "integrations": {},
   "type": "angular"
 }

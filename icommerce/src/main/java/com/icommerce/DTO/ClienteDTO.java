@@ -4,6 +4,7 @@ package com.icommerce.DTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.icommerce.modelo.Pedido;
 
@@ -21,8 +22,7 @@ public class ClienteDTO {
     public String direccion;
     public String email;
     public String dni;
-    public Date fechanacimiento;
     public String cuentabanco;
     public String fechacaducidadcuenta;
-    public List<Pedido> pedidoList;
+    public Set<Pedido> pedidos;
 }

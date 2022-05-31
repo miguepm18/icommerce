@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -31,12 +32,15 @@ public class Fichaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     @Column(name = "hora_entrada")
     private Date horaEntrada;
     
+    @NotNull
     @Column(name = "hora_salida")
     private Date horaSalida;
     
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     private Empleado empleado;

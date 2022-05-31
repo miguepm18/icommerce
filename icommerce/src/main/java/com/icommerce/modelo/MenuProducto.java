@@ -19,7 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -40,6 +40,7 @@ public class MenuProducto {
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
+    @NotNull
     @Column(name="cantidad")
     private Integer cantidad;
 
@@ -51,12 +52,12 @@ public class MenuProducto {
             return false;
         MenuProducto that = (MenuProducto) o;
         return Objects.equals(menu.getId(), that.menu.getId())
-                && Objects.equals(producto.getNombre(), that.producto.getNombre())
+                && Objects.equals(producto.getId(), that.producto.getId())
                 && Objects.equals(cantidad, that.cantidad);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(menu.getId(), producto.getNombre(), cantidad);
+        return Objects.hash(menu.getId(), producto.getId(), cantidad);
     }
 }

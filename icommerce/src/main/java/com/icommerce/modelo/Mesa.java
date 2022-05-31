@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -31,9 +31,11 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     @Column(name = "capacidad")
     private int capacidad;
     
+    @NotNull
     @Column(name = "ocupada")
     private short ocupada;
     

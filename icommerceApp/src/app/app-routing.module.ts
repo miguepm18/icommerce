@@ -14,13 +14,10 @@ const routes: Routes = [
   {
     path: 'registro-cliente-page',
     loadChildren: () => import('./registro-cliente-page/registro-cliente-page.module').then( m => m.RegistroClientePagePageModule)
-  },  {
-    path: 'login-page',
-    loadChildren: () => import('./login-page/login-page.module').then( m => m.LoginPagePageModule)
   },
   {
-    path: 'login-cliente-page',
-    loadChildren: () => import('./login-cliente-page/login-cliente-page.module').then( m => m.LoginClientePagePageModule)
+    path: 'login-page',
+    loadChildren: () => import('./login-page/login-page.module').then( m => m.LoginPagePageModule)
   },
   {
     path: 'login-empleado-page',

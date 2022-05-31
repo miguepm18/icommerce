@@ -16,7 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -33,12 +33,15 @@ public class Producto{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     @Column(name = "nombre")
     private String nombre;
     
+    @NotNull
     @Column(name = "precio")
     private float precio;
     
+    @NotNull
     @Column(name = "imagen")
     private String imagen;
     

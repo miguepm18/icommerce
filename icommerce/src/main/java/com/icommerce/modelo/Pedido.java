@@ -25,7 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -43,15 +43,18 @@ public class Pedido  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     @Column(name = "tipo")
     private String tipo;
     
+    @NotNull
     @Column(name = "hora_entrada")
     private Date horaEntrada;
     
     @Column(name = "hora_salida")
     private Date horaSalida;
     
+    @NotNull
     @Column(name = "estado")
     private String estado;
     

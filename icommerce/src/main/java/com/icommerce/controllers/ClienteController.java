@@ -39,7 +39,6 @@ public class ClienteController {
 	
 	@GetMapping("/clientes")
 	public ResponseEntity<?> obtenerClientes() {
-		System.out.println("Entra");
 		List<Cliente> result = this.clienteService.obtenerTodosLosClientes();
 		
 		if(result.isEmpty()) {
@@ -73,13 +72,12 @@ public class ClienteController {
 			return ResponseEntity.ok(this.clienteDTOConverter.convertirADto(result));
 		}		
 	}
-	/*
-	@CrossOrigin(origins = "http://localhost:8100")
+	
 	@PostMapping("/clientes/registrarCliente")
 	public ResponseEntity<?> nuevoCliente(@RequestBody Cliente nuevoCliente){
-		Cliente saved = clienteRepository.save(nuevoCliente);
+		Cliente saved = this.clienteService.insertarCliente(nuevoCliente);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-	}*/
+	}
 	
 	@GetMapping("/clientes/logIn/{username}/{password}")
 	public ResponseEntity<?> logIn(@PathVariable String username, @PathVariable String password){

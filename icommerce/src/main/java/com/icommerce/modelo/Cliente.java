@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -39,27 +39,35 @@ public class Cliente{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     @Column(name = "nombre")
     private String nombre;
     
+    @NotNull
     @Column(name = "apellidos")
     private String apellidos;
     
+    @NotNull
     @Column(name = "usuario")
     private String usuario;
     
+    @NotNull
     @Column(name = "password")
     private String password;
     
+    @NotNull
     @Column(name = "direccion")
     private String direccion;
     
+    @NotNull
     @Column(name = "email")
     private String email;
     
+    @NotNull
     @Column(name = "dni")
     private String dni;
     
+    @NotNull
     @Column(name = "cuenta_banco")
     private String cuentaBanco;
     
