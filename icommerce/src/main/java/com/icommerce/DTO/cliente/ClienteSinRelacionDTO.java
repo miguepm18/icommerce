@@ -1,18 +1,10 @@
-package com.icommerce.DTO;
-
-
-
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import com.icommerce.modelo.Pedido;
+package com.icommerce.DTO.cliente;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class ClienteDTO {
+public class ClienteSinRelacionDTO {
 
 	public Long id;
 	public String nombre;
@@ -21,8 +13,8 @@ public class ClienteDTO {
     public String password;
     public String direccion;
     public String email;
+    public Boolean activo;
     public String dni;
     public String cuentabanco;
     public String fechacaducidadcuenta;
-    public Set<Pedido> pedidos;
 }

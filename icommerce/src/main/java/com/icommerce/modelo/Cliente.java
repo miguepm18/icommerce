@@ -74,6 +74,9 @@ public class Cliente{
     @Column(name = "fecha_caducidad_cuenta")
     private Date fechaCaducidadCuenta;
     
+    @Column(name = "activo")
+    private Boolean activo;
+    
     @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos = new HashSet<>();
 

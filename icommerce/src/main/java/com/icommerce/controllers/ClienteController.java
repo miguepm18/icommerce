@@ -1,7 +1,10 @@
 package com.icommerce.controllers;
 
-import com.icommerce.DTO.ClienteDTO;
-import com.icommerce.DTO.ClienteDTOConverter;
+import com.icommerce.DTO.cliente.ClienteDTO;
+import com.icommerce.DTO.cliente.ClienteDTOConverter;
+import com.icommerce.DTO.cliente.ClienteLoginDTO;
+import com.icommerce.DTO.cliente.ClienteRegistroDTO;
+import com.icommerce.DTO.cliente.ClienteSinRelacionDTO;
 import com.icommerce.modelo.Cliente;
 import com.icommerce.modelo.Pedido;
 import com.icommerce.repository.ClienteRepository;
@@ -37,6 +40,7 @@ public class ClienteController {
 		this.clienteService = clienteService;
 	}
 	
+	//Devuelve todos los clientes como ClienteDTO
 	@GetMapping("/clientes")
 	public ResponseEntity<?> obtenerClientes() {
 		List<Cliente> result = this.clienteService.obtenerTodosLosClientes();
@@ -44,12 +48,13 @@ public class ClienteController {
 		if(result.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}else {
-			List<ClienteDTO> dtoList = result.stream().map(clienteDTOConverter::convertirADto).collect(Collectors.toList());
+			List<ClienteDTO> dtoList = result.stream().map(clienteDTOConverter::convertirAClienteDTO).collect(Collectors.toList());
 			
 			return ResponseEntity.ok(dtoList);
 		}
 	}
 	
+	//Devuelve si existe un usuario
 	@GetMapping("/clientes/checkUsername/{usuario}")
 	public ResponseEntity<?> compruebaUsuarioClientes(@PathVariable String usuario) {
 		boolean enc=false;
@@ -62,66 +67,78 @@ public class ClienteController {
 		return ResponseEntity.ok(enc);
 	}
 	
-	
+	//Devuelve un cliente a partir de un id
 	@GetMapping("/clientes/{id}")
 	public ResponseEntity<?> obtenerClienteID(@PathVariable Long id){
 		Cliente result = this.clienteService.obtenerClienteById(id);
 		if(result==null) {
 			return ResponseEntity.notFound().build();
 		}else {
-			return ResponseEntity.ok(this.clienteDTOConverter.convertirADto(result));
+			return ResponseEntity.ok(this.clienteDTOConverter.convertirAClienteDTO(result));
 		}		
 	}
 	
+	//Añade un cliente nuevo al registrarse
 	@PostMapping("/clientes/registrarCliente")
-	public ResponseEntity<?> nuevoCliente(@RequestBody Cliente nuevoCliente){
-		Cliente saved = this.clienteService.insertarCliente(nuevoCliente);
+	public ResponseEntity<?> nuevoCliente(@RequestBody ClienteRegistroDTO nuevoCliente){
+		ClienteRegistroDTO saved = this.clienteService.registrarCliente(nuevoCliente);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 	
-	@GetMapping("/clientes/logIn/{username}/{password}")
-	public ResponseEntity<?> logIn(@PathVariable String username, @PathVariable String password){
+	//Devuelve un cliente completo si existe el nombre y usuario pasados
+	//Si no existe devuelve false
+	@GetMapping("/clientes/logIn")
+	public ResponseEntity<?> logIn(@RequestBody ClienteLoginDTO clienteLogin){
 		boolean enc=false;
 		Cliente clienteEnc=null;
 		List<Cliente> clientes = clienteService.obtenerTodosLosClientes();
 		for (Cliente cliente : clientes) {
-			if(cliente.getUsuario().equalsIgnoreCase(username) && cliente.getPassword().equalsIgnoreCase(password)) {
+			if(cliente.getUsuario().equalsIgnoreCase(clienteLogin.getUsuario()) && cliente.getPassword().equalsIgnoreCase(clienteLogin.getPassword()) && cliente.getActivo()) {
 				enc=true;
 				clienteEnc=cliente;
-				return ResponseEntity.ok(clienteDTOConverter.convertirADto(clienteEnc));
+				return ResponseEntity.ok(clienteDTOConverter.convertirAClienteDTO(clienteEnc));
 			}
 		}
 		
 		return ResponseEntity.ok(false);
 	}
-	/*
-	@PutMapping("/alumno/{id}")
-	public ResponseEntity<?> editarAlumno(@RequestBody Alumno editar, @PathVariable int id) throws AlumnoNotFoundException{
-		if(alumnoRepositorio.existsById(id)) {
-			editar.setId_alumno(id);
-			return ResponseEntity.ok(alumnoRepositorio.save(editar));
+	
+	//Actualiza los campos de un cliente
+	@PutMapping("/clientes/modificarCliente")
+	public ResponseEntity<?> editarCliente(@RequestBody ClienteSinRelacionDTO clienteEditar){
+		Cliente cliente = this.clienteDTOConverter.convertirACliente(clienteEditar);
+		if(this.clienteService.obtenerClienteById(cliente.getId())!=null) {
+			ClienteDTO clienteDto = this.clienteService.editarCliente(cliente);
+			return ResponseEntity.ok(clienteDto);
 		}else {
-			throw new AlumnoNotFoundException("El alumno con ID: " + id + " no existe.");
+			return ResponseEntity.ok(false);
 		}
 	}
 	
-	
-	@DeleteMapping("/alumno/{id}")
-	public ResponseEntity<?> borrarAlumno(@PathVariable int id){
-		if(alumnoRepositorio.existsById(id)) {
-			alumnoRepositorio.deleteById(id);
-			return ResponseEntity.noContent().build();
+	//Desactiva un cliente
+	@PutMapping("/clientes/desactivarCliente")
+	public ResponseEntity<?> desactivarCliente(@RequestBody ClienteSinRelacionDTO clienteEditar){
+		Cliente cliente = this.clienteDTOConverter.convertirACliente(clienteEditar);
+		if(this.clienteService.obtenerClienteById(cliente.getId())!=null) {
+			cliente.setActivo(false);
+			ClienteDTO clienteDto = this.clienteService.editarCliente(cliente);
+			return ResponseEntity.ok(clienteDto);
 		}else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(false);
 		}
 	}
+	
+	//Activa un cliente
+		@PutMapping("/clientes/activarCliente")
+		public ResponseEntity<?> activarCliente(@RequestBody ClienteSinRelacionDTO clienteEditar){
+			Cliente cliente = this.clienteDTOConverter.convertirACliente(clienteEditar);
+			if(this.clienteService.obtenerClienteById(cliente.getId())!=null) {
+				cliente.setActivo(true);
+				ClienteDTO clienteDto = this.clienteService.editarCliente(cliente);
+				return ResponseEntity.ok(clienteDto);
+			}else {
+				return ResponseEntity.ok(false);
+			}
+		}
 
-	@ExceptionHandler(AlumnoNotFoundException.class)
-	public ResponseEntity<ApiError> handleAlumnoNoEncontrado(AlumnoNotFoundException ex){
-		ApiError apiError = new ApiError();
-		apiError.setEstado(HttpStatus.NOT_FOUND);
-		apiError.setFecha(LocalDateTime.now());
-		apiError.setMensaje(ex.getMessage());
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
-	}*/
 }
