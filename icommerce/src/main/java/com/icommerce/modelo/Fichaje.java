@@ -1,8 +1,8 @@
 package com.icommerce.modelo;
 
-import java.io.Serializable;
+
 import java.util.Date;
-import javax.persistence.Basic;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -32,15 +29,18 @@ public class Fichaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "hora_entrada")
     private Date horaEntrada;
     
-    @NotNull
+    @Column(name = "activo")
+    private Boolean activo;
+    
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "hora_salida")
     private Date horaSalida;
     
-    @NotNull
+    
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     private Empleado empleado;

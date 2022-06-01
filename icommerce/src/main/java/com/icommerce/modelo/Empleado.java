@@ -4,23 +4,18 @@
  */
 package com.icommerce.modelo;
 
-import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.Basic;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
 
 import lombok.Data;
 
@@ -37,54 +32,57 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull
+    
     @Column(name = "nombre")
     private String nombre;
     
-    @NotNull
+    
     @Column(name = "apellidos")
     private String apellidos;
     
-    @NotNull
+    
     @Column(name = "usuario")
     private String usuario;
     
-    @NotNull
+    
     @Column(name = "password")
     private String password;
     
-    @NotNull
+    
     @Column(name = "direccion")
     private String direccion;
     
-    @NotNull
+    
     @Column(name = "email")
     private String email;
     
-    @NotNull
+    
     @Column(name = "movil")
     private int movil;
     
-    @NotNull
+    
     @Column(name = "dni")
     private String dni;
     
-    @NotNull
+    @Column(name = "activo")
+    private Boolean activo;
+    
+    
     @Column(name = "es_administrador")
-    private boolean esAdministrador;
+    private Boolean esAdministrador;
     
-    @NotNull
+    
     @Column(name = "es_repartidor")
-    private boolean esRepartidor;
+    private Boolean esRepartidor;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private Set<Mesa> mesas = new HashSet<>();
+    private List<Mesa> mesas;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private Set<Fichaje> fichajes = new HashSet<>();
+    private List<Fichaje> fichajes;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private Set<Pedido> pedidos = new HashSet<>();
+    private List<Pedido> pedidos;
 
   
     

@@ -1,6 +1,7 @@
 package com.icommerce.service;
 
 
+
 import com.icommerce.modelo.Empleado;
 import com.icommerce.repository.EmpleadoRepository;
 
@@ -19,18 +20,16 @@ public class EmpleadoService {
     
     public List<Empleado> obtenerTodosLosEmpleados(){
         
-        List<Empleado> empleados=empleadoRepository.findAll();          
-                                       
-        return empleados;   
+        List<Empleado> empleados=empleadoRepository.findAll();            
+        return empleados;
     }
     
-    public void insertarEmpleado(Empleado empleado){
-        empleadoRepository.save(empleado);
+    public Empleado insertarEditarEmpleado(Empleado empleado){
+        return empleadoRepository.save(empleado);
     }
     
     public Empleado obtenerEmpleadoById(Long id) {
     	return empleadoRepository.findById(id).orElse(null);
     }
-
     
 }

@@ -4,13 +4,13 @@
  */
 package com.icommerce.modelo;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.Basic;
+import java.util.Date;
+
+import java.util.List;
+
+
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,13 +19,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -43,27 +42,32 @@ public class Pedido  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull
+    
     @Column(name = "tipo")
     private String tipo;
     
-    @NotNull
+    @JsonFormat(pattern="dd-MM-yy HH:mm:ss")
     @Column(name = "hora_entrada")
     private Date horaEntrada;
     
+    @JsonFormat(pattern="dd-MM-yy HH:mm:ss")
     @Column(name = "hora_salida")
     private Date horaSalida;
     
-    @NotNull
+    
     @Column(name = "estado")
     private String estado;
     
+    @JoinColumn(name = "mesa_id")
+    @ManyToOne
+    private Mesa mesa;
     
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private Set<Mesa> mesas = new HashSet<>();
+    @Column(name = "activo")
+    private Boolean activo;
+    
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
-    private Set<PedidoProducto> productos = new HashSet<>();
+    private List<PedidoProducto> productos;
     
     @JoinColumn(name = "cliente_id")
     @ManyToOne
