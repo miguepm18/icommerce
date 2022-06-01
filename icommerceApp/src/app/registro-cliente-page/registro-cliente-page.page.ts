@@ -17,9 +17,9 @@ export class RegistroClientePagePage implements OnInit {
   usuario:boolean;
   passwords:boolean;
   direccionEmail:boolean;
-  dniFechaNacimiento:boolean;
   allCorrect:boolean;
   usuarioValido:boolean;
+  dni:boolean;
   contrasenaValida:boolean;
   mensaje:string;
 
@@ -29,10 +29,10 @@ export class RegistroClientePagePage implements OnInit {
     //BOLEANOS PARA CONTROLAR QUE CAMPO SE MUESTRA
     this.nombreApellidos = true;
     this.usuario = false;
+    this.dni=false;
     this.usuarioValido = null;
     this.passwords = false;
     this.direccionEmail = false;
-    this.dniFechaNacimiento = false;
     this.allCorrect = false;
     this.contrasenaValida = null;
 
@@ -67,9 +67,6 @@ export class RegistroClientePagePage implements OnInit {
       dni: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$')
-      ])),
-      fechaNacimiento: new FormControl('', Validators.compose([
-        Validators.required
       ]))
       });
 
@@ -77,7 +74,7 @@ export class RegistroClientePagePage implements OnInit {
 
   onSubmit(values){
     console.log(values);
-    let nuevoCliente:Cliente = new Cliente(null, values['nombre'], values['apellidos'], values['usuario'], values['contraseña'], values['direccion'], values['email'], values['dni'], values['fechaNacimiento'], null, null);
+    let nuevoCliente:Cliente = new Cliente(null, values['nombre'], values['apellidos'], values['usuario'], values['contraseña'], values['direccion'], values['email'], values['dni'], null, null, true);
     this.apiService.registrarCliente(nuevoCliente)
       .then( (respuesta:any)=> {          
           this.mostrarAlert();
@@ -89,26 +86,26 @@ export class RegistroClientePagePage implements OnInit {
 
   //METODO QUE COMPRUEBA Y CAMBIA QUE CAMPOS SE MUESTRAN
   siguiente(fcUsuario:string){
-    if(this.dniFechaNacimiento && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.direccionEmail)){ //REQUISITOS PARA QUE PASE A LA PANTALLA DE INFORMACION GENERAL DEL FORMULARIO
+    if(this.dni && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.direccionEmail)){ //REQUISITOS PARA QUE PASE A LA PANTALLA DE INFORMACION GENERAL DEL FORMULARIO
       this.allCorrect = true;
-      this.dniFechaNacimiento = false;
+      this.dni = false;
       this.mensaje = "Informacion general";
       console.log(this.validations_form.controls['fechaNacimiento'].value);
       
     }
-    if(this.direccionEmail && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.dniFechaNacimiento)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE DNI/FECHA DE NACIMIENTO
+    if(this.direccionEmail && (!this.usuario && !this.nombreApellidos && !this.nombreApellidos && !this.dni)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE DNI/FECHA DE NACIMIENTO
       this.direccionEmail = false;
-      this.dniFechaNacimiento = true;
+      this.dni = true;
       this.mensaje = "Introduce tu DNI y Fecha de nacimiento";
       
     }
-    if(this.passwords && (!this.usuario && !this.nombreApellidos && !this.direccionEmail && !this.dniFechaNacimiento)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE DIRECCION/EMAIL
+    if(this.passwords && (!this.usuario && !this.nombreApellidos && !this.direccionEmail && !this.dni)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE DIRECCION/EMAIL
       this.passwords = false;
       this.direccionEmail = true;
       this.mensaje = "Introduce tu dirección y correo";
       
     }
-    if(this.usuario && (!this.nombreApellidos && !this.passwords && !this.direccionEmail && !this.dniFechaNacimiento)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE CONTRASEÑAS
+    if(this.usuario && (!this.nombreApellidos && !this.passwords && !this.direccionEmail && !this.dni)){//REQUISITOS PARA QUE PASE A LA PANTALLA DE CONTRASEÑAS
         this.usuario = false;
         this.passwords = true;
         this.mensaje = "Introduce tu contraseña";

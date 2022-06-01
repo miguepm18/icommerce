@@ -24,7 +24,6 @@ public class PedidoService {
     }
     
     public Pedido insertarModificarPedido(Pedido pedido){
-    	pedido.setId(null);
         return this.pedidoRepository.save(pedido);
     }
     

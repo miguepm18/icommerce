@@ -80,17 +80,12 @@ public class ClienteController {
 	
 	//Devuelve un cliente completo si existe el nombre y usuario pasados
 	//Si no existe devuelve false
-	@GetMapping("/clientes/logIn")
+	@PostMapping("/clientes/logIn")
 	public ResponseEntity<?> logIn(@RequestBody ClienteDTO clienteLogin){
-		@SuppressWarnings("unused")
-		boolean enc=false;
-		Cliente clienteEnc=null;
 		List<Cliente> clientes = clienteService.obtenerTodosLosClientes();
 		for (Cliente cliente : clientes) {
-			if(cliente.getUsuario().equalsIgnoreCase(clienteLogin.getUsuario()) && cliente.getPassword().equalsIgnoreCase(clienteLogin.getPassword()) && cliente.getActivo() ) {
-				enc=true;
-				clienteEnc=cliente;
-				return ResponseEntity.ok(clienteDTOConverter.convertirAClienteDTO(clienteEnc));
+			if(cliente.getUsuario().equalsIgnoreCase(clienteLogin.getUsuario()) && cliente.getPassword().equalsIgnoreCase(clienteLogin.getPassword()) && cliente.getActivo()) {
+				return ResponseEntity.ok(clienteDTOConverter.convertirAClienteDTO(cliente));
 			}
 		}
 		

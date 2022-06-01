@@ -11,6 +11,5 @@ public class ProductoDTO {
 	private float precio;
 	private String imagen;
 	private Boolean activo;
-	//private List<MenuProductoDTO> menus;
-	//private List<PedidoProductoDTO> pedidos;
+	
 }

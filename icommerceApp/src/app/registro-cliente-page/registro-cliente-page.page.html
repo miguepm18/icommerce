@@ -56,19 +56,14 @@
         </ion-item>
         <ion-button color="primary" expand="block" [disabled]="!validations_form.controls['direccion'].valid || !validations_form.controls['email'].valid" (click)="siguiente()">Siguiente</ion-button>
       </div>
-      <!--REGION DNI FECHA NACIMIENTO-->
-      <div *ngIf="dniFechaNacimiento">
+      <!--REGION DNI-->
+      <div *ngIf="dni">
         <ion-item>
           <ion-label position="floating" color="primary">DNI</ion-label>
           <ion-input type="text" formControlName="dni"></ion-input>
           <ion-icon name="id-card-outline" slot="end" style="margin-top: 15px;"></ion-icon>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating" color="primary">Fecha de nacimiento</ion-label>
-          <ion-input type="date" formControlName="fechaNacimiento" displayFormat="DD/MM/YYYY"></ion-input>
-          <ion-icon slot="end" name="calendar-outline"></ion-icon>
-        </ion-item>
-        <ion-button color="primary" expand="block" [disabled]="!validations_form.controls['dni'].valid || !validations_form.controls['fechaNacimiento'].valid" (click)="siguiente()">Siguiente</ion-button>
+        <ion-button color="primary" expand="block" [disabled]="!validations_form.controls['dni'].valid" (click)="siguiente()">Siguiente</ion-button>
       </div>
       <!--REGION INFORMACIÓN GENERAL-->
       <div *ngIf="allCorrect"> 

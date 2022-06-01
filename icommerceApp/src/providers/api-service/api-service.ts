@@ -6,7 +6,7 @@ import { Empleado } from 'src/app/modelo/Empleado';
 @Injectable()
 export class ApiServiceProvider {
     
-    private URL="http://localhost:8099/";
+    private URL="http://localhost:8080/";
 
     constructor(public http: HttpClient){
 
@@ -30,11 +30,12 @@ export class ApiServiceProvider {
         });
         return promise;
     }
-    //Devuelve todos los clientes
+    //Devuelve si un usuario existe en la tabla clientes
     compruebaUsuarioCliente(usuario:string):Promise<Boolean> {
         let promise = new Promise<Boolean>((resolve, reject) => {
             this.http.get(this.URL+"clientes/checkUsername/" + usuario).toPromise()
                 .then((data:boolean)=>{
+                    console.log(data);
                     resolve(data);
                 })
                 .catch( (error:Error)=>{
@@ -48,15 +49,13 @@ export class ApiServiceProvider {
     registrarCliente(clienteNuevo: Cliente): Promise<Cliente> {
         let promise = new Promise<Cliente>((resolve, reject) => {
             var header = { "headers": { "Content-Type": "application/json" } };
-            delete clienteNuevo.idCliente;
+            delete clienteNuevo.id;
             let datos = JSON.stringify(clienteNuevo);
-            this.http.post(this.URL + "/clientes/registrarCliente",
+            this.http.post(this.URL + "clientes/registrarCliente",
                datos,
                 header).toPromise().then(
                     (data: any) => {
-                        
-                        let cliente = Cliente.createFromJsonObject(data);
-                        resolve(cliente);
+                        resolve(data);
                     }
                 )
                 .catch((error: Error) => {
@@ -66,19 +65,43 @@ export class ApiServiceProvider {
         return promise;
     }
     //Comprueba que el cliente existe en la BD a partir del usuario y la contraseña, si existe, lo devuelve con todos los datos, sino devuelve false
-    logInCliente(username:string, password:string):Promise<Cliente> {
-        let promise = new Promise<Cliente>((resolve, reject) => {
-            this.http.get(this.URL+"clientes/logIn/"+username+"/"+password).toPromise()
-                .then((data:any)=>{
-                    
-                    resolve(data);
-                })
-                .catch( (error:Error)=>{
-                    reject(error.message);
+    logInCliente(clienteLogin:Cliente):Promise<any> {
+        let promise = new Promise<any>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            let datos = JSON.stringify(clienteLogin);
+            this.http.post(this.URL + "clientes/logIn",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
                 });
         });
         return promise;
     }
+
+    //Comprueba que el empleado existe en la BD a partir del usuario y la contraseña, si existe, lo devuelve con todos los datos, sino devuelve false
+    logInEmpleado(empleadoLogIn:Empleado):Promise<any> {
+        let promise = new Promise<any>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            let datos = JSON.stringify(empleadoLogIn);
+            this.http.post(this.URL + "empleados/logIn",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
     //Devuelve todos los empleados
     getEmpleados():Promise<Empleado[]> {
         let promise = new Promise<Empleado[]>((resolve, reject) => {

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.icommerce.DTO.mesa.MesaDTO;
+import com.icommerce.DTO.pedidoProducto.PedidoProductoDTO;
 
 import lombok.Data;
 
@@ -20,8 +21,8 @@ public class PedidoDTO {
 	private Date horaSalida;
 	private String estado;
 	private Boolean activo;
-	private List<MesaDTO> mesas;
-	//private List<PedidoProductoDTO> productos;
+	private Long mesaID;
+	private List<PedidoProductoDTO> productos;
 	private Long clienteID;
 	private Long empleadoID;
 }

@@ -1,33 +1,35 @@
 export class Empleado {
 
-    constructor(public idCliente:number,
+    constructor(public id:number,
         public nombre:string,
         public apellidos:string,
         public usuario:string,
         public password:string,
         public direccion:string,
         public email:string,
+        public movil:number,
         public dni:string,
-        public fechaNacimiento:string,
-        public cuentaBanco:string,
-        public fechaCaducidadCuenta:string
+        public esAdministrador:boolean,
+        public esRepartidor:boolean,
+        public activo:boolean
         )
     {  }
-    /*
-    public static createFromJsonObject(jsonObject:any):Cliente
+    
+    public static createFromJsonObject(jsonObject:any):Empleado
     {
-        let cliente:Cliente= new Cliente(jsonObject['idCliente'],
+        let empleado:Empleado= new Empleado(jsonObject['id'],
             jsonObject['nombre'],
             jsonObject['apellidos'],
             jsonObject['usuario'],
             jsonObject['password'],
             jsonObject['direccion'],
             jsonObject['email'],
+            jsonObject['movil'],
             jsonObject['dni'],
-            jsonObject['fechanacimiento'],
-            jsonObject['cuentabanco'],
-            jsonObject['fechanacimiento']);
-            return cliente;
-    }*/
+            jsonObject['esAdministrador'],
+            jsonObject['esRepartidor'],
+            jsonObject['activo']);
+            return empleado;
+    }
                 
 }

@@ -73,15 +73,13 @@ public class EmpleadoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.empleadoDTOConverter.convertirADto(emp));
 	}
 	
-	@GetMapping("/empleados/logIn")
+	@PostMapping("/empleados/logIn")
 	public ResponseEntity<?> logIn(@RequestBody EmpleadoDTO empleadoLogin){
 		@SuppressWarnings("unused")
-		boolean enc=false;
 		Empleado empleadoEnc=null;
 		List<Empleado> empleados = empleadoService.obtenerTodosLosEmpleados();
 		for (Empleado empleado : empleados) {
 			if(empleado.getUsuario().equalsIgnoreCase(empleadoLogin.getUsuario()) && empleado.getPassword().equalsIgnoreCase(empleadoLogin.getPassword()) && empleado.getActivo()) {
-				enc=true;
 				empleadoEnc=empleado;
 				return ResponseEntity.ok(empleadoDTOConverter.convertirADto(empleadoEnc));
 			}
