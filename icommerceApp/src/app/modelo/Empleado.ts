@@ -1,3 +1,7 @@
+import { Fichaje } from "./Fichaje";
+import { Mesa } from "./Mesa";
+import { Pedido } from "./Pedido";
+
 export class Empleado {
 
     constructor(public id:number,
@@ -11,7 +15,10 @@ export class Empleado {
         public dni:string,
         public esAdministrador:boolean,
         public esRepartidor:boolean,
-        public activo:boolean
+        public activo:boolean,
+        public mesas:Array<Mesa>,
+        public fichajes:Array<Fichaje>,
+        public pedidos:Array<Pedido>
         )
     {  }
     
@@ -28,7 +35,10 @@ export class Empleado {
             jsonObject['dni'],
             jsonObject['esAdministrador'],
             jsonObject['esRepartidor'],
-            jsonObject['activo']);
+            jsonObject['activo'],
+            jsonObject['mesas'],
+            jsonObject['fichajes'],
+            jsonObject['pedidos']);
             return empleado;
     }
                 

@@ -4,7 +4,7 @@
   <ion-button routerLink="/login-empleado-page" routerDirection="forward" size="small" fill="solid" shape="round" class="loginButton">Iniciar sesión</ion-button>
   <ion-button routerLink="/registro-cliente-page" routerDirection="forward" size="small" fill="solid" shape="round" class="singUpButton">Registrarse</ion-button>
   <p class="orText">Iniciar sesión con Google</p>
-  <div (click)="googleLogin()">
-    <ion-img  class="googleImg" src="https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/2875331.png?alt=media&token=8f16bbfe-5f90-43be-b504-d12043f2f9a8"></ion-img>
+  <div>
+    <ion-img  class="googleImg" (click)="googleLogin()" src="https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/2875331.png?alt=media&token=8f16bbfe-5f90-43be-b504-d12043f2f9a8"></ion-img>
   </div> 
 </ion-content>

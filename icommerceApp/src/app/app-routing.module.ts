@@ -20,11 +20,11 @@ const routes: Routes = [
     loadChildren: () => import('./login-empleado-page/login-empleado-page.module').then( m => m.LoginEmpleadoPagePageModule)
   },
   {
-    path: 'home-cliente',
+    path: 'home-cliente/:id',
     loadChildren: () => import('./home-cliente/home-cliente.module').then( m => m.HomeClientePageModule)
   },
   {
-    path: 'home-empleado',
+    path: 'home-empleado/:id',
     loadChildren: () => import('./home-empleado/home-empleado.module').then( m => m.HomeEmpleadoPageModule)
   },
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +8,17 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private apiService: ApiServiceProvider) {}
 
 
   googleLogin(){
-    console.log("ola")
+    this.apiService.getClientes()
+      .then( (respuesta:any)=> {          
+          console.log(respuesta);
+          
+      })
+      .catch( (error:string) => {
+          console.log(error);
+      });
   }
 }

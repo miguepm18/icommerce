@@ -1,5 +1,24 @@
+<ion-menu side="start" menuId="cliente" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary" >
+      <ion-title>Start Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Cesta</ion-item>
+      <ion-item>Historial de pedidos</ion-item>
+      <ion-item>Menus</ion-item>
+      <ion-item>Productos</ion-item>
+      <ion-item>Cuenta</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="cliente"></ion-menu-button>
+    </ion-buttons>
     <ion-title>homeCliente</ion-title>
   </ion-toolbar>
 </ion-header>

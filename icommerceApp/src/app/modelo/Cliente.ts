@@ -1,3 +1,5 @@
+import { Pedido } from "./Pedido";
+
 export class Cliente {
 
     constructor(public id:number,
@@ -9,10 +11,11 @@ export class Cliente {
         public email:string,
         public dni:string,
         public cuentaBanco:string,
-        public fechaCaducidadCuenta:string,
-        public activo:boolean
+        public fechaCaducidadCuenta:string, //MM-yy
+        public activo:boolean,
+        public pedidos:Array<Pedido>
         )
-    {  }
+    {}
     
     public static createFromJsonObject(jsonObject:any):Cliente
     {
@@ -26,7 +29,8 @@ export class Cliente {
             jsonObject['dni'],
             jsonObject['cuentaBanco'],
             jsonObject['fechaCaducidadCuenta'],
-            jsonObject['activo']);
+            jsonObject['activo'],
+            jsonObject['pedidos']);
             return cliente;
     }
                 

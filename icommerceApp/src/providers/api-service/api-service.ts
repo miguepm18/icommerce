@@ -12,13 +12,15 @@ export class ApiServiceProvider {
 
     }
 
+    //CLIENTES
+
     //Devuelve todos los clientes
     getClientes():Promise<Cliente[]> {
         let promise = new Promise<Cliente[]>((resolve, reject) => {
             this.http.get(this.URL+"clientes").toPromise()
                 .then((data:any)=>{
                     let clientes=new Array<Cliente>();
-                    data.forEach(clientesJson => {
+                    data.forEach(clientesJson => {                        
                         let cliente=Cliente.createFromJsonObject(clientesJson);
                         clientes.push(cliente);
                     });
@@ -35,7 +37,6 @@ export class ApiServiceProvider {
         let promise = new Promise<Boolean>((resolve, reject) => {
             this.http.get(this.URL+"clientes/checkUsername/" + usuario).toPromise()
                 .then((data:boolean)=>{
-                    console.log(data);
                     resolve(data);
                 })
                 .catch( (error:Error)=>{
@@ -83,6 +84,23 @@ export class ApiServiceProvider {
         return promise;
     }
 
+    //Devuelve un empleado a partir de un id
+    getClienteId(id:number):Promise<Cliente> {
+        let promise = new Promise<Cliente>((resolve, reject) => {
+            this.http.get(this.URL+"clientes/"+id).toPromise()
+                .then((data:any)=>{
+                    
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //EMPLEADO
+
     //Comprueba que el empleado existe en la BD a partir del usuario y la contraseña, si existe, lo devuelve con todos los datos, sino devuelve false
     logInEmpleado(empleadoLogIn:Empleado):Promise<any> {
         let promise = new Promise<any>((resolve, reject) => {
@@ -126,10 +144,24 @@ export class ApiServiceProvider {
         return promise;
     }
 
-    //Comprueba que el empleado existe en la BD a partir del usuario y la contraseña, si existe, lo devuelve con todos los datos, sino devuelve false
-    /*logInEmpleado(username:string, password:string):Promise<Empleado> {
-        let promise = new Promise<Cliente>((resolve, reject) => {
-            this.http.get(this.URL+"empleados/logIn/"+username+"/"+password).toPromise()
+    //Devuelve si un usuario existe en la tabla Empleados
+    compruebaUsuarioEmpleado(usuario:string):Promise<Boolean> {
+        let promise = new Promise<Boolean>((resolve, reject) => {
+            this.http.get(this.URL+"empleados/checkUsername/" + usuario).toPromise()
+                .then((data:boolean)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Devuelve un empleado a partir de un id
+    getEmpleadoId(id:number):Promise<Empleado> {
+        let promise = new Promise<Empleado>((resolve, reject) => {
+            this.http.get(this.URL+"empleados/"+id).toPromise()
                 .then((data:any)=>{
                     
                     resolve(data);
@@ -139,7 +171,7 @@ export class ApiServiceProvider {
                 });
         });
         return promise;
-    }*/
+    }
 
     
 

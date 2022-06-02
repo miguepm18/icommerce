@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { Cliente } from '../modelo/Cliente';
 
 @Component({
   selector: 'app-home-cliente',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeClientePage implements OnInit {
 
-  constructor() { }
+  cliente:Cliente;
+  constructor(private apiService: ApiServiceProvider, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.apiService.getClienteId(Number.parseInt(id))
+            .then((respuesta:any)=>{
+              this.cliente=Cliente.createFromJsonObject(respuesta);
+            })
+            .catch( (error:string) => {
+              console.log(error);
+            });
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { Cliente } from '../modelo/Cliente';
@@ -14,7 +15,7 @@ export class LoginEmpleadoPagePage implements OnInit {
 
   validations_form: FormGroup;
   credencialesIncorrectos:boolean;
-  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertCtrl: AlertController, private navCtrl: NavController) { }
+  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertCtrl: AlertController, private navCtrl: NavController, private router:Router) { }
 
   ngOnInit() {
 
@@ -32,27 +33,26 @@ export class LoginEmpleadoPagePage implements OnInit {
   }
   onSubmit(values){
     console.log(values);
-    let cliente:Cliente = new Cliente(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null);
+    let cliente:Cliente = new Cliente(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null, null);
     this.apiService.logInCliente(cliente)
       .then( (respuesta:any)=> {          
           if(!respuesta){
             console.log("Buscando en empleados...");
-            let empleado:Empleado = new Empleado(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null, null);
+            let empleado:Empleado = new Empleado(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null, null, null, null, null);
             this.apiService.logInEmpleado(empleado)
             .then((respuesta:any)=>{
+              console.log(respuesta);
               if(!respuesta){
                 this.mostrarAlert();
-              }else{
-                console.log("Navegando a homeEmpleado");
-                this.navCtrl.navigateForward('/home-empleado');
+              }else{                
+                this.navCtrl.navigateForward('/home-empleado/'+respuesta['id']);
               }
             })
             .catch( (error:string) => {
               console.log(error);
             });            
           }else{
-            console.log("Navegando a homeCliente");
-            this.navCtrl.navigateForward('/home-cliente');
+            this.navCtrl.navigateForward('/home-cliente/'+respuesta['id']);
           }
           
       })
@@ -60,7 +60,7 @@ export class LoginEmpleadoPagePage implements OnInit {
           console.log(error);
       });
     
-  }
+}
 
   async mostrarAlert(){
     this.alertCtrl.create({
