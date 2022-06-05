@@ -4,10 +4,9 @@ import { Cliente } from 'src/app/modelo/Cliente';
 import { Empleado } from 'src/app/modelo/Empleado';
 
 @Injectable()
-export class ApiServiceProvider {
-    
-    //private URL="http://localhost:8080/"; //LOCAL
-    private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
+export class ApiServiceProvider {    
+    private URL="http://localhost:8080/"; //LOCAL
+    //private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
 
     constructor(public http: HttpClient){
 
@@ -170,6 +169,60 @@ export class ApiServiceProvider {
                 })
                 .catch( (error:Error)=>{
                     reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Inserta un nuevo empleado en la BD
+    registrarEmpleado(empleadoNuevo: Empleado): Promise<Empleado> {
+        let promise = new Promise<Empleado>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            delete empleadoNuevo.id;
+            let datos = JSON.stringify(empleadoNuevo);
+            this.http.post(this.URL + "empleados/registrarEmpleado",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Modifica un empleado(No es necesaria la password)
+    modificarEmpleado(empleadoNuevo: Empleado): Promise<Empleado> {
+        let promise = new Promise<Empleado>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            let datos = JSON.stringify(empleadoNuevo);
+            this.http.put(this.URL + "empleados/modificarEmpleado",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Elimina un empleado
+    deleteEmpleado(empleadoNuevo: Empleado): Promise<Empleado> {
+        let promise = new Promise<Empleado>((resolve, reject) => {
+            this.http.delete(this.URL + "empleados/borrarEmpleado/"+empleadoNuevo.id).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
                 });
         });
         return promise;

@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()">CLOSE</ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="empleado==null">Nuevo empleado</ion-title>
+    <ion-title *ngIf="empleado!=null">Editar empleado</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="form-content">
+  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+    <ion-item>
+      <ion-label position="floating" color="primary">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Apellidos</ion-label>
+      <ion-input type="text" formControlName="apellidos"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">usuario</ion-label>
+      <ion-input type="text" formControlName="usuario" (change)="compruebaUsuario(validations_form.controls['usuario'].value)"></ion-input>
+    </ion-item>
+    <ion-icon style="color: red;" *ngIf="usuarioValido!=null && !usuarioValido" name="information-circle-outline"></ion-icon><ion-label *ngIf="usuarioValido!=null && !usuarioValido" class="error-message" style="color: red;">El usuario ya existe.</ion-label>
+    <ion-item *ngIf="empleado==null">
+      <ion-label position="floating" color="primary">Contraseña</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Apellidos</ion-label>
+      <ion-input type="text" formControlName="apellidos"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Dirección</ion-label>
+      <ion-input type="text" formControlName="direccion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">E-mail</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Movil</ion-label>
+      <ion-input type="text" formControlName="movil"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">dni</ion-label>
+      <ion-input type="text" formControlName="dni"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Activo</ion-label>
+      <ion-checkbox color="primary" formControlName="activo"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tipo</ion-label>
+      <ion-select formControlName="tipo">
+        <ion-select-option value="administrador">Administrador</ion-select-option>
+        <ion-select-option value="repartidor">Repartidor</ion-select-option>
+        <ion-select-option value="enTienda">En tienda</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="((!validations_form.valid || !usuarioValido) && empleado==null) || ((!validations_form.valid || !usuarioValido) && empleado!=null)">Aceptar</ion-button>
+  </form>
+ 
+</ion-content>

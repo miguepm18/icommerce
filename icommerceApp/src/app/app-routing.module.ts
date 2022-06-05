@@ -62,6 +62,10 @@ const routes: Routes = [
     path: 'cesta',
     loadChildren: () => import('./cesta/cesta.module').then( m => m.CestaPageModule)
   },
+  {
+    path: 'crear-empleado',
+    loadChildren: () => import('./modales/empleados/crear-empleado/crear-empleado.module').then( m => m.CrearEmpleadoPageModule)
+  },
 
 
 ];

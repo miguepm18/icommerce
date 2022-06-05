@@ -19,9 +19,12 @@ export class LoginEmpleadoPagePage implements OnInit {
   credencialesIncorrectos:boolean;
   constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertCtrl: AlertController, private navCtrl: NavController, private router:Router, private appComponent:AppComponent, private menu:MenuController) { }
 
-  ngOnInit() {
-
+  ionViewWillEnter(){
     this.menu.enable(false, 'empleado');
+  }
+
+
+  ngOnInit() {
 
     this.credencialesIncorrectos=false;
 

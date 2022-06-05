@@ -1,9 +1,47 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>empleados</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="empleado"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Empleados</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="anadirEmpleado(null)"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-card *ngFor="let emp of empleados">
+    <ion-card-header *ngIf="emp.activo" style="background-color: green;">
+      <ion-row>
+        <ion-col>
+          <ion-card-subtitle *ngIf="emp.esAdministrador">Administrador</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="emp.esRepartidor">Repartidor</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="!emp.esAdministrador && !emp.esRepartidor">En tienda</ion-card-subtitle>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="anadirEmpleado(emp)"><ion-icon name="create-outline"></ion-icon></ion-button>
+          <ion-button (click)="deleteEmpleado(emp)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-card-title>{{emp.nombre}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-header style="background-color: red;" *ngIf="!emp.activo">
+      <ion-row>
+        <ion-col>
+          <ion-card-subtitle *ngIf="emp.esAdministrador">Administrador</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="emp.esRepartidor">Repartidor</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="!emp.esAdministrador && !emp.esRepartidor">En tienda</ion-card-subtitle>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="anadirEmpleado(emp)"><ion-icon name="create-outline"></ion-icon></ion-button>
+          <ion-button (click)="deleteEmpleado(emp)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-card-title>{{emp.nombre}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{emp.nombre}}, {{emp.apellidos}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>

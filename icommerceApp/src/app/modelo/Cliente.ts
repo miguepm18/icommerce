@@ -31,6 +31,8 @@ export class Cliente {
             jsonObject['fechaCaducidadCuenta'],
             jsonObject['activo'],
             jsonObject['pedidos']);
+            console.log(jsonObject['nombre']);
+            
             return cliente;
     }
                 

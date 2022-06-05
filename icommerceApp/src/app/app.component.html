@@ -2,49 +2,60 @@
   <ion-menu side="start" menuId="empleado" contentId="main">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title *ngIf="empleado!=null || cliente!=null">{{empleado.nombre}}</ion-title>
-        <ion-label style="margin-left: 8%;" *ngIf="empleado!=null || cliente!=null">{{empleado.email}}</ion-label>
+        <ion-title *ngIf="(empleado!=null && cliente==null)">{{empleado.nombre}}</ion-title>
+        <ion-label style="margin-left: 8%;" *ngIf="(empleado!=null && cliente==null)">{{empleado.email}}</ion-label>
+
+        <ion-title *ngIf="(empleado==null && cliente!=null)">{{cliente.nombre}}</ion-title>
+        <ion-label style="margin-left: 8%;" *ngIf="(empleado==null && cliente!=null)">{{cliente.email}}</ion-label>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content *ngIf="empleado!=null || cliente!=null">
       <ion-list>
-          <ion-item (click)="empleadosPage()">
-              <i class="material-icons" style="width: 15%;">work_outline</i>
-              Empleados
-          </ion-item>
-          <ion-item  (click)="clientesPage()">
-              <i class="material-icons" style="width: 15%;">person</i>
-              Clientes
-          </ion-item>
-          <ion-item (click)="menusPage()">
-              <i class="material-icons" style="width: 15%;">restaurant_menu</i>
-              Menús
-          </ion-item>
-          <ion-item (click)="mesasPage()">
-              <i class="material-icons" style="width: 15%;">table chart</i>
-              Mesas
-          </ion-item>
-          <ion-item (click)="fichajesPage()">
-              <ion-icon name="today-outline" class="iconoMenu"></ion-icon>
-              Fichajes
-          </ion-item>
-          <ion-item (click)="pedidosPage()">
-              <i class="material-icons" style="width: 15%;">local_mall</i>
-              Pedidos
-          </ion-item>
-          <ion-item (click)="productosPage()">
-              <ion-icon name="fast-food-outline" class="iconoMenu"></ion-icon>
-              Productos
-          </ion-item>
-          <ion-item (click)="cuentaPage()">
-              <ion-icon name="person-circle-outline" class="iconoMenu"></ion-icon>
-              Cuenta
-          </ion-item>
+        <ion-item (click)="empleadosPage()" *ngIf="cliente==null && empleado.esAdministrador">
+          <i class="material-icons" style="width: 15%;">work_outline</i>
+          Empleados
+        </ion-item>
+        <ion-item (click)="clientesPage()" *ngIf="cliente==null && empleado.esAdministrador">
+          <i class="material-icons" style="width: 15%;">person</i>
+          Clientes
+        </ion-item>
+        <ion-item (click)="menusPage()"
+          *ngIf="(cliente==null && empleado.esAdministrador) || (cliente!=null && empleado==null) || (cliente==null && !empleado.esAdministrador && !empleado.esRepartidor)">
+          <i class="material-icons" style="width: 15%;">restaurant_menu</i>
+          Menús
+        </ion-item>
+        <ion-item (click)="mesasPage()"
+          *ngIf="(cliente==null && empleado.esAdministrador) || (cliente==null && !empleado.esAdministrador && !empleado.esRepartidor)">
+          <i class="material-icons" style="width: 15%;">table chart</i>
+          Mesas
+        </ion-item>
+        <ion-item (click)="fichajesPage()" *ngIf="(cliente==null && empleado!=null)">
+          <ion-icon name="today-outline" class="iconoMenu"></ion-icon>
+          Fichajes
+        </ion-item>
+        <ion-item (click)="pedidosPage()"
+          *ngIf="(cliente==null && empleado!=null && empleado.esAdministrador) || (cliente==null && empleado!=null && empleado.esRepartidor)">
+          <i class="material-icons" style="width: 15%;">local_mall</i>
+          Pedidos
+        </ion-item>
+        <ion-item (click)="productosPage()"
+          *ngIf="(cliente==null && empleado!=null && empleado.esAdministrador) || (cliente!=null && empleado==null)">
+          <ion-icon name="fast-food-outline" class="iconoMenu"></ion-icon>
+          Productos
+        </ion-item>
+        <ion-item (click)="cestaPage()" *ngIf="empleado==null && cliente!=null">
+          <ion-icon name="person-circle-outline" class="iconoMenu"></ion-icon>
+          Cesta
+        </ion-item>
+        <ion-item (click)="cuentaPage()">
+          <ion-icon name="person-circle-outline" class="iconoMenu"></ion-icon>
+          Cuenta
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
 
 
 
-  <ion-router-outlet  id="main"></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>

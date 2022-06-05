@@ -13,24 +13,10 @@ import { Empleado } from '../modelo/Empleado';
 })
 export class HomeEmpleadoPage implements OnInit {
 
-  empleado:Empleado;
   constructor(private apiService: ApiServiceProvider, private route: ActivatedRoute, private menu: MenuController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'empleado');
-    let id = this.route.snapshot.paramMap.get('id');
-    this.apiService.getEmpleadoId(Number.parseInt(id))
-            .then((respuesta:any)=>{
-              this.empleado=Empleado.createFromJsonObject(respuesta);
-            })
-            .catch( (error:string) => {
-              console.log(error);
-            });
-  }
-
-  fichajesPage(){
-    console.log("holasd");
-    
   }
 
 }

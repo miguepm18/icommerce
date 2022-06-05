@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar';
-import { MenuController, Platform } from '@ionic/angular';
+import { MenuController, NavController, Platform } from '@ionic/angular';
 import { Cliente } from './modelo/Cliente';
 import { Empleado } from './modelo/Empleado';
 
@@ -15,7 +15,7 @@ export class AppComponent {
   public cliente:Cliente;
   public empleado:Empleado;
   
-  constructor() {
+  constructor(private navController:NavController, private menu:MenuController) {
     this.cliente=null;
     this.empleado=null;
   }
@@ -31,7 +31,8 @@ export class AppComponent {
     
   }
   empleadosPage(){
-
+    this.navController.navigateForward("/empleados");
+    this.menu.close('empleado');
   }
   clientesPage(){
 

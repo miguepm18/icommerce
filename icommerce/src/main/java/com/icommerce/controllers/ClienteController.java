@@ -78,8 +78,8 @@ public class ClienteController {
 	@PostMapping("/clientes/registrarCliente")
 	public ResponseEntity<?> nuevoCliente(@RequestBody ClienteDTO nuevoCliente){
 		nuevoCliente.setPassword(encripter.encoder().encode(nuevoCliente.getPassword()));
-		this.clienteService.insertarEditarCliente(this.clienteDTOConverter.convertirACliente(nuevoCliente));
-		return ResponseEntity.status(HttpStatus.CREATED).body(null);
+		Cliente clienteCreado = this.clienteService.insertarEditarCliente(this.clienteDTOConverter.convertirACliente(nuevoCliente));
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.clienteDTOConverter.convertirAClienteDTO(clienteCreado));
 	}
 	
 	//Devuelve un cliente completo si existe el nombre y usuario pasados
@@ -88,7 +88,7 @@ public class ClienteController {
 	public ResponseEntity<?> logIn(@RequestBody ClienteDTO clienteLogin){
 		List<Cliente> clientes = clienteService.obtenerTodosLosClientes();
 		for (Cliente cliente : clientes) {
-			if(cliente.getUsuario().equals(clienteLogin.getUsuario()) && encripter.encoder().matches(cliente.getPassword(), cliente.getPassword()) && cliente.getActivo()) {
+			if(cliente.getUsuario().equals(clienteLogin.getUsuario()) && encripter.encoder().matches(clienteLogin.getPassword(), cliente.getPassword()) && cliente.getActivo()) {
 				return ResponseEntity.ok(clienteDTOConverter.convertirAClienteDTO(cliente));
 			}
 		}

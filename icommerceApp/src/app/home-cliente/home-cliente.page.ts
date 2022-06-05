@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { Cliente } from '../modelo/Cliente';
 
@@ -10,18 +11,10 @@ import { Cliente } from '../modelo/Cliente';
 })
 export class HomeClientePage implements OnInit {
 
-  cliente:Cliente;
-  constructor(private apiService: ApiServiceProvider, private route: ActivatedRoute) { }
+  constructor(private apiService: ApiServiceProvider, private route: ActivatedRoute, private menu:MenuController) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.apiService.getClienteId(Number.parseInt(id))
-            .then((respuesta:any)=>{
-              this.cliente=Cliente.createFromJsonObject(respuesta);
-            })
-            .catch( (error:string) => {
-              console.log(error);
-            });
+    this.menu.enable(true, 'empleado');          
   }
 
 }

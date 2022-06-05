@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,12 +96,24 @@ public class EmpleadoController {
 	@PutMapping("/empleados/modificarEmpleado")
 	public ResponseEntity<?> editarEmpleado(@RequestBody EmpleadoDTO empleadoEditar){
 		Empleado empleado = this.empleadoDTOConverter.convertirAEmpleado(empleadoEditar);
-		if(this.empleadoService.obtenerEmpleadoById(empleado.getId())!=null) {
+		Empleado empBD = this.empleadoService.obtenerEmpleadoById(empleado.getId());
+		if(empBD != null) {
+			empleado.setPassword(empBD.getPassword());
+		}
+		if(empBD!=null) {
 			Empleado empleadoModificado = this.empleadoService.insertarEditarEmpleado(empleado);
 			return ResponseEntity.ok(this.empleadoDTOConverter.convertirADto(empleadoModificado));
 		}else {
 			return ResponseEntity.ok(false);
 		}
+	}
+	
+	@DeleteMapping("/empleados/borrarEmpleado/{id}")
+	public ResponseEntity<?> borrarEmpleado(@PathVariable Long id){
+		Empleado emp = this.empleadoService.obtenerEmpleadoById(id);
+		emp.setActivo(false);
+		this.empleadoService.insertarEditarEmpleado(emp);
+		return ResponseEntity.ok(this.empleadoDTOConverter.convertirADto(emp));
 	}
 		
 }
