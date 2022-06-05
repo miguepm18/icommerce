@@ -5,43 +5,122 @@
     </ion-buttons>
     <ion-title>Empleados</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="anadirEmpleado(null)"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+      <ion-button (click)="anadirEmpleado(null)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let emp of empleados">
-    <ion-card-header *ngIf="emp.activo" style="background-color: green;">
-      <ion-row>
-        <ion-col>
-          <ion-card-subtitle *ngIf="emp.esAdministrador">Administrador</ion-card-subtitle>
-          <ion-card-subtitle *ngIf="emp.esRepartidor">Repartidor</ion-card-subtitle>
-          <ion-card-subtitle *ngIf="!emp.esAdministrador && !emp.esRepartidor">En tienda</ion-card-subtitle>
-        </ion-col>
-        <ion-col>
-          <ion-button (click)="anadirEmpleado(emp)"><ion-icon name="create-outline"></ion-icon></ion-button>
-          <ion-button (click)="deleteEmpleado(emp)"><ion-icon name="trash-outline"></ion-icon></ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-card-title>{{emp.nombre}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-header style="background-color: red;" *ngIf="!emp.activo">
-      <ion-row>
-        <ion-col>
-          <ion-card-subtitle *ngIf="emp.esAdministrador">Administrador</ion-card-subtitle>
-          <ion-card-subtitle *ngIf="emp.esRepartidor">Repartidor</ion-card-subtitle>
-          <ion-card-subtitle *ngIf="!emp.esAdministrador && !emp.esRepartidor">En tienda</ion-card-subtitle>
-        </ion-col>
-        <ion-col>
-          <ion-button (click)="anadirEmpleado(emp)"><ion-icon name="create-outline"></ion-icon></ion-button>
-          <ion-button (click)="deleteEmpleado(emp)"><ion-icon name="trash-outline"></ion-icon></ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-card-title>{{emp.nombre}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{emp.nombre}}, {{emp.apellidos}}
-    </ion-card-content>
+  <ion-card *ngFor="let emp of empleados" class="cardContentStyle">
+    <div *ngIf="emp.activo || (!emp.activo && !activos)">
+      <ion-card-header *ngIf="emp.activo && emp.esAdministrador" class="headerCardAdmin">
+        <ion-card-subtitle>
+          <p>
+            <ion-chip class="chipAdmin">
+              <ion-icon name="infinite"></ion-icon>
+              <ion-label>Administrador</ion-label>
+            </ion-chip>
+          </p>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-header *ngIf="emp.activo && emp.esRepartidor" class="headerCardRepartidor">
+        <ion-card-subtitle>
+          <p>
+            <ion-chip class="chipRepartidor">
+              <ion-icon name="bicycle-outline"></ion-icon>
+              <ion-label>Repartidor</ion-label>
+            </ion-chip>
+          </p>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-header *ngIf="emp.activo && (!emp.esAdministrador && !emp.esRepartidor)" class="headerCardTienda">
+        <ion-card-subtitle>
+          <p>
+            <ion-chip class="chipTienda">
+              <ion-icon name="cart-outline"></ion-icon>
+              <ion-label>Tienda</ion-label>
+            </ion-chip>
+          </p>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-header *ngIf="!emp.activo && emp.esAdministrador" class="headerCardDesactivada">
+        <ion-card-subtitle>
+          <p>
+            <ion-chip class="chipAdmin">
+              <ion-icon name="infinite"></ion-icon>
+              <ion-label>Administrador</ion-label>
+            </ion-chip>
+          </p>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-header *ngIf="!emp.activo && emp.esRepartidor" class="headerCardDesactivada">
+        <ion-card-subtitle>
+          <p>
+            <ion-chip class="chipRepartidor">
+              <ion-icon name="bicycle-outline"></ion-icon>
+              <ion-label>Repartidor</ion-label>
+            </ion-chip>
+          </p>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-header *ngIf="!emp.activo && (!emp.esAdministrador && !emp.esRepartidor)" class="headerCardDesactivada">
+        <ion-card-subtitle>
+          <p>
+            <ion-chip class="chipTienda">
+              <ion-icon name="cart-outline"></ion-icon>
+              <ion-label>Tienda</ion-label>
+            </ion-chip>
+          </p>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content style="background-color: white;">
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{emp.nombre}}</p> 
+          </ion-col>
+          <ion-col size="6">
+            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{emp.apellidos}}</p> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="person-outline"></ion-icon><p class="textoInfo">{{emp.usuario}}</p> 
+          </ion-col>
+          <ion-col>
+            <ion-icon name="compass-outline"></ion-icon><p class="textoInfo">{{emp.direccion}}</p> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="mail-open-outline"></ion-icon><p class="textoInfo">{{emp.email}}</p> 
+          </ion-col>
+          <ion-col size="6">
+            <ion-icon name="phone-portrait-outline"></ion-icon><p class="textoInfo">{{emp.movil}}</p> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="anadirEmpleado(emp)" expand="full">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button (click)="deleteEmpleado(emp)" expand="full">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-content>
+    </div>
   </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="mostrarActivos()">
+      <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
+      <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

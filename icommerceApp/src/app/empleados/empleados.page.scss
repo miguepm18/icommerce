@@ -1,0 +1,48 @@
+.chipTienda{
+    --color: black;
+    width: min-content;
+    height: min-content;
+    background-color: grey;
+    margin-left: 60%;
+}
+.chipAdmin{
+    --color: white;
+    background-color: #04769b;
+    margin-left: 50%;
+}
+.chipRepartidor{
+    --color: white;
+    background-color: #74bbf7;
+    margin-left: 50%;
+}
+.headerCardTienda{
+    height: min-content;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/hardware-store-photo-backgrounds.jpg?alt=media&token=dc96c359-eef2-459e-8583-9bc5c0f62b8e');
+}
+.headerCardRepartidor{
+    height: min-content;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/repartidorBackground.jpg?alt=media&token=ee673fb8-4b27-4592-973b-f620a2f84864');
+}
+.headerCardAdmin{
+    height: min-content;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/adminBackground.jpg?alt=media&token=5d4bd205-38f4-487a-b715-011d2337b6a6')
+    
+}
+.headerCardDesactivada{
+    height: min-content;
+    background-image:url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/desactivadoBackground.jpg?alt=media&token=88758b2e-d819-4f41-b485-9b741ed60b1b')
+}
+ion-header{
+    --ion-background-color:#74bbf7;
+}
+ion-content{
+    --ion-background-color: #a0cce4;
+}
+.cardContenido{
+    background-color: white;
+}
+.textoInfo{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

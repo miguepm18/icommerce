@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonFab, ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { CrearEmpleadoPage } from '../modales/empleados/crear-empleado/crear-empleado.page';
 import { Empleado } from '../modelo/Empleado';
@@ -12,12 +12,17 @@ import { Empleado } from '../modelo/Empleado';
 export class EmpleadosPage implements OnInit {
 
   empleados: Array<Empleado>;
+  activos:boolean;
   constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController) {
     this.empleados = new Array<Empleado>();
+    this.activos=false;
   }
 
   ngOnInit() {
 
+  }
+  mostrarActivos(){
+    this.activos=!this.activos;
   }
 
   ionViewWillEnter() {
