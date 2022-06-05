@@ -1,3 +1,50 @@
 <ion-app>
+  <ion-menu side="start" menuId="empleado" contentId="main">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title *ngIf="empleado!=null || cliente!=null">{{empleado.nombre}}</ion-title>
+        <ion-label style="margin-left: 8%;" *ngIf="empleado!=null || cliente!=null">{{empleado.email}}</ion-label>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+          <ion-item (click)="empleadosPage()">
+              <i class="material-icons" style="width: 15%;">work_outline</i>
+              Empleados
+          </ion-item>
+          <ion-item  (click)="clientesPage()">
+              <i class="material-icons" style="width: 15%;">person</i>
+              Clientes
+          </ion-item>
+          <ion-item (click)="menusPage()">
+              <i class="material-icons" style="width: 15%;">restaurant_menu</i>
+              Menús
+          </ion-item>
+          <ion-item (click)="mesasPage()">
+              <i class="material-icons" style="width: 15%;">table chart</i>
+              Mesas
+          </ion-item>
+          <ion-item (click)="fichajesPage()">
+              <ion-icon name="today-outline" class="iconoMenu"></ion-icon>
+              Fichajes
+          </ion-item>
+          <ion-item (click)="pedidosPage()">
+              <i class="material-icons" style="width: 15%;">local_mall</i>
+              Pedidos
+          </ion-item>
+          <ion-item (click)="productosPage()">
+              <ion-icon name="fast-food-outline" class="iconoMenu"></ion-icon>
+              Productos
+          </ion-item>
+          <ion-item (click)="cuentaPage()">
+              <ion-icon name="person-circle-outline" class="iconoMenu"></ion-icon>
+              Cuenta
+          </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+
   <ion-router-outlet  id="main"></ion-router-outlet>
 </ion-app>

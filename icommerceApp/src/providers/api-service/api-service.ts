@@ -6,7 +6,8 @@ import { Empleado } from 'src/app/modelo/Empleado';
 @Injectable()
 export class ApiServiceProvider {
     
-    private URL="http://localhost:8080/";
+    //private URL="http://localhost:8080/"; //LOCAL
+    private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
 
     constructor(public http: HttpClient){
 
@@ -32,6 +33,7 @@ export class ApiServiceProvider {
         });
         return promise;
     }
+    
     //Devuelve si un usuario existe en la tabla clientes
     compruebaUsuarioCliente(usuario:string):Promise<Boolean> {
         let promise = new Promise<Boolean>((resolve, reject) => {

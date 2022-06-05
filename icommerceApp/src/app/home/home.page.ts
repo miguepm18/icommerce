@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 
 @Component({
@@ -6,9 +7,13 @@ import { ApiServiceProvider } from 'src/providers/api-service/api-service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
-  constructor(private apiService: ApiServiceProvider) {}
+  constructor(private apiService: ApiServiceProvider, private menu:MenuController) {}
+  
+  ngOnInit(): void {
+    this.menu.enable(true, 'empleado')
+  }
 
 
   googleLogin(){

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.icommerce.Encriptador;
 import com.icommerce.DTO.empleado.EmpleadoDTO;
 import com.icommerce.DTO.empleado.EmpleadoDTOConverter;
 import com.icommerce.modelo.Empleado;
@@ -25,10 +26,12 @@ public class EmpleadoController {
 
 	private final EmpleadoDTOConverter empleadoDTOConverter;
 	private final EmpleadoService empleadoService;
+	private final Encriptador encripter;
 	
-	public EmpleadoController(EmpleadoDTOConverter empleadoDTOConverter, EmpleadoService empleadoService) {
+	public EmpleadoController(EmpleadoDTOConverter empleadoDTOConverter, EmpleadoService empleadoService, Encriptador encripter) {
 		this.empleadoDTOConverter=empleadoDTOConverter;
 		this.empleadoService = empleadoService;
+		this.encripter = encripter;
 	}
 	
 	
@@ -69,6 +72,7 @@ public class EmpleadoController {
 
 	@PostMapping("/empleados/registrarEmpleado")
 	public ResponseEntity<?> nuevoEmpleado(@RequestBody EmpleadoDTO nuevoEmpleado){
+		nuevoEmpleado.setPassword(this.encripter.encoder().encode(nuevoEmpleado.getPassword()));	
 		Empleado emp = this.empleadoService.insertarEditarEmpleado(this.empleadoDTOConverter.convertirAEmpleado(nuevoEmpleado));
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.empleadoDTOConverter.convertirADto(emp));
 	}
@@ -79,7 +83,7 @@ public class EmpleadoController {
 		Empleado empleadoEnc=null;
 		List<Empleado> empleados = empleadoService.obtenerTodosLosEmpleados();
 		for (Empleado empleado : empleados) {
-			if(empleado.getUsuario().equalsIgnoreCase(empleadoLogin.getUsuario()) && empleado.getPassword().equalsIgnoreCase(empleadoLogin.getPassword()) && empleado.getActivo()) {
+			if(empleado.getUsuario().equals(empleadoLogin.getUsuario()) && this.encripter.encoder().matches(empleadoLogin.getPassword(), empleado.getPassword()) && empleado.getActivo()) {
 				empleadoEnc=empleado;
 				return ResponseEntity.ok(empleadoDTOConverter.convertirADto(empleadoEnc));
 			}

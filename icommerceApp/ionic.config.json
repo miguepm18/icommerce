@@ -1,5 +1,7 @@
 {
   "name": "icommerceApp",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

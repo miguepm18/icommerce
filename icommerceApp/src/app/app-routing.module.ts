@@ -26,7 +26,43 @@ const routes: Routes = [
   {
     path: 'home-empleado/:id',
     loadChildren: () => import('./home-empleado/home-empleado.module').then( m => m.HomeEmpleadoPageModule)
+  },  {
+    path: 'empleados',
+    loadChildren: () => import('./empleados/empleados.module').then( m => m.EmpleadosPageModule)
   },
+  {
+    path: 'clientes',
+    loadChildren: () => import('./clientes/clientes.module').then( m => m.ClientesPageModule)
+  },
+  {
+    path: 'menus',
+    loadChildren: () => import('./menus/menus.module').then( m => m.MenusPageModule)
+  },
+  {
+    path: 'mesas',
+    loadChildren: () => import('./mesas/mesas.module').then( m => m.MesasPageModule)
+  },
+  {
+    path: 'fichajes',
+    loadChildren: () => import('./fichajes/fichajes.module').then( m => m.FichajesPageModule)
+  },
+  {
+    path: 'pedidos',
+    loadChildren: () => import('./pedidos/pedidos.module').then( m => m.PedidosPageModule)
+  },
+  {
+    path: 'productos',
+    loadChildren: () => import('./productos/productos.module').then( m => m.ProductosPageModule)
+  },
+  {
+    path: 'cuenta',
+    loadChildren: () => import('./cuenta/cuenta.module').then( m => m.CuentaPageModule)
+  },
+  {
+    path: 'cesta',
+    loadChildren: () => import('./cesta/cesta.module').then( m => m.CestaPageModule)
+  },
+
 
 ];
 

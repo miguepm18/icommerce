@@ -1,5 +1,6 @@
 package com.icommerce.controllers;
 
+import com.icommerce.Encriptador;
 import com.icommerce.DTO.cliente.ClienteDTO;
 import com.icommerce.DTO.cliente.ClienteDTOConverter;
 import com.icommerce.modelo.Cliente;
@@ -25,10 +26,12 @@ public class ClienteController {
 
 	private final ClienteDTOConverter clienteDTOConverter;
 	private final ClienteService clienteService;
+	private final Encriptador encripter;
 	
-	public ClienteController(ClienteDTOConverter clienteDTOConverter, ClienteService clienteService) {
+	public ClienteController(ClienteDTOConverter clienteDTOConverter, ClienteService clienteService, Encriptador encripter) {
 		this.clienteDTOConverter=clienteDTOConverter;
 		this.clienteService = clienteService;
+		this.encripter=encripter;
 	}
 	
 	//Devuelve todos los clientes
@@ -74,6 +77,7 @@ public class ClienteController {
 	//Añade un cliente nuevo al registrarse
 	@PostMapping("/clientes/registrarCliente")
 	public ResponseEntity<?> nuevoCliente(@RequestBody ClienteDTO nuevoCliente){
+		nuevoCliente.setPassword(encripter.encoder().encode(nuevoCliente.getPassword()));
 		this.clienteService.insertarEditarCliente(this.clienteDTOConverter.convertirACliente(nuevoCliente));
 		return ResponseEntity.status(HttpStatus.CREATED).body(null);
 	}
@@ -84,7 +88,7 @@ public class ClienteController {
 	public ResponseEntity<?> logIn(@RequestBody ClienteDTO clienteLogin){
 		List<Cliente> clientes = clienteService.obtenerTodosLosClientes();
 		for (Cliente cliente : clientes) {
-			if(cliente.getUsuario().equalsIgnoreCase(clienteLogin.getUsuario()) && cliente.getPassword().equalsIgnoreCase(clienteLogin.getPassword()) && cliente.getActivo()) {
+			if(cliente.getUsuario().equals(clienteLogin.getUsuario()) && encripter.encoder().matches(cliente.getPassword(), cliente.getPassword()) && cliente.getActivo()) {
 				return ResponseEntity.ok(clienteDTOConverter.convertirAClienteDTO(cliente));
 			}
 		}

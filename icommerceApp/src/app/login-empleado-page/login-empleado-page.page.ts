@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { App } from '@capacitor/app';
+import { AlertController, MenuController, NavController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { AppComponent } from '../app.component';
 import { Cliente } from '../modelo/Cliente';
 import { Empleado } from '../modelo/Empleado';
 
@@ -15,9 +17,11 @@ export class LoginEmpleadoPagePage implements OnInit {
 
   validations_form: FormGroup;
   credencialesIncorrectos:boolean;
-  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertCtrl: AlertController, private navCtrl: NavController, private router:Router) { }
+  constructor(public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertCtrl: AlertController, private navCtrl: NavController, private router:Router, private appComponent:AppComponent, private menu:MenuController) { }
 
   ngOnInit() {
+
+    this.menu.enable(false, 'empleado');
 
     this.credencialesIncorrectos=false;
 
@@ -40,18 +44,20 @@ export class LoginEmpleadoPagePage implements OnInit {
             console.log("Buscando en empleados...");
             let empleado:Empleado = new Empleado(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null, null, null, null, null);
             this.apiService.logInEmpleado(empleado)
-            .then((respuesta:any)=>{
-              console.log(respuesta);
-              if(!respuesta){
+            .then((respuestaEmp:any)=>{
+              console.log(respuestaEmp);
+              if(!respuestaEmp){
                 this.mostrarAlert();
               }else{                
-                this.navCtrl.navigateForward('/home-empleado/'+respuesta['id']);
+                this.appComponent.setEmpleado(Empleado.createFromJsonObject(respuestaEmp));
+                this.navCtrl.navigateForward('/home-empleado/'+respuestaEmp['id']);
               }
             })
             .catch( (error:string) => {
               console.log(error);
             });            
           }else{
+            this.appComponent.setCliente(Cliente.createFromJsonObject(respuesta));
             this.navCtrl.navigateForward('/home-cliente/'+respuesta['id']);
           }
           
