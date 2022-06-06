@@ -31,7 +31,7 @@
         </ion-item>
         <ion-item (click)="fichajesPage()" *ngIf="(cliente==null && empleado!=null)">
           <ion-icon name="today-outline" class="iconoMenu"></ion-icon>
-          Fichajes
+          <span style="margin-left: 5%;">Fichajes</span>
         </ion-item>
         <ion-item (click)="pedidosPage()"
           *ngIf="(cliente==null && empleado!=null && empleado.esAdministrador) || (cliente==null && empleado!=null && empleado.esRepartidor)">
@@ -41,7 +41,7 @@
         <ion-item (click)="productosPage()"
           *ngIf="(cliente==null && empleado!=null && empleado.esAdministrador) || (cliente!=null && empleado==null)">
           <ion-icon name="fast-food-outline" class="iconoMenu"></ion-icon>
-          Productos
+          <span style="margin-left: 5%;">Productos</span>
         </ion-item>
         <ion-item (click)="cestaPage()" *ngIf="empleado==null && cliente!=null">
           <ion-icon name="person-circle-outline" class="iconoMenu"></ion-icon>
@@ -49,7 +49,7 @@
         </ion-item>
         <ion-item (click)="cuentaPage()">
           <ion-icon name="person-circle-outline" class="iconoMenu"></ion-icon>
-          Cuenta
+          <span style="margin-left: 5%;">Cuenta</span>
         </ion-item>
       </ion-list>
     </ion-content>

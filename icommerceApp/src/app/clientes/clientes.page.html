@@ -1,9 +1,72 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>clientes</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="empleado"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Clientes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="anadirCliente(null)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let cliente of clientes" class="cardContentStyle">
+    <div *ngIf="cliente.activo || (!cliente.activo && !activos)">
+      <ion-card-header *ngIf="cliente.activo" class="headerCardActivada">
+        <p style="color: black; font-size: small;">{{cliente.id}}</p>
+      </ion-card-header>
+      <ion-card-header *ngIf="!cliente.activo" class="headerCardDesactivada">
+        <p style="color: white; font-size: small;">{{cliente.id}}</p>
+      </ion-card-header>
+      <ion-card-content style="background-color: white;">
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{cliente.nombre}}</p> 
+          </ion-col>
+          <ion-col size="6">
+            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{cliente.apellidos}}</p> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="person-outline"></ion-icon><p class="textoInfo">{{cliente.usuario}}</p> 
+          </ion-col>
+          <ion-col>
+            <ion-icon name="compass-outline"></ion-icon><p class="textoInfo">{{cliente.direccion}}</p> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="mail-open-outline"></ion-icon><p class="textoInfo">{{cliente.email}}</p> 
+          </ion-col>
+          <ion-col size="6">
+            <ion-icon name="phone-portrait-outline"></ion-icon><p class="textoInfo">{{cliente.dni}}</p> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="anadirCliente(cliente)" expand="full">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button (click)="deleteCliente(cliente)" expand="full">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-content>
+    </div>
+  </ion-card>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="mostrarActivos()">
+      <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
+      <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

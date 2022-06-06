@@ -66,6 +66,18 @@ const routes: Routes = [
     path: 'crear-empleado',
     loadChildren: () => import('./modales/empleados/crear-empleado/crear-empleado.module').then( m => m.CrearEmpleadoPageModule)
   },
+  {
+    path: 'crear-cliente',
+    loadChildren: () => import('./modales/clientes/crear-cliente/crear-cliente.module').then( m => m.CrearClientePageModule)
+  },
+  {
+    path: 'crear-menu',
+    loadChildren: () => import('./modales/menus/crear-menu/crear-menu.module').then( m => m.CrearMenuPageModule)
+  },
+  {
+    path: 'crear-mesa',
+    loadChildren: () => import('./modales/mesas/crear-mesa/crear-mesa.module').then( m => m.CrearMesaPageModule)
+  },
 
 
 ];

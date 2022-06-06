@@ -12,7 +12,7 @@ export class HomePage implements OnInit{
   constructor(private apiService: ApiServiceProvider, private menu:MenuController) {}
   
   ngOnInit(): void {
-    this.menu.enable(true, 'empleado')
+    this.menu.enable(false, 'empleado');
   }
 
 

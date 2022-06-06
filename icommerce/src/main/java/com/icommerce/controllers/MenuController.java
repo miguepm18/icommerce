@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.icommerce.DTO.menu.MenuDTO;
 import com.icommerce.DTO.menu.MenuDTOConverter;
+import com.icommerce.modelo.Cliente;
 import com.icommerce.modelo.Menu;
 import com.icommerce.service.MenuService;
 
@@ -71,5 +73,13 @@ public class MenuController {
 		}else {
 			return ResponseEntity.ok(false);
 		}
+	}
+	
+	@DeleteMapping("/menus/borrarMenu/{id}")
+	public ResponseEntity<?> borrarMenu(@PathVariable Long id){
+		Menu menu = this.menuService.obtenerMenuById(id);
+		menu.setActivo(false);
+		this.menuService.insertarModificarMenu(menu);
+		return ResponseEntity.ok(this.menuDTOConverter.convertirAMenuDTO(menu));
 	}
 }

@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "icommerceApp",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.icommerce.DTO.mesa.MesaDTO;
 import com.icommerce.DTO.mesa.MesaDTOConverter;
+import com.icommerce.modelo.Menu;
 import com.icommerce.modelo.Mesa;
 import com.icommerce.service.MesaService;
 
@@ -70,5 +72,12 @@ public class MesaController {
 		}else {
 			return ResponseEntity.ok(false);
 		}
+	}
+	@DeleteMapping("/mesas/borrarMesa/{id}")
+	public ResponseEntity<?> borrarMesa(@PathVariable Long id){
+		Mesa mesa = this.mesaService.obtenerMesaById(id);
+		mesa.setActivo(false);
+		this.mesaService.insertarModificarMesa(mesa);
+		return ResponseEntity.ok(this.mesaDTOConverter.convertirAMesaDTO(mesa));
 	}
 }

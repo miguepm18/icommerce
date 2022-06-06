@@ -35,25 +35,32 @@ export class AppComponent {
     this.menu.close('empleado');
   }
   clientesPage(){
-
+    this.navController.navigateForward("/clientes");
+    this.menu.close('empleado');
   }
   menusPage(){
-
+    this.navController.navigateForward("/menus");
+    this.menu.close('empleado');
   }
   mesasPage(){
-
+    this.navController.navigateForward("/mesas");
+    this.menu.close('empleado');
   }
   fichajesPage(){
-
+    this.navController.navigateForward("/fichajes");
+    this.menu.close('empleado');
   }
   pedidosPage(){
-
+    this.navController.navigateForward("/pedidos");
+    this.menu.close('empleado');
   }
   productosPage(){
-
+    this.navController.navigateForward("/productos");
+    this.menu.close('empleado');
   }
   cuentaPage(){
-
+    this.navController.navigateForward("/cuenta");
+    this.menu.close('empleado');
   }
-
+  
 }

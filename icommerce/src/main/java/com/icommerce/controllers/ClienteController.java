@@ -4,6 +4,7 @@ import com.icommerce.Encriptador;
 import com.icommerce.DTO.cliente.ClienteDTO;
 import com.icommerce.DTO.cliente.ClienteDTOConverter;
 import com.icommerce.modelo.Cliente;
+import com.icommerce.modelo.Empleado;
 import com.icommerce.service.ClienteService;
 
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,6 +110,13 @@ public class ClienteController {
 		}
 	}
 		
+	@DeleteMapping("/clientes/borrarCliente/{id}")
+	public ResponseEntity<?> borrarCliente(@PathVariable Long id){
+		Cliente cliente = this.clienteService.obtenerClienteById(id);
+		cliente.setActivo(false);
+		this.clienteService.insertarEditarCliente(cliente);
+		return ResponseEntity.ok(this.clienteDTOConverter.convertirAClienteDTO(cliente));
+	}
 	
 
 }

@@ -1,12 +1,12 @@
 import { Pedido } from "./Pedido";
 
 export class Mesa{
-    constructor(id:number,
-        capacidad:number,
-        ocupada:boolean,
-        activo:boolean,
-        empleadoID:number,
-        pedidos:Array<Pedido>){}
+    constructor(public id:number,
+        public capacidad:number,
+        public ocupada:boolean,
+        public activo:boolean,
+        public empleadoID:number,
+        public pedidos:Array<Pedido>){}
 
     public static createFromJsonObject(jsonObject:any):Mesa
     {
