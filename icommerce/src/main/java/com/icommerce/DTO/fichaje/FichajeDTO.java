@@ -3,6 +3,7 @@ package com.icommerce.DTO.fichaje;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.icommerce.DTO.empleado.EmpleadoDTO;
 
 import lombok.Data;
 
@@ -15,5 +16,5 @@ public class FichajeDTO {
 	private Boolean activo;
 	@JsonFormat(pattern="dd-MM-yy HH:mm:ss")
 	private Date horaSalida;
-	private Long empleadoID;
+	private EmpleadoDTO empleado;
 }

@@ -1,9 +1,92 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>fichajes</ion-title>
+    <!--Waves Container-->
+    <div class="header">
+      <div>
+        <ion-buttons>
+          <ion-menu-button menu="empleado" slot="start"></ion-menu-button>
+          <ion-title style="margin-left: 12%;">Fichajes</ion-title>
+          <ion-button (click)="anadirFichaje(null)" slot="end">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        
+        <ion-buttons slot="end">
+          
+        </ion-buttons>
+        
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+          
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="parallax">
+            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+          
+        </svg>
+      </div>
+      <!--Waves end-->
+
+    </div>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <ion-card *ngFor="let fichaje of fichajes" class="cardContentStyle">
+    <div *ngIf="fichaje.activo || (!fichaje.activo && !activos)">
+      <ion-card-header *ngIf="fichaje.activo" class="headerCardActivada">
+        <ion-row>
+          <ion-col size="6">
+            <p style="color: black; font-size: small;">{{fichaje.horaEntrada}}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p style="color: black; font-size: small;">{{fichaje.horaSalida}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-header *ngIf="!fichaje.activo" class="headerCardDesactivada">
+        <ion-row>
+          <ion-col size="6">
+            <p style="color: white; font-size: small;">{{fichaje.horaEntrada}}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p style="color: white; font-size: small;">{{fichaje.horaSalida}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-content style="background-color: white;">
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon name="text-outline" *ngIf="fichaje.empleado != null"></ion-icon><p class="textoInfo" *ngIf="fichaje.empleado != null">{{fichaje.empleado.usuario}}</p>
+            <ion-icon name="text-outline" *ngIf="fichaje.empleado == null"></ion-icon><p class="textoInfo" *ngIf="fichaje.empleado == null">Sin empleado</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="anadirFichaje(fichaje)" expand="full">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button (click)="deleteFichaje(fichaje)" expand="full">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-content>
+    </div>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="mostrarActivos()">
+      <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
+      <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

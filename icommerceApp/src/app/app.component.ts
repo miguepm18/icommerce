@@ -30,6 +30,16 @@ export class AppComponent {
     this.cliente=null;
     
   }
+
+  homePage(){
+    if(this.empleado==null && this.cliente!=null){
+      this.navController.navigateRoot("/home-cliente/" + this.cliente.id);
+    }else{
+      this.navController.navigateRoot("/home-empleado/" + this.empleado.id);
+    }
+    this.menu.close('empleado');
+  }
+
   empleadosPage(){
     this.navController.navigateForward("/empleados");
     this.menu.close('empleado');

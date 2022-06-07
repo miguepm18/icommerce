@@ -78,6 +78,10 @@ const routes: Routes = [
     path: 'crear-mesa',
     loadChildren: () => import('./modales/mesas/crear-mesa/crear-mesa.module').then( m => m.CrearMesaPageModule)
   },
+  {
+    path: 'crear-fichaje',
+    loadChildren: () => import('./modales/fichajes/crear-fichaje/crear-fichaje.module').then( m => m.CrearFichajePageModule)
+  },
 
 
 ];

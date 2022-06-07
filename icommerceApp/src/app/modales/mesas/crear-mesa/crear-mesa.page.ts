@@ -6,6 +6,7 @@ import { Mesa } from 'src/app/modelo/Mesa';
 import { Pedido } from 'src/app/modelo/Pedido';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 
+
 @Component({
   selector: 'app-crear-mesa',
   templateUrl: './crear-mesa.page.html',
@@ -14,48 +15,20 @@ import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 export class CrearMesaPage implements OnInit {
 
   validations_form: FormGroup;
-  empleadoAsignado: Empleado;
-  empleados: Array<Empleado>;
+  
   
   @Input() public mesa: Mesa;
+  @Input() public empleados:Array<Empleado>;
   
 
-  constructor(private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) {
-    this.empleados = new Array<Empleado>();
-    this.empleadoAsignado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    this.apiService.getEmpleados()
-      .then((respuesta: any) => {
-        respuesta.forEach(empleadoJson => {
-          let empleado: Empleado = Empleado.createFromJsonObject(empleadoJson);
-          this.empleados.push(empleado);
-        });
-      });
-
-    
+  constructor(private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) {      
   }
 
-  
-
   ngOnInit() {
-
-    if (this.mesa!=null && this.mesa.empleadoID != null) {
-      this.apiService.getEmpleadoId(this.mesa.empleadoID)
-        .then((respuesta: any) => {
-          this.empleadoAsignado = Empleado.createFromJsonObject(respuesta);
-        });
-    }
-
-    let empleadosAux: Array<Empleado> = new Array<Empleado>();
-    this.empleados.forEach(empleado => {
-      if (!empleado.esAdministrador && !empleado.esRepartidor) {
-        empleadosAux.push(empleado);
-      }
-    });
-    this.empleados = empleadosAux;
-
+    console.log(this.empleados);
+    
     if (this.mesa != null) {
       if (this.mesa.empleadoID != null) {
-        
         this.validations_form = this.formBuilder.group({
           activo: new FormControl(this.mesa.activo, Validators.compose([
             Validators.required
@@ -66,7 +39,7 @@ export class CrearMesaPage implements OnInit {
           ocupada: new FormControl(this.mesa.ocupada, Validators.compose([
             Validators.required
           ])),
-          empleadoMesa: new FormControl(this.empleadoAsignado.usuario, Validators.compose([
+          empleadoMesa: new FormControl(this.mesa.empleadoID, Validators.compose([
             Validators.required
           ]))
         });
@@ -103,7 +76,6 @@ export class CrearMesaPage implements OnInit {
         ]))
       });
     }
-
   }
 
   async cerrarModal() {
@@ -112,9 +84,11 @@ export class CrearMesaPage implements OnInit {
 
   onSubmit(values) {
     let mesa: Mesa = Mesa.createFromJsonObject(values);
-    let emp: Empleado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);;
+    let emp: Empleado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    console.log(values['empleadoMesa']);
+    
     this.empleados.forEach(empleado => {
-      if (empleado.usuario === values['empleadoMesa']) {
+      if (empleado.id === values['empleadoMesa']) {
         emp = empleado;
       }
     });

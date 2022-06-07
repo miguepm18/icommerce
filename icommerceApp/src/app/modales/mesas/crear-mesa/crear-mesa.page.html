@@ -13,9 +13,8 @@
       <ion-label>Empleado asignado</ion-label>
       <ion-select formControlName="empleadoMesa">
         <ion-select-option value="noAsignado">Sin empleado</ion-select-option>
-        <div *ngFor="let empleado of empleados">
-          <ion-select-option value="{{empleado.usuario}}" *ngIf="!empleado.esAdministrador && !empleado.esRepartidor">{{empleado.usuario}}</ion-select-option>
-        </div>
+        <ion-select-option [value]="empleado.id" *ngFor="let empleado of empleados">{{empleado.usuario}}
+        </ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -30,7 +29,8 @@
       <ion-label position="floating" color="primary">Ocupada</ion-label>
       <ion-checkbox color="primary" formControlName="ocupada"></ion-checkbox>
     </ion-item>
-    <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">Aceptar</ion-button>
+    <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">
+      Aceptar</ion-button>
   </form>
- 
+
 </ion-content>

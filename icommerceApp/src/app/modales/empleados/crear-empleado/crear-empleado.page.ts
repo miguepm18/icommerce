@@ -120,7 +120,6 @@ export class CrearEmpleadoPage implements OnInit {
     if (this.empleado == null) {
       empleado.pedidos = new Array<Pedido>();
       empleado.mesas = new Array<Mesa>();
-      empleado.fichajes = new Array<Fichaje>();
     }
     if (this.empleado == null) {
       this.apiService.registrarEmpleado(empleado)

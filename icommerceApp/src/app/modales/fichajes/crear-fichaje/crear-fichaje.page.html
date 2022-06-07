@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()">CLOSE</ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="fichaje==null">Nuevo fichaje</ion-title>
+    <ion-title *ngIf="fichaje!=null">Editar fichaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="form-content">
+  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+    <ion-item>
+      <ion-label>Empleado asignado</ion-label>
+      <ion-select formControlName="empleadoAsignado">
+        <ion-select-option [value]="empleado.id" *ngFor="let empleado of empleados">{{empleado.usuario}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Hora entrada</ion-label>
+      <ion-datetime locale="es-ES" formControlName="horaEntrada" first-day-of-week="1"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Hora salida</ion-label>
+      <ion-datetime locale="es-ES" formControlName="horaSalida" first-day-of-week="1"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Activo</ion-label>
+      <ion-checkbox color="primary" formControlName="activo"></ion-checkbox>
+    </ion-item>
+    <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">
+      Aceptar</ion-button>
+  </form>
+</ion-content>

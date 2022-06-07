@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.icommerce.DTO.fichaje.FichajeDTO;
 import com.icommerce.DTO.fichaje.FichajeDTOConverter;
 import com.icommerce.modelo.Fichaje;
+import com.icommerce.modelo.Mesa;
 import com.icommerce.service.FichajeService;
 
 @CrossOrigin
@@ -71,6 +73,14 @@ public class FichajeController {
 		}else {
 			return ResponseEntity.ok(false);
 		}
+	}
+	
+	@DeleteMapping("/fichajes/borrarFichaje/{id}")
+	public ResponseEntity<?> borrarFichaje(@PathVariable Long id){
+		Fichaje fichaje = this.fichajeService.obtenerFichajeById(id);
+		fichaje.setActivo(false);
+		this.fichajeService.insertarModificarFichaje(fichaje);
+		return ResponseEntity.ok(this.fichajeDTOConverter.convertirAFichajeDTO(fichaje));
 	}
 	
 }

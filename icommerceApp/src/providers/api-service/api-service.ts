@@ -4,6 +4,7 @@ import { Cliente } from 'src/app/modelo/Cliente';
 import { Empleado } from 'src/app/modelo/Empleado';
 import { Menu } from 'src/app/modelo/Menu';
 import { Mesa } from 'src/app/modelo/Mesa';
+import { Fichaje } from 'src/app/modelo/Fichaje';
 
 @Injectable()
 export class ApiServiceProvider {    
@@ -432,4 +433,93 @@ export class ApiServiceProvider {
         return promise;
     }
 
+    //FICHAJES
+
+
+    getFichajes():Promise<Fichaje[]> {
+        let promise = new Promise<Fichaje[]>((resolve, reject) => {
+            this.http.get(this.URL+"fichajes").toPromise()
+                .then((data:any)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+    
+
+    getFichajeId(id:number):Promise<Fichaje> {
+        let promise = new Promise<Fichaje>((resolve, reject) => {
+            this.http.get(this.URL+"fichajes/"+id).toPromise()
+                .then((data:any)=>{
+                    
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Inserta un nuevo empleado en la BD
+    registrarFichaje(fichajeNuevo: Fichaje): Promise<Fichaje> {
+        let promise = new Promise<Fichaje>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            delete fichajeNuevo.id;
+            let datos = JSON.stringify(fichajeNuevo);
+            this.http.post(this.URL + "fichajes/crearFichaje",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Modifica un empleado(No es necesaria la password)
+    modificarFichaje(fichajeEditar: Fichaje): Promise<Fichaje> {
+        let promise = new Promise<Fichaje>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            let datos = JSON.stringify(fichajeEditar);
+            this.http.put(this.URL + "fichajes/modificarFichaje",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Elimina un empleado
+    deleteFichaje(fichajeBorrado: Fichaje): Promise<Fichaje> {
+        let promise = new Promise<Fichaje>((resolve, reject) => {
+            this.http.delete(this.URL + "fichajes/borrarFichaje/"+fichajeBorrado.id).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
 }
+
+
+
+    
+

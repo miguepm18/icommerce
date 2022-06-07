@@ -45,7 +45,7 @@ export class LoginEmpleadoPagePage implements OnInit {
       .then( (respuesta:any)=> {          
           if(!respuesta){
             console.log("Buscando en empleados...");
-            let empleado:Empleado = new Empleado(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null, null, null, null, null);
+            let empleado:Empleado = new Empleado(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null, null, null, null);
             this.apiService.logInEmpleado(empleado)
             .then((respuestaEmp:any)=>{
               console.log(respuestaEmp);

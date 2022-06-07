@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { CrearMesaPage } from '../modales/mesas/crear-mesa/crear-mesa.page';
+import { Empleado } from '../modelo/Empleado';
 import { Mesa } from '../modelo/Mesa';
 
 @Component({
@@ -42,10 +43,23 @@ export class MesasPage implements OnInit {
 
 
   async anadirMesa(mesaSelec: Mesa) {
+    let empleados:Array<Empleado> = new Array<Empleado>();
+    this.apiProvider.getEmpleados()
+      .then((respuesta: any) => {
+        respuesta.forEach(empleadoJson => {
+          let empleado: Empleado = Empleado.createFromJsonObject(empleadoJson);
+          if(!empleado.esAdministrador && !empleado.esRepartidor){
+            empleados.push(empleado);
+          }
+          
+        });
+      });
+
     const modal = await this.modalController.create({
       component: CrearMesaPage,
       componentProps: {
-        'mesa': mesaSelec
+        'mesa': mesaSelec,
+        'empleados': empleados
       }
     });
 

@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FichajesPageRoutingModule } from './fichajes-routing.module';
+import { CrearFichajePageRoutingModule } from './crear-fichaje-routing.module';
 
-import { FichajesPage } from './fichajes.page';
+import { CrearFichajePage } from './crear-fichaje.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FichajesPageRoutingModule,
+    CrearFichajePageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [FichajesPage]
+  declarations: [CrearFichajePage]
 })
-export class FichajesPageModule {}
+export class CrearFichajePageModule {}

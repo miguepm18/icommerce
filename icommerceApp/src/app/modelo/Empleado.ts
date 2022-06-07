@@ -17,10 +17,9 @@ export class Empleado {
         public esRepartidor:boolean,
         public activo:boolean,
         public mesas:Array<Mesa>,
-        public fichajes:Array<Fichaje>,
         public pedidos:Array<Pedido>
         )
-    {  }
+    {}
     
     public static createFromJsonObject(jsonObject:any):Empleado
     {
@@ -37,7 +36,6 @@ export class Empleado {
             jsonObject['esRepartidor'],
             jsonObject['activo'],
             jsonObject['mesas'],
-            jsonObject['fichajes'],
             jsonObject['pedidos']);
             return empleado;
     }
