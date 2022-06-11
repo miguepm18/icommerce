@@ -54,6 +54,16 @@ public class ProductoController {
 		}		
 	}
 	
+	@GetMapping("/productos/numeroProductos")
+	public ResponseEntity<?> obtenerTotalProductos(){
+		List<Producto> productos = this.productoService.obtenerTodosLosProductos();
+		if(productos==null) {
+			return ResponseEntity.notFound().build();
+		}else {
+			return ResponseEntity.ok(productos.size());
+		}		
+	}
+	
 
 	@PostMapping("/productos/crearProducto")
 	public ResponseEntity<?> nuevoProducto(@RequestBody ProductoDTO nuevoProducto){

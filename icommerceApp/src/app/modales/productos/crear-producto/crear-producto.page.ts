@@ -17,7 +17,6 @@ export class CrearProductoPage implements OnInit {
   constructor( private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) { }
 
   ngOnInit() {
-    console.log(this.producto);
     if(this.producto!=null){
       this.validations_form = this.formBuilder.group({
         activo: new FormControl(this.producto.activo, Validators.compose([
@@ -52,9 +51,11 @@ export class CrearProductoPage implements OnInit {
     console.log(values);
     
     let producto: Producto = Producto.createFromJsonObject(values);
+    producto.imagen=this.producto.imagen;
     if(this.producto!=null){
       producto.id=this.producto.id;
     }
+    
     if (this.producto == null) {
       this.apiService.registrarProducto(producto)
         .then((respuesta: any) => {
@@ -85,6 +86,29 @@ export class CrearProductoPage implements OnInit {
     }).then(alertEt => {
       alertEt.present();
     })
+  }
+  uploadImage(event: FileList){
+
+    var file:File=event.item(0);
+
+    var extension = file.name.substr(file.name.lastIndexOf('.') + 1);
+
+    this.apiService.uploadImage(file,this.validations_form.controls['nombre'].value)
+
+    .then( (downloadUrl)=>{
+      
+      
+      this.producto.imagen=downloadUrl;
+      
+      
+    })
+
+    .catch((error)=>{
+
+      console.log(error);
+
+    });
+
   }
 
 }

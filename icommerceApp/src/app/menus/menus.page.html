@@ -87,10 +87,11 @@
           </ion-row>
           <div *ngIf="menu.productos!=''">
             <ion-row *ngFor="let menuProducto of menu.productos">
-              <p style="font-size: 80%; align-items: center;">
-                {{menuProducto.producto.nombre}}...{{menuProducto.producto.precio}}€</p>
+              <ion-col size="12">
+                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio}}€</p>
+              </ion-col>
             </ion-row>
-            <h2 class="precio" style="color: white; font-size: large;">Precio.....{{menu.precioTotal}}€</h2>
+            <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal}}</h2>
           </div>
           <div *ngIf="menu.productos==''">
             <p style="text-align: center;">Sin productos asignados</p>

@@ -21,6 +21,15 @@
       <ion-label position="floating" color="primary">Activo</ion-label>
       <ion-checkbox color="primary" formControlName="activo"></ion-checkbox>
     </ion-item>
+    <ion-item *ngIf="producto!=null">
+      <ion-avatar>
+        <img [src]="producto.imagen">
+      </ion-avatar>
+    </ion-item>
+    <ion-item>
+      <p>Selecciona una imagen:</p>
+      <input type="file" (change)="uploadImage($event.target.files)"/>
+    </ion-item>
     <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">Aceptar</ion-button>
   </form>
 

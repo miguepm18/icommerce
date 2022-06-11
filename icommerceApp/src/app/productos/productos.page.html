@@ -37,24 +37,29 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let producto of productos" class="cardContentStyle">
+  <ion-card *ngFor="let producto of productos">
     <div *ngIf="producto.activo || (!producto.activo && !activos)">
-      <ion-card-header *ngIf="producto.activo" class="headerCardActivada">
-        <p style="color: black; font-size: small;">{{producto.id}}</p>
-      </ion-card-header>
-      <ion-card-header *ngIf="!producto.activo" class="headerCardDesactivada">
-        <p style="color: white; font-size: small;">{{producto.id}}</p>
-      </ion-card-header>
       <ion-card-content style="background-color: white;">
         <ion-row>
           <ion-col size="6">
-            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{producto.nombre}}</p> 
+            <ion-avatar>
+              <img [src]="producto.imagen">
+            </ion-avatar>
+            
           </ion-col>
           <ion-col size="6">
-            <ion-icon name="logo-euro"></ion-icon><p class="textoInfo">{{producto.precio}}</p> 
+            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{producto.nombre}}</p>  
           </ion-col>
         </ion-row>
         <ion-row>
+          <ion-col size="6">
+            
+          </ion-col>
+          <ion-col size="6">
+            <p class="textoInfo">{{producto.precio}}</p><ion-icon name="logo-euro"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="empleadoActual.esAdministrador">
           <ion-col size="6">
             <ion-button (click)="anadirProducto(producto)" expand="full" *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
               <ion-icon name="create-outline"></ion-icon>

@@ -7,15 +7,99 @@ import { Mesa } from 'src/app/modelo/Mesa';
 import { Fichaje } from 'src/app/modelo/Fichaje';
 import { Producto } from 'src/app/modelo/Producto';
 import { Pedido } from 'src/app/modelo/Pedido';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable()
 export class ApiServiceProvider {    
-    private URL="http://localhost:8080/"; //LOCAL
-    //private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
+    //private URL="http://localhost:8080/"; //LOCAL
+    private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
 
-    constructor(public http: HttpClient){
+    constructor(public http: HttpClient, private afStorage: AngularFireStorage){
 
     }
+
+    //FIRESTORE STORAGE
+    uploadImage(file: File, nombre:string):Promise<string> {
+
+        var promise:Promise<string> = new Promise<string>( (resolve, reject)=>{
+      
+          //Se comprueba que el tipo del fichero pertenece a un tipo imagen
+      
+          if (file.type.split('/')[0] !== 'image') { 
+      
+            console.log('File type is not supported!')
+      
+            reject("El fichero no es de tipo imagen");
+      
+          }
+      
+          //se calcula el path dentro del storage de firebase
+      
+          //se guarda dentro de una carpeta avatar
+      
+          //el nombre del fichero es igual al id del alumno precedido de la hora dada por getTime 
+          
+          const fileStoragePath = `productosBackground/` + nombre;
+      
+      
+      
+          // Image reference
+      
+          const imageRef = this.afStorage.ref(fileStoragePath);
+      
+      
+      
+          // File upload task
+      
+          this.afStorage.upload(fileStoragePath, file)
+      
+          .then((data)=>{
+      
+            imageRef.getDownloadURL().subscribe(resp=>{
+      
+                resolve(resp);
+      
+            });
+      
+          })
+      
+          .catch((error)=>{
+      
+                reject(error);
+      
+          });
+      
+        });
+      
+        return(promise);  
+      
+      }//end_uploadImage
+
+
+      removeImage(imageUrl:string):Promise<string> {
+
+        var promise:Promise<string> = new Promise<string>( (resolve, reject)=>{
+      
+          var imageRef = this.afStorage.refFromURL(imageUrl);
+      
+          imageRef.delete().subscribe(resp=>{
+      
+            resolve;
+      
+          },
+      
+          error => {
+      
+            reject(error);
+      
+          });
+      
+        });
+      
+        return(promise);  
+      
+      
+      }//end_uploadImage
 
     //CLIENTES
 
@@ -522,6 +606,19 @@ export class ApiServiceProvider {
         return promise;
     }
     //PRODUCTOS
+
+    getNumeroDeProductos():Promise<number> {
+        let promise = new Promise<number>((resolve, reject) => {
+            this.http.get(this.URL+"productos/numeroProductos").toPromise()
+                .then((data:any)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
 
     getProductos():Promise<Producto[]> {
         let promise = new Promise<Producto[]>((resolve, reject) => {
