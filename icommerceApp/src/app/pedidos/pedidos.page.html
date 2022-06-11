@@ -6,18 +6,15 @@
         <ion-buttons>
           <ion-menu-button menu="empleado" slot="start"></ion-menu-button>
           <ion-title>Pedidos</ion-title>
-          <ion-button (click)="anadirPedido(null)" slot="end">
-            <ion-icon name="add-circle-outline"></ion-icon>
-          </ion-button>
         </ion-buttons>
-        
+
         <ion-buttons slot="end">
-          
+
         </ion-buttons>
-        
+
         <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-          
+
           <defs>
             <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
           </defs>
@@ -27,7 +24,7 @@
             <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
             <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
           </g>
-          
+
         </svg>
       </div>
       <!--Waves end-->
@@ -40,70 +37,86 @@
   <ion-card *ngFor="let pedido of pedidos" class="cardContentStyle">
     <div *ngIf="pedido.activo || (!pedido.activo && !activos)">
       <!--PEDIDO ONLINE-->
-      <ion-card-header *ngIf="pedido.activo && pedido.tipo=='online'" class="headerCardActivada">
-        <p>
-          <ion-chip slot="end">
-            <ion-icon name="bag-handle-sharp"></ion-icon>
-            <ion-label>{{pedido.id}}</ion-label>
-          </ion-chip>
-        </p>
-      </ion-card-header>
-      <!--PEDIDO TIENDA-->
-      <ion-card-header *ngIf="pedido.activo && pedido.tipo=='tienda'" class="headerCardActivada">
+      <ion-card-header *ngIf="pedido.activo && pedido.tipo=='online'" class="headerCardOnline">
         <ion-row>
-          <ion-col size="6">
-            <p>
-              <ion-chip slot="end">
-                <i class="material-icons" style="width: 15%;">table chart</i>
-                <ion-label>{{pedido.mesaID}}</ion-label>
-              </ion-chip>
-            </p>
-          </ion-col>
-          <ion-col size="6">
-          </ion-col>
-        </ion-row>
-      </ion-card-header>
-      <!--Desactivado-->
-      <ion-card-header *ngIf="!pedido.activo" class="headerCardDesactivada">
-        <p style="color: white; font-size: small;">{{pedido.id}}</p>
-      </ion-card-header>
-      <ion-card-content style="background-color: white;">
-        <ion-row>
-          <ion-col size="6">
-            <p>
-              <ion-chip>
-                <ion-icon name="planet-sharp" *ngIf="pedido.tipo=='online'"></ion-icon>
-                <ion-icon name="briefcase-sharp" *ngIf="pedido.tipo=='tienda'"></ion-icon>
-                <ion-label *ngIf="pedido.tipo=='online'">{{pedido.cliente.usuario}}</ion-label>
-                <ion-label *ngIf="pedido.tipo=='tienda'">{{pedido.empleado.id}}</ion-label>
-              </ion-chip>
-            </p>
-          </ion-col>
           <ion-col size="6">
             
           </ion-col>
+          <ion-col size="6">
+            <ion-avatar style="margin-left: 30%;">
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/PedidoOnlineIcon.png?alt=media&token=5f1b6100-ed18-461e-ab64-5146861ac1eb">
+            </ion-avatar>
+          </ion-col>
+        </ion-row>
+
+
+      </ion-card-header>
+      <!--PEDIDO TIENDA-->
+      <ion-card-header *ngIf="pedido.tipo=='tienda'" class="headerCardTienda">
+        <ion-row>
+          <ion-col size="6">
+
+          </ion-col>
+          <ion-col size="6">
+            <ion-avatar style="margin-left: 30%;">
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/IconoPedidoEnTienda.png?alt=media&token=4fee903c-2519-4a13-bb21-9898bc1e2c89">
+            </ion-avatar>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <!--CONTENIDO ONLINE-->
+      <ion-card-content style="background-color: white;" *ngIf="pedido.tipo=='online'">
+        <ion-row>
+          <ion-col size="6">
+            <i class="material-icons" style="width: 15%;">local_mall</i><span style="margin-left: 5%; margin-bottom: 5%;">{{pedido.id}}</span>
+          </ion-col>
+          <ion-col size="6">
+            <ion-icon name="planet-outline"></ion-icon><span style="margin-left: 5%;">{{pedido.tipo}}</span>
+          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6">
-            <ion-button (click)="anadirPedido(pedido)" expand="full">
-              <ion-icon name="create-outline"></ion-icon>
-            </ion-button>
+            <ion-icon name="arrow-forward-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>{{pedido.horaEntrada}}</span>
           </ion-col>
           <ion-col size="6">
-            <ion-button (click)="deletePedido(pedido)" expand="full">
-              <ion-icon name="trash-outline"></ion-icon>
-            </ion-button>
+            <ion-icon name="arrow-back-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>{{pedido.horaSalida}}</span>
           </ion-col>
         </ion-row>
-        
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">{{pedido.estado}}</span>
+          </ion-col>
+          <ion-col size="6">
+            {{pedido.precio | currency:'EUR' }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="fast-food"></ion-icon><span style="margin-left: 5%;">{{pedido.productos.length}}</span>
+          </ion-col>
+          <ion-col size="6">
+            <ion-icon name="person"></ion-icon><span>{{pedido.cliente.usuario}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-icon name="person-circle"></ion-icon>Empleado repartidor: {{pedido.empleado.usuario}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+      <!--CONTENIDO TIENDA-->
+      <ion-card-content style="background-color: white;" *ngIf="pedido.tipo=='tienda'">
+        <ion-row>
+          <ion-col size="6">
+            <ion-icon name="fast-food"></ion-icon>
+          </ion-col>
+          <ion-col size="6">
+
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </div>
   </ion-card>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="mostrarActivos()">
-      <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
-      <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

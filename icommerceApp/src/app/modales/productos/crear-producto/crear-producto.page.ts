@@ -14,6 +14,7 @@ export class CrearProductoPage implements OnInit {
   @Input() public producto:Producto;
   public imagen:string;
   validations_form: FormGroup;
+  file:File;
   constructor( private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) { }
 
   ngOnInit() {
@@ -48,25 +49,42 @@ export class CrearProductoPage implements OnInit {
   }
 
   onSubmit(values) {
-    console.log(values);
+
     
     let producto: Producto = Producto.createFromJsonObject(values);
-    producto.imagen=this.producto.imagen;
+    
     if(this.producto!=null){
       producto.id=this.producto.id;
     }
+
+    this.apiService.uploadImage(this.file,this.validations_form.controls['nombre'].value)
+
+    .then( (downloadUrl)=>{
+      
+      producto.imagen=downloadUrl;
+      
+      if (this.producto == null) {
+        this.apiService.registrarProducto(producto)
+          .then((respuesta: any) => {
+            this.mostrarAlert("Producto creado correctamente.");
+          });
+      } else {
+        this.apiService.modificarProducto(producto)
+          .then((respuesta: any) => {
+            this.mostrarAlert("Producto modificado correctamente.");
+          });
+      }
+      
+    })
+
+    .catch((error)=>{
+
+      console.log(error);
+
+    });
     
-    if (this.producto == null) {
-      this.apiService.registrarProducto(producto)
-        .then((respuesta: any) => {
-          this.mostrarAlert("Producto creado correctamente.");
-        });
-    } else {
-      this.apiService.modificarProducto(producto)
-        .then((respuesta: any) => {
-          this.mostrarAlert("Producto modificado correctamente.");
-        });
-    }
+    
+    
 
   }
 
@@ -88,26 +106,9 @@ export class CrearProductoPage implements OnInit {
     })
   }
   uploadImage(event: FileList){
+    this.file = event.item(0);
 
-    var file:File=event.item(0);
-
-    var extension = file.name.substr(file.name.lastIndexOf('.') + 1);
-
-    this.apiService.uploadImage(file,this.validations_form.controls['nombre'].value)
-
-    .then( (downloadUrl)=>{
-      
-      
-      this.producto.imagen=downloadUrl;
-      
-      
-    })
-
-    .catch((error)=>{
-
-      console.log(error);
-
-    });
+    
 
   }
 

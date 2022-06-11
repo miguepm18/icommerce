@@ -54,6 +54,8 @@ public class Pedido  {
     @Column(name = "hora_salida")
     private Date horaSalida;
     
+    @Column(name = "precio")
+    private Double precio;
     
     @Column(name = "estado")
     private String estado;

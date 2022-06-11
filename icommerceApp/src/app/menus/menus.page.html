@@ -67,10 +67,10 @@
           <div *ngIf="menu.productos!=''">
             <ion-row *ngFor="let menuProducto of menu.productos">
               <ion-col size="12">
-                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio}}€</p>
+                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio | currency:'EUR'}}</p>
               </ion-col>
             </ion-row>
-            <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal}}</h2>
+            <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal | currency:'EUR'}}</h2>
           </div>
           <div *ngIf="menu.productos==''">
             <p style="text-align: center;">Sin productos asignados</p>
@@ -88,10 +88,10 @@
           <div *ngIf="menu.productos!=''">
             <ion-row *ngFor="let menuProducto of menu.productos">
               <ion-col size="12">
-                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio}}€</p>
+                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio | currency:'EUR'}}</p>
               </ion-col>
             </ion-row>
-            <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal}}</h2>
+            <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal | currency:'EUR'}}</h2>
           </div>
           <div *ngIf="menu.productos==''">
             <p style="text-align: center;">Sin productos asignados</p>

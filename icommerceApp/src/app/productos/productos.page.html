@@ -56,7 +56,7 @@
             
           </ion-col>
           <ion-col size="6">
-            <p class="textoInfo">{{producto.precio}}</p><ion-icon name="logo-euro"></ion-icon>
+            <p class="textoInfo">{{producto.precio | currency:'EUR'}}</p>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="empleadoActual.esAdministrador">

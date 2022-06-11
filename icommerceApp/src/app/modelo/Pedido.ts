@@ -10,6 +10,7 @@ export class Pedido {
         public estado: string,
         public activo: boolean,
         public mesaID: number,
+        public precio: number,
         public productos: Array<PedidoProducto>,
         public cliente: Cliente,
         public empleado: Empleado) { }
@@ -23,6 +24,7 @@ export class Pedido {
             jsonObject['estado'],
             jsonObject['activo'],
             jsonObject['mesaID'],
+            jsonObject['precio'],
             jsonObject['productos'],
             jsonObject['cliente'],
             jsonObject['empleado']);

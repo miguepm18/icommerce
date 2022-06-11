@@ -26,5 +26,6 @@ public class PedidoDTO {
 	private Long mesaID;
 	private List<PedidoProductoDTO> productos;
 	private ClienteDTO cliente;
+	private Double precio;
 	private EmpleadoDTO empleado;
 }
