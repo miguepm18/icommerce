@@ -6,7 +6,12 @@
     background-image: 'https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/iconoMesa.png?alt=media&token=e40bf129-337f-4800-8143-bf438299f576';
     padding-right: 10px;
 }
-
+ion-header{
+  --ion-background-color:#74bbf7;
+}
+ion-content{
+  --ion-background-color: #a0cce4;
+}
 
 
 .header {

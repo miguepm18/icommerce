@@ -22,26 +22,40 @@ export class CrearFichajePage implements OnInit {
   }
 
   ngOnInit() {      
-
     if(this.fichaje!=null){
       if(this.empleado!=null){
-        this.validations_form = this.formBuilder.group({
-          activo: new FormControl(this.fichaje.activo, Validators.compose([
-            Validators.required
-          ])),
-          horaEntrada: new FormControl(this.parsearFechaBD(this.fichaje.horaEntrada), Validators.compose([
-            Validators.required
-          ])),
-          horaSalida: new FormControl(this.parsearFechaBD(this.fichaje.horaSalida), Validators.compose([
-            Validators.required
-          ])),
-          empleadoAsignado: new FormControl(this.fichaje.empleado.id, Validators.compose([
-            Validators.required
-          ])),
-          id: new FormControl(this.fichaje.id, Validators.compose([
-
-          ]))
-        });
+        if(this.fichaje.horaSalida!=null){
+          this.validations_form = this.formBuilder.group({
+            activo: new FormControl(this.fichaje.activo, Validators.compose([
+              Validators.required
+            ])),
+            horaEntrada: new FormControl(this.parsearFechaBD(this.fichaje.horaEntrada), Validators.compose([
+              Validators.required
+            ])),
+            horaSalida: new FormControl(this.parsearFechaBD(this.fichaje.horaSalida), Validators.compose([
+              
+            ])),
+            empleadoAsignado: new FormControl(this.fichaje.empleado.id, Validators.compose([
+              Validators.required
+            ]))
+          });
+        }else{
+          this.validations_form = this.formBuilder.group({
+            activo: new FormControl(this.fichaje.activo, Validators.compose([
+              Validators.required
+            ])),
+            horaEntrada: new FormControl(this.parsearFechaBD(this.fichaje.horaEntrada), Validators.compose([
+              Validators.required
+            ])),
+            horaSalida: new FormControl('', Validators.compose([
+              
+            ])),
+            empleadoAsignado: new FormControl(this.fichaje.empleado.id, Validators.compose([
+              Validators.required
+            ]))
+          });
+        }
+        
       }else{
         this.validations_form = this.formBuilder.group({
           activo: new FormControl(this.fichaje.activo, Validators.compose([
@@ -55,9 +69,6 @@ export class CrearFichajePage implements OnInit {
           ])),
           empleadoAsignado: new FormControl('', Validators.compose([
             Validators.required
-          ])),
-          id: new FormControl(this.fichaje.id, Validators.compose([
-
           ]))
         });
       }
@@ -87,7 +98,10 @@ export class CrearFichajePage implements OnInit {
 
   onSubmit(values) {
     values['horaEntrada'] = this.parsearFechaDatetime(values['horaEntrada']);
-    values['horaSalida'] = this.parsearFechaDatetime(values['horaSalida']);
+    if(values['horaSalida']!=''){
+      values['horaSalida'] = this.parsearFechaDatetime(values['horaSalida']);
+    }
+    
     let ind:number = this.empleados.findIndex(x=> x.id==values['empleadoAsignado']);
     let fichaje: Fichaje = Fichaje.createFromJsonObject(values);
     if(ind!=-1){

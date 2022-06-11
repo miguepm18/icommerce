@@ -1,3 +1,4 @@
+import { Empleado } from "./Empleado";
 import { Pedido } from "./Pedido";
 
 export class Mesa{
@@ -5,8 +6,9 @@ export class Mesa{
         public capacidad:number,
         public ocupada:boolean,
         public activo:boolean,
-        public empleadoID:number,
-        public pedidos:Array<Pedido>){}
+        public empleado:Empleado,
+        public pedidos:Array<Pedido>,
+        public cuenta:number){}
 
     public static createFromJsonObject(jsonObject:any):Mesa
     {
@@ -14,8 +16,9 @@ export class Mesa{
         jsonObject['capacidad'],
         jsonObject['ocupada'],
         jsonObject['activo'],
-        jsonObject['empleadoID'],
-        jsonObject['pedidos']);
+        jsonObject['empleado'],
+        jsonObject['pedidos'],
+        jsonObject['cuenta']);
         return mesa;
     }
 }

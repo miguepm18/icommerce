@@ -17,18 +17,19 @@ export class CrearMesaPage implements OnInit {
   validations_form: FormGroup;
   
   
-  @Input() public mesa: Mesa;
-  @Input() public empleados:Array<Empleado>;
+  @Input() mesa: Mesa;
+  @Input() empleados:Array<Empleado>;
   
 
   constructor(private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) {      
+    
   }
 
   ngOnInit() {
     console.log(this.empleados);
     
     if (this.mesa != null) {
-      if (this.mesa.empleadoID != null) {
+      if (this.mesa.empleado != null) {
         this.validations_form = this.formBuilder.group({
           activo: new FormControl(this.mesa.activo, Validators.compose([
             Validators.required
@@ -39,7 +40,7 @@ export class CrearMesaPage implements OnInit {
           ocupada: new FormControl(this.mesa.ocupada, Validators.compose([
             Validators.required
           ])),
-          empleadoMesa: new FormControl(this.mesa.empleadoID, Validators.compose([
+          empleadoMesa: new FormControl(this.mesa.empleado.id, Validators.compose([
             Validators.required
           ]))
         });
@@ -84,7 +85,7 @@ export class CrearMesaPage implements OnInit {
 
   onSubmit(values) {
     let mesa: Mesa = Mesa.createFromJsonObject(values);
-    let emp: Empleado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    let emp: Empleado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null);
     console.log(values['empleadoMesa']);
     
     this.empleados.forEach(empleado => {
@@ -92,12 +93,12 @@ export class CrearMesaPage implements OnInit {
         emp = empleado;
       }
     });
-    mesa.empleadoID = emp.id;
+    mesa.empleado = emp;
     if (this.mesa == null) {
       mesa.pedidos = new Array<Pedido>();
     }
     if (this.mesa == null && values['empleadoMesa'] === "noAsignado") {
-      delete this.mesa.empleadoID
+      delete this.mesa.empleado
     }
     if (this.mesa == null) {
       this.apiService.registrarMesa(mesa)

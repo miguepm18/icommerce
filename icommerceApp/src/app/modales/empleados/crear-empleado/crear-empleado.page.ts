@@ -117,10 +117,7 @@ export class CrearEmpleadoPage implements OnInit {
       empleado.esAdministrador = false;
       empleado.esRepartidor = false;
     }
-    if (this.empleado == null) {
-      empleado.pedidos = new Array<Pedido>();
-      empleado.mesas = new Array<Mesa>();
-    }
+    
     if (this.empleado == null) {
       this.apiService.registrarEmpleado(empleado)
         .then((respuesta: any) => {

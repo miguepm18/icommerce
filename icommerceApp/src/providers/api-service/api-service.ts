@@ -5,6 +5,8 @@ import { Empleado } from 'src/app/modelo/Empleado';
 import { Menu } from 'src/app/modelo/Menu';
 import { Mesa } from 'src/app/modelo/Mesa';
 import { Fichaje } from 'src/app/modelo/Fichaje';
+import { Producto } from 'src/app/modelo/Producto';
+import { Pedido } from 'src/app/modelo/Pedido';
 
 @Injectable()
 export class ApiServiceProvider {    
@@ -212,6 +214,8 @@ export class ApiServiceProvider {
         });
         return promise;
     }
+
+
 
     //Inserta un nuevo empleado en la BD
     registrarEmpleado(empleadoNuevo: Empleado): Promise<Empleado> {
@@ -507,6 +511,177 @@ export class ApiServiceProvider {
     deleteFichaje(fichajeBorrado: Fichaje): Promise<Fichaje> {
         let promise = new Promise<Fichaje>((resolve, reject) => {
             this.http.delete(this.URL + "fichajes/borrarFichaje/"+fichajeBorrado.id).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+    //PRODUCTOS
+
+    getProductos():Promise<Producto[]> {
+        let promise = new Promise<Producto[]>((resolve, reject) => {
+            this.http.get(this.URL+"productos").toPromise()
+                .then((data:any)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+    
+
+    getProductoId(id:number):Promise<Producto> {
+        let promise = new Promise<Producto>((resolve, reject) => {
+            this.http.get(this.URL+"productos/"+id).toPromise()
+                .then((data:any)=>{
+                    
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Inserta un nuevo empleado en la BD
+    registrarProducto(productoNuevo: Producto): Promise<Producto> {
+        let promise = new Promise<Producto>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            delete productoNuevo.id;
+            let datos = JSON.stringify(productoNuevo);
+            this.http.post(this.URL + "productos/crearProducto",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Modifica un empleado(No es necesaria la password)
+    modificarProducto(productoEditar: Producto): Promise<Producto> {
+        let promise = new Promise<Producto>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            let datos = JSON.stringify(productoEditar);
+            this.http.put(this.URL + "productos/modificarProducto",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Elimina un empleado
+    deleteProducto(productoBorrado: Producto): Promise<Producto> {
+        console.log(productoBorrado.id);
+        
+        let promise = new Promise<Producto>((resolve, reject) => {
+            this.http.delete(this.URL + "productos/borrarProducto/"+productoBorrado.id).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //PEDIDOS
+
+    getPedidos():Promise<Pedido[]> {
+        let promise = new Promise<Pedido[]>((resolve, reject) => {
+            this.http.get(this.URL+"pedidos").toPromise()
+                .then((data:any)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+    
+
+    getPedidoId(id:number):Promise<Pedido> {
+        let promise = new Promise<Pedido>((resolve, reject) => {
+            this.http.get(this.URL+"pedidos/"+id).toPromise()
+                .then((data:any)=>{
+                    
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Inserta un nuevo empleado en la BD
+    registrarPedido(pedidoNuevo: Pedido): Promise<Pedido> {
+        let promise = new Promise<Pedido>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            delete pedidoNuevo.id;
+            let datos = JSON.stringify(pedidoNuevo);
+            this.http.post(this.URL + "pedidos/crearPedido",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Modifica un empleado(No es necesaria la password)
+    modificarPedido(pedidoEditar: Pedido): Promise<Pedido> {
+        let promise = new Promise<Pedido>((resolve, reject) => {
+            var header = { "headers": { "Content-Type": "application/json" } };
+            let datos = JSON.stringify(pedidoEditar);
+            this.http.put(this.URL + "pedidos/modificarPedido",
+               datos,
+                header).toPromise().then(
+                    (data: any) => {
+                        resolve(data);
+                    }
+                )
+                .catch((error: Error) => {
+                   reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    //Elimina un empleado
+    deletePedido(pedidoBorrado: Pedido): Promise<Pedido> {
+        
+        
+        let promise = new Promise<Pedido>((resolve, reject) => {
+            this.http.delete(this.URL + "pedidos/borrarPedido/"+pedidoBorrado.id).toPromise().then(
                     (data: any) => {
                         resolve(data);
                     }

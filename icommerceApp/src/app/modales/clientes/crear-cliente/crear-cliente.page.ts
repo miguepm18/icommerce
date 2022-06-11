@@ -90,9 +90,6 @@ export class CrearClientePage implements OnInit {
   onSubmit(values) {
     let cliente: Cliente = Cliente.createFromJsonObject(values);
     if (this.cliente == null) {
-      cliente.pedidos = new Array<Pedido>();
-    }
-    if (this.cliente == null) {
       this.apiService.registrarCliente(cliente)
         .then((respuesta: any) => {
           this.mostrarAlert("Cliente creado correctamente.");

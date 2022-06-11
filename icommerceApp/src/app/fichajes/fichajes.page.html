@@ -5,19 +5,20 @@
       <div>
         <ion-buttons>
           <ion-menu-button menu="empleado" slot="start"></ion-menu-button>
-          <ion-title style="margin-left: 12%;">Fichajes</ion-title>
-          <ion-button (click)="anadirFichaje(null)" slot="end">
+          <ion-title>Fichajes</ion-title>
+          <ion-button (click)="anadirFichaje(null)" slot="end"
+            *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
             <ion-icon name="add-circle-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
-        
+
         <ion-buttons slot="end">
-          
+
         </ion-buttons>
-        
+
         <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-          
+
           <defs>
             <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
           </defs>
@@ -27,7 +28,7 @@
             <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
             <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
           </g>
-          
+
         </svg>
       </div>
       <!--Waves end-->
@@ -38,46 +39,80 @@
 <ion-content>
   <ion-card *ngFor="let fichaje of fichajes" class="cardContentStyle">
     <div *ngIf="fichaje.activo || (!fichaje.activo && !activos)">
-      <ion-card-header *ngIf="fichaje.activo" class="headerCardActivada">
+      <!--FICHAJE ABIERTO Y ACTIVO-->
+      <ion-card-content class="cardContenidoFichajeAbierto" *ngIf="fichaje.horaSalida==null && fichaje.activo">
         <ion-row>
-          <ion-col size="6">
-            <p style="color: black; font-size: small;">{{fichaje.horaEntrada}}</p>
+          <ion-col size="4">
+            <p *ngIf="!empleadoActual.esAdministrador" class="textoInfo" style="color: black; margin-top: 5%;">{{fichaje.empleado.usuario}}</p>
+            <p *ngIf="empleadoActual.esAdministrador" class="textoInfo">{{fichaje.empleado.usuario}}</p>
           </ion-col>
-          <ion-col size="6">
-            <p style="color: black; font-size: small;">{{fichaje.horaSalida}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-card-header>
-      <ion-card-header *ngIf="!fichaje.activo" class="headerCardDesactivada">
-        <ion-row>
-          <ion-col size="6">
-            <p style="color: white; font-size: small;">{{fichaje.horaEntrada}}</p>
-          </ion-col>
-          <ion-col size="6">
-            <p style="color: white; font-size: small;">{{fichaje.horaSalida}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-card-header>
-      <ion-card-content style="background-color: white;">
-        <ion-row>
-          <ion-col size="12">
-            <ion-icon name="text-outline" *ngIf="fichaje.empleado != null"></ion-icon><p class="textoInfo" *ngIf="fichaje.empleado != null">{{fichaje.empleado.usuario}}</p>
-            <ion-icon name="text-outline" *ngIf="fichaje.empleado == null"></ion-icon><p class="textoInfo" *ngIf="fichaje.empleado == null">Sin empleado</p>
+          <ion-col size="8">
+            <p style="margin-left: 25%;">{{fichaje.horaEntrada}}</p>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="6">
-            <ion-button (click)="anadirFichaje(fichaje)" expand="full">
+          <ion-col size="4">
+            <ion-button color="secondary" (click)="anadirFichaje(fichaje)" expand="full"
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>
+            <ion-button color="secondary" (click)="deleteFichaje(fichaje)" expand="full"
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
           </ion-col>
-          <ion-col size="6">
-            <ion-button (click)="deleteFichaje(fichaje)" expand="full">
+          <ion-col size="8">
+
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+      <!--FICHAJE CERRADO Y ACTIVO-->
+      <ion-card-content class="cardContenidoFichajeCerrado" *ngIf="fichaje.horaSalida!=null && fichaje.activo">
+        <ion-row>
+          <ion-col size="4">
+            <p *ngIf="!empleadoActual.esAdministrador" class="textoInfo" style="color: black; margin-top: 15%;">{{fichaje.empleado.usuario}}</p>
+            <p *ngIf="empleadoActual.esAdministrador" class="textoInfo">{{fichaje.empleado.usuario}}</p>
+          </ion-col>
+          <ion-col size="8">
+            <p style="margin-left: 25%;">{{fichaje.horaEntrada}}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+            <ion-button color="danger" (click)="anadirFichaje(fichaje)" expand="full"
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="deleteFichaje(fichaje)" expand="full"
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="8">
+            <p style="margin-left: 25%;">{{fichaje.horaSalida}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+      <!--FICHAJE DESACTIVADO-->
+      <ion-card-content class="cardContenidoFichajeDesactivado" *ngIf="!fichaje.activo">
+        <ion-row>
+          <ion-col size="4">
+            <p *ngIf="!empleadoActual.esAdministrador" class="textoInfo" style="color: black; margin-top: 5%;">{{fichaje.empleado.usuario}}</p>
+            <p *ngIf="empleadoActual.esAdministrador" class="textoInfo">{{fichaje.empleado.usuario}}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+            <ion-button color="medium" (click)="anadirFichaje(fichaje)" expand="full"
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button color="medium" (click)="deleteFichaje(fichaje)" expand="full"
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>
-        
       </ion-card-content>
     </div>
   </ion-card>

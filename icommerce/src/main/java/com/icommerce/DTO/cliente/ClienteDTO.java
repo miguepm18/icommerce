@@ -23,5 +23,4 @@ public class ClienteDTO {
     @JsonFormat(pattern="MM-yy")
     public Date fechaCaducidadCuenta;
     public Boolean activo;
-    List<PedidoDTO> pedidos;
 }

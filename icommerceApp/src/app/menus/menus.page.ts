@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { AppComponent } from '../app.component';
 import { CrearMenuPage } from '../modales/menus/crear-menu/crear-menu.page';
+import { Cliente } from '../modelo/Cliente';
+import { Empleado } from '../modelo/Empleado';
 import { Menu } from '../modelo/Menu';
 
 @Component({
@@ -13,9 +16,21 @@ export class MenusPage implements OnInit {
 
   menus: Array<Menu>;
   activos:boolean;
-  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController) {
+  clienteActual:Cliente;
+  empleadoActual:Empleado;
+
+  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController, private appComponent:AppComponent) {
     this.menus = new Array<Menu>();
     this.activos=false;
+    if(this.appComponent.cliente!=null){
+      this.clienteActual = appComponent.cliente;
+    }else{
+      this.empleadoActual = appComponent.empleado;
+    }
+    console.log(this.empleadoActual);
+    console.log(this.clienteActual);
+    
+    
    }
 
   ngOnInit() {

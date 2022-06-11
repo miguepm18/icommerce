@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProductosPageRoutingModule } from './productos-routing.module';
+import { CrearPedidoPageRoutingModule } from './crear-pedido-routing.module';
 
-import { ProductosPage } from './productos.page';
+import { CrearPedidoPage } from './crear-pedido.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProductosPageRoutingModule,
+    CrearPedidoPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ProductosPage]
+  declarations: [CrearPedidoPage]
 })
-export class ProductosPageModule {}
+export class CrearPedidoPageModule {}

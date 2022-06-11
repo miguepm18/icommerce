@@ -102,6 +102,8 @@ public class ClienteController {
 	@PutMapping("/clientes/modificarCliente")
 	public ResponseEntity<?> editarCliente(@RequestBody ClienteDTO clienteEditar){
 		Cliente cliente = this.clienteDTOConverter.convertirACliente(clienteEditar);
+		Cliente clienteBD = this.clienteService.obtenerClienteById(cliente.getId());
+		cliente.setPassword(clienteBD.getPassword());
 		if(this.clienteService.obtenerClienteById(cliente.getId())!=null) {
 			Cliente clienteModificado = this.clienteService.insertarEditarCliente(cliente);
 			return ResponseEntity.ok(this.clienteDTOConverter.convertirAClienteDTO(clienteModificado));

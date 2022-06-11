@@ -10,5 +10,4 @@ public class ProductoDTO {
 	private float precio;
 	private String imagen;
 	private Boolean activo;
-	
 }

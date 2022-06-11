@@ -1,6 +1,6 @@
 .headerCardActivada{
     height: min-content;
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/clienteBackground.png?alt=media&token=249a8cbe-98e7-48d1-bff5-61fea642196d');
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/clienteBackground.png?alt=media&token=b62e6453-c658-44e0-aa91-c6771f663d01');
 }
 .headerCardDesactivada{
     height: min-content;
@@ -17,7 +17,7 @@ ion-content{
 }
 .textoInfo{
     white-space: nowrap;
-    text-overflow: ellipsis;
+    text-overflow: initial;
     overflow: hidden;
 }
 

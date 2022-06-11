@@ -24,6 +24,4 @@ public class EmpleadoDTO {
     private Boolean esAdministrador;
     private Boolean esRepartidor;
     private Boolean activo;
-    private List<MesaDTO> mesas;
-    private List<PedidoDTO> pedidos;
 }

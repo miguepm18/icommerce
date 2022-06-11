@@ -1,10 +1,8 @@
 .headerCardActivada{
   height: min-content;
-  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/clienteBackground.png?alt=media&token=249a8cbe-98e7-48d1-bff5-61fea642196d');
 }
 .headerCardDesactivada{
   height: min-content;
-  background-image:url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/desactivadoBackground.jpg?alt=media&token=88758b2e-d819-4f41-b485-9b741ed60b1b')
 }
 ion-header{
   --ion-background-color:#74bbf7;
@@ -12,13 +10,36 @@ ion-header{
 ion-content{
   --ion-background-color: #a0cce4;
 }
-.cardContenido{
+.cardContenidoFichajeAbierto{
   background-color: white;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/fichajeBackgroundActivado.png?alt=media&token=789218cc-dce8-4a6f-8d64-bf1ebca82d1b');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
+.cardContenidoFichajeCerrado{
+  background-color: white;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/fichajeBackgroundCerrado.png?alt=media&token=d3427c87-e161-434f-9898-3e815483210b');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.cardContenidoFichajeDesactivado{
+  background-color: white;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/fichajeBackgroundDesactivado.png?alt=media&token=2d409b22-0745-4723-a143-48c50d062864');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .textoInfo{
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  color: white;
+}
+.textoInfoDesactivada{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: black;
 }
 .header {
     text-align:top;

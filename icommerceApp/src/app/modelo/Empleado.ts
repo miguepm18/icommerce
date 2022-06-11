@@ -15,9 +15,7 @@ export class Empleado {
         public dni:string,
         public esAdministrador:boolean,
         public esRepartidor:boolean,
-        public activo:boolean,
-        public mesas:Array<Mesa>,
-        public pedidos:Array<Pedido>
+        public activo:boolean
         )
     {}
     
@@ -34,9 +32,7 @@ export class Empleado {
             jsonObject['dni'],
             jsonObject['esAdministrador'],
             jsonObject['esRepartidor'],
-            jsonObject['activo'],
-            jsonObject['mesas'],
-            jsonObject['pedidos']);
+            jsonObject['activo']);
             return empleado;
     }
                 

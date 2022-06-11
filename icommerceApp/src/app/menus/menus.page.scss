@@ -1,10 +1,25 @@
 .headerCardActivada{
     height: min-content;
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/clienteBackground.png?alt=media&token=249a8cbe-98e7-48d1-bff5-61fea642196d');
 }
-.headerCardDesactivada{
-    height: min-content;
-    background-image:url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/desactivadoBackground.jpg?alt=media&token=88758b2e-d819-4f41-b485-9b741ed60b1b')
+.contenidoMenuActivo{
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/MenuBackgroundActivado.png?alt=media&token=0931cf3d-1cc4-49a4-9255-48151b2c8117');
+  height: 400px;
+  border:none;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 30px;
+}
+.contenidoMenuDesactivado{
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/MenuBackgroundDesactivado.png?alt=media&token=928e4885-04db-4ecf-a11c-f15fd49f1d2a');
+  height: 430px;
+  border:none;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 30px;
+}
+.precio{
+  margin-top: 30%;
+  text-align: center;
 }
 ion-header{
     --ion-background-color:#74bbf7;
@@ -12,14 +27,8 @@ ion-header{
 ion-content{
     --ion-background-color: #a0cce4;
 }
-.cardContenido{
-    background-color: white;
-}
-.textoInfo{
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
+
+
 
 .header {
     text-align:top;

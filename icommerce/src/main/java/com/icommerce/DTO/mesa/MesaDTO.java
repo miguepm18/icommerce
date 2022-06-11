@@ -2,6 +2,7 @@ package com.icommerce.DTO.mesa;
 
 import java.util.List;
 
+import com.icommerce.DTO.empleado.EmpleadoDTO;
 import com.icommerce.DTO.pedido.PedidoDTO;
 
 import lombok.Data;
@@ -13,6 +14,7 @@ public class MesaDTO {
 	private int capacidad;
 	private Boolean ocupada;
 	private Boolean activo;
-	private Long empleadoID;
+	private EmpleadoDTO empleado;
 	private List<PedidoDTO> pedidos;
+	private Double cuenta;
 }

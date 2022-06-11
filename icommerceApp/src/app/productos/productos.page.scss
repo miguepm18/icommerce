@@ -1,3 +1,25 @@
+.headerCardActivada{
+  height: min-content;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/clienteBackground.png?alt=media&token=249a8cbe-98e7-48d1-bff5-61fea642196d');
+}
+.headerCardDesactivada{
+  height: min-content;
+  background-image:url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/desactivadoBackground.jpg?alt=media&token=88758b2e-d819-4f41-b485-9b741ed60b1b')
+}
+ion-header{
+  --ion-background-color:#74bbf7;
+}
+ion-content{
+  --ion-background-color: #a0cce4;
+}
+.cardContenido{
+  background-color: white;
+}
+.textoInfo{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .header {
     text-align:top;
     display: ruby-text;

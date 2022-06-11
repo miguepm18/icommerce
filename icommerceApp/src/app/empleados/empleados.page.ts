@@ -29,6 +29,8 @@ export class EmpleadosPage implements OnInit {
     this.apiProvider.getEmpleados()
       .then((respuesta: any) => {
         this.empleados= new Array<Empleado>();
+        console.log(respuesta);
+        
         respuesta.forEach(empleadoJson => {
           let empleado = Empleado.createFromJsonObject(empleadoJson);
           this.empleados.push(empleado);

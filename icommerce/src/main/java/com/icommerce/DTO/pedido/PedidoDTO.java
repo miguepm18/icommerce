@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.icommerce.DTO.cliente.ClienteDTO;
+import com.icommerce.DTO.empleado.EmpleadoDTO;
 import com.icommerce.DTO.mesa.MesaDTO;
 import com.icommerce.DTO.pedidoProducto.PedidoProductoDTO;
 
@@ -23,6 +25,6 @@ public class PedidoDTO {
 	private Boolean activo;
 	private Long mesaID;
 	private List<PedidoProductoDTO> productos;
-	private Long clienteID;
-	private Long empleadoID;
+	private ClienteDTO cliente;
+	private EmpleadoDTO empleado;
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { AppComponent } from '../app.component';
 import { CrearMesaPage } from '../modales/mesas/crear-mesa/crear-mesa.page';
+import { Cliente } from '../modelo/Cliente';
 import { Empleado } from '../modelo/Empleado';
 import { Mesa } from '../modelo/Mesa';
 
@@ -14,9 +16,16 @@ export class MesasPage implements OnInit {
 
   mesas: Array<Mesa>;
   activos:boolean;
-  constructor( private apiProvider: ApiServiceProvider, private modalController: ModalController) {
+  clienteActual:Cliente;
+  empleadoActual:Empleado;
+  constructor( private apiProvider: ApiServiceProvider, private modalController: ModalController, private appComponent:AppComponent) {
     this.mesas = new Array<Mesa>();
     this.activos=false;
+    if(this.appComponent.cliente!=null){
+      this.clienteActual=this.appComponent.cliente;
+    }else{
+      this.empleadoActual=this.appComponent.empleado;
+    }
    }
 
   ngOnInit() {

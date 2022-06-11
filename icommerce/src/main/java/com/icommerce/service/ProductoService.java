@@ -24,7 +24,6 @@ public class ProductoService {
     }
     
     public Producto insertarModificarProducto(Producto producto){
-    	producto.setId(null);
         return this.productoRepository.save(producto);
     }
     

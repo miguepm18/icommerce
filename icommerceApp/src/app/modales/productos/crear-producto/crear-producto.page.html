@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()">CLOSE</ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="producto==null">Nuevo producto</ion-title>
+    <ion-title *ngIf="producto!=null">Editar producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="form-content">
+  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item> 
+      <ion-label position="floating" color="primary">Precio</ion-label>
+      <ion-input type="number" formControlName="precio"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Activo</ion-label>
+      <ion-checkbox color="primary" formControlName="activo"></ion-checkbox>
+    </ion-item>
+    <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">Aceptar</ion-button>
+  </form>
+
+</ion-content>

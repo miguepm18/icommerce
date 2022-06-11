@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { AppComponent } from '../app.component';
 import { CrearFichajePage } from '../modales/fichajes/crear-fichaje/crear-fichaje.page';
+import { Cliente } from '../modelo/Cliente';
 import { Empleado } from '../modelo/Empleado';
 import { Fichaje } from '../modelo/Fichaje';
 
@@ -14,10 +16,17 @@ export class FichajesPage implements OnInit {
 
   fichajes: Array<Fichaje>;
   activos:boolean;
+  clienteActual:Cliente;
+  empleadoActual:Empleado;
 
-  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController) { 
+  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController, private appComponent:AppComponent) { 
     this.fichajes = new Array<Fichaje>();
     this.activos=false;
+    if(this.appComponent.cliente!=null){
+      this.clienteActual=this.appComponent.cliente;
+    }else{
+      this.empleadoActual=this.appComponent.empleado;
+    }
   }
 
   ngOnInit() {
@@ -44,42 +53,66 @@ export class FichajesPage implements OnInit {
   }
 
   async anadirFichaje(fichajeSelec: Fichaje) {
-
     let empleados:Array<Empleado> = new Array<Empleado>();
     this.apiProvider.getEmpleados()
       .then((respuesta: any) => {
         respuesta.forEach(empleadoJson => {
           let empleado = Empleado.createFromJsonObject(empleadoJson);
-          empleados.push(empleado);
+          if(empleado.activo && !empleado.esAdministrador){
+            empleados.push(empleado);
+          }
         });
       });
       console.log(empleados);
-      
-    const modal = await this.modalController.create({
-      component: CrearFichajePage,
-      componentProps: {
-        'fichaje': fichajeSelec,
-        'empleado': fichajeSelec.empleado,
-        'empleados': empleados
-      }
-    });
-
-    modal.onWillDismiss().then(dataReturned => {
-      this.apiProvider.getFichajes()
-      .then((respuesta: any) => {
-        this.fichajes= new Array<Fichaje>();
-        respuesta.forEach(fichajeJson => {
-          let fichaje = Fichaje.createFromJsonObject(fichajeJson);
-          this.fichajes.push(fichajeJson);
+    if(fichajeSelec != null){
+      const modal = await this.modalController.create({
+        component: CrearFichajePage,
+        componentProps: {
+          'fichaje': fichajeSelec,
+          'empleado': fichajeSelec.empleado,
+          'empleados': empleados
+        }
+      });
+      modal.onWillDismiss().then(dataReturned => {
+        this.apiProvider.getFichajes()
+        .then((respuesta: any) => {
+          this.fichajes= new Array<Fichaje>();
+          respuesta.forEach(fichajeJson => {
+            let fichaje = Fichaje.createFromJsonObject(fichajeJson);
+            this.fichajes.push(fichajeJson);
+          });
         });
       });
-    });
+  
+      return await modal.present();
+    }else{
+      const modal = await this.modalController.create({
+        component: CrearFichajePage,
+        componentProps: {
+          'fichaje': fichajeSelec,
+          'empleados': empleados
+        }
+      });
+      modal.onWillDismiss().then(dataReturned => {
+        this.apiProvider.getFichajes()
+        .then((respuesta: any) => {
+          this.fichajes= new Array<Fichaje>();
+          respuesta.forEach(fichajeJson => {
+            let fichaje = Fichaje.createFromJsonObject(fichajeJson);
+            this.fichajes.push(fichajeJson);
+          });
+        });
+      });
+  
+      return await modal.present();
+    }
+    
 
-    return await modal.present();
+    
   }
 
   nombreEmpleadoID(idEmpleado:number){
-    let empleado:Empleado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    let empleado:Empleado = new Empleado(null, null, null, null, null, null, null, null, null, null, null, null);
     this.apiProvider.getEmpleadoId(idEmpleado)
         .then((respuesta: any) => {
           empleado = Empleado.createFromJsonObject(respuesta);

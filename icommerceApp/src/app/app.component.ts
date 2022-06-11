@@ -1,4 +1,5 @@
 import { Component, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { StatusBar } from '@capacitor/status-bar';
 import { MenuController, NavController, Platform } from '@ionic/angular';
 import { Cliente } from './modelo/Cliente';
@@ -15,16 +16,21 @@ export class AppComponent {
   public cliente:Cliente;
   public empleado:Empleado;
   
-  constructor(private navController:NavController, private menu:MenuController) {
+  constructor(private navController:NavController, private menu:MenuController, private router:Router) {
     this.cliente=null;
     this.empleado=null;
   }
 
   setCliente(clienteIniciado:Cliente) {
     this.cliente=clienteIniciado;
-    this.empleado=null;    
+    this.empleado=null;
   }
 
+  logOut(){
+    this.cliente=null;
+    this.empleado=null;
+    this.navController.navigateRoot('/login-empleado-page', { animated: true, animationDirection: 'back' });
+  }
   setEmpleado(empleadoIniciado:Empleado) {
     this.empleado=empleadoIniciado;
     this.cliente=null;

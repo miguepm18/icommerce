@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.icommerce.DTO.producto.ProductoDTO;
 import com.icommerce.DTO.producto.ProductoDTOConverter;
+import com.icommerce.modelo.Fichaje;
 import com.icommerce.modelo.Producto;
 import com.icommerce.service.ProductoService;
 
@@ -71,5 +73,13 @@ public class ProductoController {
 		}else {
 			return ResponseEntity.ok(false);
 		}
+	}
+	
+	@DeleteMapping("/productos/borrarProducto/{id}")
+	public ResponseEntity<?> borrarProducto(@PathVariable Long id){
+		Producto producto = this.productoService.obtenerProductoById(id);
+		producto.setActivo(false);
+		this.productoService.insertarModificarProducto(producto);
+		return ResponseEntity.ok(this.productoDTOConverter.convertirAProductoDTO(producto));
 	}
 }

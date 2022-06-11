@@ -44,5 +44,7 @@ public class Menu{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
     private List<MenuProducto> productos;
 
+    @Column(name = "preciototal")
+    private Double precioTotal;
     
 }

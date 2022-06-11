@@ -7,6 +7,7 @@
   
           <ion-title *ngIf="(empleado==null && cliente!=null)">{{cliente.nombre}}</ion-title>
           <ion-label style="margin-left: 8%;" *ngIf="(empleado==null && cliente!=null)">{{cliente.email}}</ion-label>
+          <ion-button slot="end" (click)="logOut()"><ion-icon name="log-out-sharp"></ion-icon></ion-button>
         </ion-toolbar>
 
       

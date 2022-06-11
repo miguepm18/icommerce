@@ -45,6 +45,9 @@ public class Mesa {
     @Column(name = "activo")
     private Boolean activo;
     
+    @Column(name = "cuenta")
+    private Double cuenta;
+    
     @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)
     private List<Pedido> pedidos;
     

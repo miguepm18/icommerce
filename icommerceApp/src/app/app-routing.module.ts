@@ -82,6 +82,14 @@ const routes: Routes = [
     path: 'crear-fichaje',
     loadChildren: () => import('./modales/fichajes/crear-fichaje/crear-fichaje.module').then( m => m.CrearFichajePageModule)
   },
+  {
+    path: 'crear-producto',
+    loadChildren: () => import('./modales/productos/crear-producto/crear-producto.module').then( m => m.CrearProductoPageModule)
+  },
+  {
+    path: 'crear-pedido',
+    loadChildren: () => import('./modales/pedidos/crear-pedido/crear-pedido.module').then( m => m.CrearPedidoPageModule)
+  },
 
 
 ];

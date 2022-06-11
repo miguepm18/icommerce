@@ -15,4 +15,5 @@ public class MenuDTO {
 	private Boolean activo;
 	private String observaciones;
 	private List<MenuProductoDTO> productos;
+	private Double precioTotal;
 }

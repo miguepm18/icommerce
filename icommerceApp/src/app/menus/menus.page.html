@@ -5,19 +5,20 @@
       <div>
         <ion-buttons>
           <ion-menu-button menu="empleado" slot="start"></ion-menu-button>
-          <ion-title style="margin-left: 12%;">Menus</ion-title>
-          <ion-button (click)="anadirMenu(null)" slot="end">
+          <ion-title>Menus</ion-title>
+          <ion-button (click)="anadirMenu(null)" slot="end"
+            *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
             <ion-icon name="add-circle-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
-        
+
         <ion-buttons slot="end">
-          
+
         </ion-buttons>
-        
+
         <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-          
+
           <defs>
             <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
           </defs>
@@ -27,7 +28,7 @@
             <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
             <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
           </g>
-          
+
         </svg>
       </div>
       <!--Waves end-->
@@ -37,36 +38,89 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let menu of menus" class="cardContentStyle">
-    <div *ngIf="menu.activo || (!menu.activo && !activos)">
-      <ion-card-header *ngIf="menu.activo" class="headerCardActivada">
-        <p style="color: black; font-size: small;">{{menu.id}}</p>
-      </ion-card-header>
-      <ion-card-header *ngIf="!menu.activo" class="headerCardDesactivada">
-        <p style="color: white; font-size: small;">{{menu.id}}</p>
-      </ion-card-header>
-      <ion-card-content style="background-color: white;">
+  <ion-card *ngFor="let menu of menus">
+    <div *ngIf="menu.activo">
+      <ion-card-content class="contenidoMenuActivo">
         <ion-row>
           <ion-col size="6">
-            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{menu.nombre}}</p> 
-          </ion-col>
-          <ion-col size="6">
-            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{menu.observaciones}}</p> 
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6">
-            <ion-button (click)="anadirMenu(menu)" expand="full">
+            <ion-button (click)="anadirMenu(menu)" color="none" expand="full" icon-only
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)"
+              style="margin-top: 10%; margin-left: 25%;">
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col size="6">
-            <ion-button (click)="deleteMenu(menu)" expand="full">
+            <ion-button (click)="deleteMenu(menu)" expand="full" color="none" icon-only
+              *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)"
+              style="margin-top: 10%; margin-right: 25%;">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>
-        
+        <!--VISTA ADMIN-->
+        <div *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
+          <ion-row>
+            <ion-col size="12" style="text-align: center;">
+              <p class="textoInfo" style="font-size: large; color: white;">{{menu.nombre}}</p>
+            </ion-col>
+          </ion-row>
+          <div *ngIf="menu.productos!=''">
+            <ion-row *ngFor="let menuProducto of menu.productos">
+              <ion-col size="12">
+                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio}}€</p>
+              </ion-col>
+            </ion-row>
+            <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal}}</h2>
+          </div>
+          <div *ngIf="menu.productos==''">
+            <p style="text-align: center;">Sin productos asignados</p>
+          </div>
+
+        </div>
+        <!--VISTA RESTO DE USUARIOS-->
+        <div
+          *ngIf="(clienteActual!=null && empleadoActual==null) || (clienteActual==null && !empleadoActual.esAdministrador)">
+          <ion-row>
+            <ion-col size="12" style="text-align: center;">
+              <p style="color: white; font-size: large;">{{menu.nombre}}</p>
+            </ion-col>
+          </ion-row>
+          <div *ngIf="menu.productos!=''">
+            <ion-row *ngFor="let menuProducto of menu.productos">
+              <p style="font-size: 80%; align-items: center;">
+                {{menuProducto.producto.nombre}}...{{menuProducto.producto.precio}}€</p>
+            </ion-row>
+            <h2 class="precio" style="color: white; font-size: large;">Precio.....{{menu.precioTotal}}€</h2>
+          </div>
+          <div *ngIf="menu.productos==''">
+            <p style="text-align: center;">Sin productos asignados</p>
+          </div>
+          
+
+
+        </div>
+      </ion-card-content>
+    </div>
+    <!--DESACTIVADA-->
+    <div *ngIf="!menu.activo && !activos">
+      <ion-card-content class="contenidoMenuDesactivado">
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="anadirMenu(menu)" color="dark" expand="full">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button (click)="deleteMenu(menu)" expand="full" color="dark">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p class="textoInfo" style="text-align: center; margin-top: 10%; color: white;">{{menu.nombre}}</p>
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </div>
   </ion-card>

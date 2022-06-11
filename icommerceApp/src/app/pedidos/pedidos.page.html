@@ -5,7 +5,7 @@
       <div>
         <ion-buttons>
           <ion-menu-button menu="empleado" slot="start"></ion-menu-button>
-          <ion-title style="margin-left: 12%;">Pedidos</ion-title>
+          <ion-title>Pedidos</ion-title>
           <ion-button (click)="anadirPedido(null)" slot="end">
             <ion-icon name="add-circle-outline"></ion-icon>
           </ion-button>
@@ -37,5 +37,73 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let pedido of pedidos" class="cardContentStyle">
+    <div *ngIf="pedido.activo || (!pedido.activo && !activos)">
+      <!--PEDIDO ONLINE-->
+      <ion-card-header *ngIf="pedido.activo && pedido.tipo=='online'" class="headerCardActivada">
+        <p>
+          <ion-chip slot="end">
+            <ion-icon name="bag-handle-sharp"></ion-icon>
+            <ion-label>{{pedido.id}}</ion-label>
+          </ion-chip>
+        </p>
+      </ion-card-header>
+      <!--PEDIDO TIENDA-->
+      <ion-card-header *ngIf="pedido.activo && pedido.tipo=='tienda'" class="headerCardActivada">
+        <ion-row>
+          <ion-col size="6">
+            <p>
+              <ion-chip slot="end">
+                <i class="material-icons" style="width: 15%;">table chart</i>
+                <ion-label>{{pedido.mesaID}}</ion-label>
+              </ion-chip>
+            </p>
+          </ion-col>
+          <ion-col size="6">
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <!--Desactivado-->
+      <ion-card-header *ngIf="!pedido.activo" class="headerCardDesactivada">
+        <p style="color: white; font-size: small;">{{pedido.id}}</p>
+      </ion-card-header>
+      <ion-card-content style="background-color: white;">
+        <ion-row>
+          <ion-col size="6">
+            <p>
+              <ion-chip>
+                <ion-icon name="planet-sharp" *ngIf="pedido.tipo=='online'"></ion-icon>
+                <ion-icon name="briefcase-sharp" *ngIf="pedido.tipo=='tienda'"></ion-icon>
+                <ion-label *ngIf="pedido.tipo=='online'">{{pedido.cliente.usuario}}</ion-label>
+                <ion-label *ngIf="pedido.tipo=='tienda'">{{pedido.empleado.id}}</ion-label>
+              </ion-chip>
+            </p>
+          </ion-col>
+          <ion-col size="6">
+            
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="anadirPedido(pedido)" expand="full">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button (click)="deletePedido(pedido)" expand="full">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-content>
+    </div>
+  </ion-card>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="mostrarActivos()">
+      <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
+      <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
