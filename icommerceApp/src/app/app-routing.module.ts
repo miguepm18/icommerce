@@ -90,6 +90,22 @@ const routes: Routes = [
     path: 'crear-pedido',
     loadChildren: () => import('./modales/pedidos/crear-pedido/crear-pedido.module').then( m => m.CrearPedidoPageModule)
   },
+  {
+    path: 'vista-mesa',
+    loadChildren: () => import('./modales/mesas/vista-mesa/vista-mesa.module').then( m => m.VistaMesaPageModule)
+  },
+  {
+    path: 'anadir-producto-menu',
+    loadChildren: () => import('./modales/menus/anadir-producto-menu/anadir-producto-menu.module').then( m => m.AnadirProductoMenuPageModule)
+  },
+  {
+    path: 'anadir-producto-mesa',
+    loadChildren: () => import('./modales/mesas/anadir-producto-mesa/anadir-producto-mesa.module').then( m => m.AnadirProductoMesaPageModule)
+  },
+  {
+    path: 'anadir-menu-mesa',
+    loadChildren: () => import('./modales/mesas/anadir-menu-mesa/anadir-menu-mesa.module').then( m => m.AnadirMenuMesaPageModule)
+  },
 
 
 ];

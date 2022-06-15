@@ -48,9 +48,13 @@ export class MenusPage implements OnInit {
         respuesta.forEach(menuJson => {
           
           let menu:Menu =  Menu.createFromJsonObject(menuJson);
-     
-          
-          this.menus.push(menu);
+          if(this.empleadoActual==null || !this.empleadoActual.esAdministrador){
+            if(menu.activo){
+              this.menus.push(menu);
+            }
+          }else{
+            this.menus.push(menu);
+          }
         });
       });
     
@@ -92,4 +96,5 @@ export class MenusPage implements OnInit {
       });
 
   }
+
 }

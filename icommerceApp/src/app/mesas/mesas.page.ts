@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { AppComponent } from '../app.component';
 import { CrearMesaPage } from '../modales/mesas/crear-mesa/crear-mesa.page';
+import { VistaMesaPage } from '../modales/mesas/vista-mesa/vista-mesa.page';
 import { Cliente } from '../modelo/Cliente';
 import { Empleado } from '../modelo/Empleado';
 import { Mesa } from '../modelo/Mesa';
@@ -42,9 +43,13 @@ export class MesasPage implements OnInit {
         respuesta.forEach(mesaJson => {
           
           let mesa:Mesa =  Mesa.createFromJsonObject(mesaJson);
-     
-          
-          this.mesas.push(mesa);
+          if(!this.empleadoActual.esAdministrador && !this.empleadoActual.esRepartidor && this.clienteActual ==null){
+            if(mesa.empleado.id==this.empleadoActual.id && mesa.activo){
+              this.mesas.push(mesa);
+            }
+          }else{
+            this.mesas.push(mesa);
+          }
         });
       });
     
@@ -99,6 +104,39 @@ export class MesasPage implements OnInit {
         });
       });
 
+  }
+
+  async vistaMesa(mesa: Mesa) {
+
+    const modal = await this.modalController.create({
+      component: VistaMesaPage,
+      componentProps: {
+        'mesa': mesa
+      }
+    });
+
+    modal.onWillDismiss().then(dataReturned => {
+      this.mesas= new Array<Mesa>();
+      this.apiProvider.getMesas()
+      .then((respuesta: any) => {    
+        
+        respuesta.forEach(mesaJson => {
+          
+          let mesa:Mesa =  Mesa.createFromJsonObject(mesaJson);
+          if(!this.empleadoActual.esAdministrador && !this.empleadoActual.esRepartidor && this.clienteActual ==null){
+            if(mesa.empleado.id==this.empleadoActual.id && mesa.activo){
+              console.log("entra");
+              
+              this.mesas.push(mesa);
+            }
+          }else{
+            this.mesas.push(mesa);
+          }
+        });
+      });
+    });
+
+    return await modal.present();
   }
 
 }

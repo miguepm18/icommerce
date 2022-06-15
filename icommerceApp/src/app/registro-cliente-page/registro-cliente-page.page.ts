@@ -74,7 +74,7 @@ export class RegistroClientePagePage implements OnInit {
 
   onSubmit(values) {
     console.log(values);
-    let nuevoCliente: Cliente = new Cliente(null, values['nombre'], values['apellidos'], values['usuario'], values['contraseña'], values['direccion'], values['email'], values['dni'], null, null, true);
+    let nuevoCliente: Cliente = new Cliente(null, values['nombre'], values['apellidos'], values['usuario'], values['contraseña'], values['direccion'], values['email'], values['dni'], true);
     this.apiService.registrarCliente(nuevoCliente)
       .then((respuesta: any) => {
         this.mostrarAlert();
@@ -170,5 +170,9 @@ export class RegistroClientePagePage implements OnInit {
     }).then(alertEt => {
       alertEt.present();
     })
+  }
+
+  volver(){
+    this.navCtrl.navigateRoot('/home');
   }
 }

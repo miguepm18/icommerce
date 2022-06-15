@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { AppComponent } from '../app.component';
 import { CrearClientePage } from '../modales/clientes/crear-cliente/crear-cliente.page';
 import { Cliente } from '../modelo/Cliente';
+import { Empleado } from '../modelo/Empleado';
 
 @Component({
   selector: 'app-clientes',

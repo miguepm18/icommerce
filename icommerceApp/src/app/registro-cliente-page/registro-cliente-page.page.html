@@ -86,6 +86,7 @@
           <ion-label color="primary">DNI: {{validations_form.controls['dni'].value}}</ion-label>
         </ion-item>
       </div>
+      <ion-button color="medium" expand="block" (click)="volver()">Volver</ion-button>
     </ion-card-content>
   </ion-card>
   <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" id="botonRegistro" *ngIf="allCorrect">Registrarse</ion-button>

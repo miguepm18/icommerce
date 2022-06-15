@@ -39,11 +39,12 @@
 <ion-content>
   <ion-card *ngFor="let mesa of mesas" class="cardContentStyle">
     <div *ngIf="mesa.activo || (!mesa.activo && !activos)">
-      <ion-card-content style="background-color: white;" class="cardContenidoActiva">
-        <p style="margin-left: 50%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: large; color: white;" >Mesa Nº: {{mesa.id}}</p>
-        <p style="margin-left: 50%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: medium; color:white;">Nº ocupantes: {{mesa.capacidad}}</p>
-        <p style="margin-left: 50%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: medium; color:white;">Cuenta: {{mesa.cuenta}}€</p>
-        <ion-row *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)" style="margin-left: 35%;">
+      <!--CONTENT CARD MESA ACTIVA-->
+      <ion-card-content style="background-color: white;" class="cardContenidoActiva" *ngIf="mesa.activo">
+        <p style="margin-left: 35%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: large; color: white;">Mesa Nº: {{mesa.id}}</p>
+        <p style="margin-left: 35%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: medium; color:white;">Capacidad: {{mesa.capacidad}}</p>
+        <p style="margin-left: 35%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: medium; color:white;">Cuenta: {{mesa.cuenta}}€</p>
+        <ion-row *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)" style="margin-left: 33%;">
           <ion-col size="4">
             <ion-button (click)="anadirMesa(mesa)" expand="block">
               <ion-icon name="create-outline"></ion-icon>
@@ -55,12 +56,57 @@
             </ion-button>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="clienteActual==null && empleadoActual!=null && !empleadoActual.esAdministrador">
+          <ion-col size="4">
+
+          </ion-col>
+          <ion-col size="4">
+            <ion-button (click)="vistaMesa(mesa)" expand="block" color="success" *ngIf="!mesa.ocupada" style="margin-left: 35%;">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="vistaMesa(mesa)" expand="block" color="danger" *ngIf="mesa.ocupada" style="margin-left: 35%;">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-content>
+      <!--CONTENT CARD MESA DESACTIVADA-->
+      <ion-card-content style="background-color: white;" class="cardContenidoDesactivada" *ngIf="!mesa.activo">
+        <p style="margin-left: 35%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: large; color: white;">Mesa Nº: {{mesa.id}}</p>
+        <p style="margin-left: 35%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: medium; color:white;">Capacidad: {{mesa.capacidad}}</p>
+        <p style="margin-left: 35%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: medium; color:white;">Cuenta: {{mesa.cuenta}}€</p>
+        <ion-row *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)" style="margin-left: 33%;">
+          <ion-col size="4">
+            <ion-button (click)="anadirMesa(mesa)" expand="block">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button (click)="deleteMesa(mesa)" expand="block">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="clienteActual==null && empleadoActual!=null && !empleadoActual.esAdministrador">
+          <ion-col size="4">
+
+          </ion-col>
+          <ion-col size="4">
+            <ion-button (click)="vistaMesa(mesa)" expand="block" color="success" *ngIf="!mesa.ocupada" style="margin-left: 35%;">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="vistaMesa(mesa)" expand="block" color="danger" *ngIf="mesa.ocupada" style="margin-left: 35%;">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
         
       </ion-card-content>
     </div>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="empleadoActual!=null && empleadoActual.esAdministrador">
     <ion-fab-button (click)="mostrarActivos()">
       <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
       <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>

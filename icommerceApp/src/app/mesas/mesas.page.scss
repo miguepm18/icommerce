@@ -15,6 +15,11 @@ ion-content{
     height: 234px;
     background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/MesaActivaBackground.png?alt=media&token=5bb545ac-5bd1-4091-9dda-bebb1d672925');
 }
+.cardContenidoDesactivada{
+  background-color: white;
+  height: 234px;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/icommerce-bb5fc.appspot.com/o/MesaDesactivadaBackground.png?alt=media&token=797dda53-1915-459c-a2b4-1f77aa5fcc56');
+}
 .textoInfo{
     white-space: nowrap;
     text-overflow: ellipsis;

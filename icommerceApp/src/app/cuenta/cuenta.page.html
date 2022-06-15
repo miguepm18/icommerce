@@ -37,5 +37,57 @@
 </ion-header>
 
 <ion-content>
-
+<ion-card style="background-color: #ecedf8;">
+  <ion-card-header>
+    <ion-title *ngIf="empleadoActual!=null && clienteActual==null">Información empleado</ion-title>
+    <ion-title *ngIf="empleadoActual==null && clienteActual!=null">Información cliente</ion-title>
+  </ion-card-header>
+  <!--INFORMACIÓN CLIENTE-->
+  <ion-card-content *ngIf="empleadoActual==null && clienteActual!=null" style="background-color: #1096bf;">
+    <ion-item>
+      <ion-label>Nombre: {{clienteActual.nombre}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Apellidos: {{clienteActual.apellidos}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Usuario: {{clienteActual.usuario}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Direccion: {{clienteActual.direccion}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>E-mail: {{clienteActual.email}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>DNI: {{clienteActual.dni}}</ion-label>
+    </ion-item>
+  </ion-card-content>
+  <!--INFORMACIÓN EMPLEADO-->
+  <ion-card-content *ngIf="empleadoActual!=null && clienteActual==null" style="background-color: #1096bf;">
+    <ion-item>
+      <ion-label>Nombre: {{empleadoActual.nombre}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Apellidos: {{empleadoActual.apellidos}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Usuario: {{empleadoActual.usuario}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Direccion: {{empleadoActual.direccion}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>E-mail: {{empleadoActual.email}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Móvil: {{empleadoActual.movil}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label *ngIf="empleadoActual.esAdministrador">Tipo: Administrador</ion-label>
+      <ion-label *ngIf="!empleadoActual.esAdministrador && !empleadoActual.esRepartidor">Tipo: Tienda</ion-label>
+      <ion-label *ngIf="empleadoActual.esRepartidor">Tipo: Repartidor</ion-label>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
 </ion-content>

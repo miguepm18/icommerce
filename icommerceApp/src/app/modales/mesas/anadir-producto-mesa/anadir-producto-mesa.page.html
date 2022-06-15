@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()">CLOSE</ion-button>
+    </ion-buttons>
+    <ion-title>Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-title>Productos disponibles</ion-title>
+  <ion-card *ngFor="let producto of productosDisponibles">
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="6">
+          <ion-avatar>
+            <img [src]="producto.imagen">
+          </ion-avatar>
+          
+        </ion-col>
+        <ion-col size="6">
+          <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{producto.nombre}}</p>  
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          
+        </ion-col>
+        <ion-col size="6">
+          <p class="textoInfo">{{producto.precio | currency:'EUR'}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" (click)="anadirProducto(producto)"><ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+
+
+  <ion-title>Productos agregados</ion-title>
+
+  <ion-card *ngFor="let pedidoProducto of productosPedido">
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="6">
+          <ion-avatar>
+            <img [src]="pedidoProducto.producto.imagen">
+          </ion-avatar>
+        </ion-col>
+        <ion-col size="6">
+          <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{pedidoProducto.producto.nombre}}</p>  
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button (click)="aumentaCantidad(pedidoProducto)"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+          {{pedidoProducto.cantidad}}
+          <ion-button (click)="disminuyeCantidad(pedidoProducto)"><ion-icon name="remove-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <p class="textoInfo">{{pedidoProducto.producto.precio | currency:'EUR'}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" (click)="eliminarProducto(pedidoProducto)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

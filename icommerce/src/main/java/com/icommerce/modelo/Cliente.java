@@ -60,13 +60,6 @@ public class Cliente{
     private String dni;
     
     
-    @Column(name = "cuenta_banco")
-    private String cuentaBanco;
-    
-    @JsonFormat(pattern="yyyy-MM-dd")
-    @Column(name = "fecha_caducidad_cuenta")
-    private Date fechaCaducidadCuenta;
-    
     @Column(name = "activo")
     private Boolean activo;
     

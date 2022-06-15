@@ -21,6 +21,26 @@
       <ion-label position="floating" color="primary">Activo</ion-label>
       <ion-checkbox color="primary" formControlName="activo"></ion-checkbox>
     </ion-item>
+    <div *ngIf="menu!=null">
+      <ion-row>
+        <ion-col size="8">
+          <ion-title>Productos</ion-title>
+        </ion-col>
+        <ion-col size="4">
+          <ion-icon name="add-circle" (click)="anadirProducto()" size="large" style="margin-left: 20%;"></ion-icon>
+        </ion-col>
+      </ion-row>
+      
+      <ion-list *ngIf="menu.productos!=null && menu.productos.length>0">
+        <ion-item *ngFor="let producto of menu.productos">
+          <ion-avatar>
+            <img [src]="producto.producto.imagen">
+          </ion-avatar>
+          {{producto.producto.nombre}}&nbsp;<span *ngIf="producto.cantidad>1">x{{producto.cantidad}}</span>
+        </ion-item>
+      </ion-list>
+      <ion-label *ngIf="menu.productos.length==0" style="margin-left: 5%;">Sin productos asociados.</ion-label>
+    </div>
     <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">Aceptar</ion-button>
   </form>
  

@@ -117,7 +117,7 @@
     </div>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="empleadoActual!=null && empleadoActual.esAdministrador">
     <ion-fab-button (click)="mostrarActivos()">
       <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
       <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>

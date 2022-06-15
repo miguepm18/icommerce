@@ -40,7 +40,7 @@ export class LoginEmpleadoPagePage implements OnInit {
   }
   onSubmit(values){
     console.log(values);
-    let cliente:Cliente = new Cliente(null, null, null, values['usuario'], values['password'], null, null, null, null, null, null);
+    let cliente:Cliente = new Cliente(null, null, null, values['usuario'], values['password'], null, null, null, null);
     this.apiService.logInCliente(cliente)
       .then( (respuesta:any)=> {          
           if(!respuesta){

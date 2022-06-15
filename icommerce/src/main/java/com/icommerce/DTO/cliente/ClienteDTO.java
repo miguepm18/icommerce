@@ -19,8 +19,5 @@ public class ClienteDTO {
     public String direccion;
     public String email;
     public String dni;
-    public String cuentaBanco;
-    @JsonFormat(pattern="MM-yy")
-    public Date fechaCaducidadCuenta;
     public Boolean activo;
 }

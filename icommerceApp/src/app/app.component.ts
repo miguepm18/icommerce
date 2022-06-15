@@ -4,6 +4,7 @@ import { StatusBar } from '@capacitor/status-bar';
 import { MenuController, NavController, Platform } from '@ionic/angular';
 import { Cliente } from './modelo/Cliente';
 import { Empleado } from './modelo/Empleado';
+import * as moment from 'moment';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AppComponent {
   constructor(private navController:NavController, private menu:MenuController, private router:Router) {
     this.cliente=null;
     this.empleado=null;
+    moment.locale('es');
   }
 
   setCliente(clienteIniciado:Cliente) {

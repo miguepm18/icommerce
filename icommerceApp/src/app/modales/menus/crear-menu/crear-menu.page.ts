@@ -5,6 +5,7 @@ import { Menu } from 'src/app/modelo/Menu';
 import { MenuProducto } from 'src/app/modelo/MenuProducto';
 import { Producto } from 'src/app/modelo/Producto';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
+import { AnadirProductoMenuPage } from '../anadir-producto-menu/anadir-producto-menu.page';
 
 @Component({
   selector: 'app-crear-menu',
@@ -14,10 +15,14 @@ import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 export class CrearMenuPage implements OnInit {
 
   validations_form: FormGroup;
-
-  constructor(private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) { }
-
   @Input() public menu: Menu;
+  public productosAsociadosEditados:Array<Producto>;
+  constructor(private modalController: ModalController, public formBuilder: FormBuilder, private apiService: ApiServiceProvider, private alertController: AlertController) {
+    
+    
+   }
+
+  
 
   ngOnInit() {
     if(this.menu!=null){
@@ -64,7 +69,11 @@ export class CrearMenuPage implements OnInit {
         });
     } else {
       menu.id = this.menu.id;
-
+      menu.productos = this.menu.productos;
+      menu.precioTotal=0;
+      menu.productos.forEach(menuProducto => {
+        menu.precioTotal+=menuProducto.producto.precio*menuProducto.cantidad;
+      });
       this.apiService.modificarMenu(menu)
         .then((respuesta: any) => {
           this.mostrarAlert("Menu modificado correctamente.");
@@ -89,5 +98,38 @@ export class CrearMenuPage implements OnInit {
     }).then(alertEt => {
       alertEt.present();
     })
+  }
+
+  async anadirProducto() {
+    let productos:Array<Producto> = new Array<Producto>();
+    this.apiService.getProductos()
+      .then((respuesta: any) => {    
+        respuesta.forEach(productoJson => {
+          
+          let producto:Producto =  Producto.createFromJsonObject(productoJson);
+     
+          if(producto.activo){
+            productos.push(producto);
+          }
+          
+        });
+      });
+      
+      
+    const modal = await this.modalController.create({
+      component: AnadirProductoMenuPage,
+      componentProps: {
+        'productosActivos': productos,
+        'productoMenu': this.menu.productos,
+        'idMenu': this.menu.id
+      }
+    });
+
+    modal.onWillDismiss().then(dataReturned => {
+      console.log(dataReturned);
+      
+    });
+
+    return await modal.present();
   }
 }

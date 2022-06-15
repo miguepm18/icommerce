@@ -64,10 +64,10 @@
               <p class="textoInfo" style="font-size: large; color: white;">{{menu.nombre}}</p>
             </ion-col>
           </ion-row>
-          <div *ngIf="menu.productos!=''">
+          <div *ngIf="menu.productos!=null && menu.productos.length>0">
             <ion-row *ngFor="let menuProducto of menu.productos">
-              <ion-col size="12">
-                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio | currency:'EUR'}}</p>
+              <ion-col size="12" *ngIf="menuProducto.producto!=null">
+                <p style="text-align: center; color: white;">{{menuProducto.producto.nombre}}...{{menuProducto.producto.precio | currency:'EUR'}} <span *ngIf="menuProducto.cantidad>1">x{{menuProducto.cantidad}}</span></p>
               </ion-col>
             </ion-row>
             <h2 class="precio" style="color: white;">Precio.....{{menu.precioTotal | currency:'EUR'}}</h2>
@@ -126,7 +126,7 @@
     </div>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="empleadoActual.esAdministrador">
     <ion-fab-button (click)="mostrarActivos()">
       <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
       <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>

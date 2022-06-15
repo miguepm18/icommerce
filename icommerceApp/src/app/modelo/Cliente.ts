@@ -10,8 +10,6 @@ export class Cliente {
         public direccion:string,
         public email:string,
         public dni:string,
-        public cuentaBanco:string,
-        public fechaCaducidadCuenta:string, //MM-yy
         public activo:boolean
         )
     {}
@@ -26,11 +24,8 @@ export class Cliente {
             jsonObject['direccion'],
             jsonObject['email'],
             jsonObject['dni'],
-            jsonObject['cuentaBanco'],
-            jsonObject['fechaCaducidadCuenta'],
             jsonObject['activo']);
-            console.log(jsonObject['nombre']);
-            
+
             return cliente;
     }
                 

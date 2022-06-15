@@ -56,35 +56,46 @@ export class CrearProductoPage implements OnInit {
     if(this.producto!=null){
       producto.id=this.producto.id;
     }
+    if(this.file!=null){
+      this.apiService.uploadImage(this.file,this.validations_form.controls['nombre'].value)
 
-    this.apiService.uploadImage(this.file,this.validations_form.controls['nombre'].value)
-
-    .then( (downloadUrl)=>{
-      
-      producto.imagen=downloadUrl;
-      
+      .then( (downloadUrl)=>{
+        
+        producto.imagen=downloadUrl;
+        
+        if (this.producto == null) {
+          this.apiService.registrarProducto(producto)
+            .then((respuesta: any) => {
+              this.mostrarAlert("Producto creado correctamente.");
+            });
+        } else {
+          this.apiService.modificarProducto(producto)
+            .then((respuesta: any) => {
+              this.mostrarAlert("Producto modificado correctamente.");
+            });
+        }
+        
+      })
+  
+      .catch((error)=>{
+  
+        console.log(error);
+  
+      });
+    }else{
       if (this.producto == null) {
         this.apiService.registrarProducto(producto)
           .then((respuesta: any) => {
             this.mostrarAlert("Producto creado correctamente.");
           });
       } else {
+        producto.imagen=this.producto.imagen;
         this.apiService.modificarProducto(producto)
           .then((respuesta: any) => {
             this.mostrarAlert("Producto modificado correctamente.");
           });
       }
-      
-    })
-
-    .catch((error)=>{
-
-      console.log(error);
-
-    });
-    
-    
-    
+    }    
 
   }
 

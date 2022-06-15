@@ -27,7 +27,7 @@
           Clientes
         </ion-item>
         <ion-item (click)="menusPage()"
-          *ngIf="(cliente==null && empleado.esAdministrador) || (cliente!=null && empleado==null) || (cliente==null && !empleado.esAdministrador && !empleado.esRepartidor)">
+          *ngIf="(cliente==null && empleado.esAdministrador) || (cliente!=null && empleado==null)">
           <i class="material-icons" style="width: 15%;">restaurant_menu</i>
           Menús
         </ion-item>
