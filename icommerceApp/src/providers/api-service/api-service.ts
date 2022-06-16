@@ -11,8 +11,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable()
 export class ApiServiceProvider {    
-    private URL="http://localhost:8080/"; //LOCAL
-    //private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
+    //private URL="http://localhost:8080/"; //LOCAL
+    private URL="http://iesjulioverne.es:4002/"; //SERVIDOR VM
 
     constructor(public http: HttpClient, private afStorage: AngularFireStorage){
 
