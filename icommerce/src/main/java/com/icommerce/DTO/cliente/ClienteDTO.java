@@ -20,4 +20,5 @@ public class ClienteDTO {
     public String email;
     public String dni;
     public Boolean activo;
+    
 }

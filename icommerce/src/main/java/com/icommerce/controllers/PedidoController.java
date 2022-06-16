@@ -71,4 +71,15 @@ public class PedidoController {
 			return ResponseEntity.ok(false);
 		}
 	}
+	
+	@GetMapping("/pedidos/cliente/{id}")
+	public ResponseEntity<?> obtenerPedidosCliente(@PathVariable Long id){
+		List<Pedido> result = this.pedidoService.obtenerPedidosDelCliente(id);
+		if(result==null) {
+			return ResponseEntity.notFound().build();
+		}else {
+			List<PedidoDTO> dtoList = result.stream().map(pedidoDTOConverter::convertirADto).collect(Collectors.toList());
+			return ResponseEntity.ok(dtoList);
+		}		
+	}
 }

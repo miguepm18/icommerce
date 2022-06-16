@@ -62,7 +62,7 @@ export class VistaMesaPage implements OnInit {
     }
     this.mesa.ocupada=true;
     let productosPedido:Array<PedidoProducto> = new Array<PedidoProducto>();
-    let nuevoPedido:Pedido = new Pedido(null, "tienda",moment().format('DD-MM-YY HH:mm:ss'), null, "enCurso", true, this.mesa.id, 0,productosPedido, null, this.mesa.empleado);
+    let nuevoPedido:Pedido = new Pedido(null, "tienda",moment().format('DD-MM-YY HH:mm:ss'), null, "enCurso", true, this.mesa.id, 0,"",productosPedido, null, this.mesa.empleado);
     this.mesa.pedidos.push(nuevoPedido);
     this.mesa.cuenta=nuevoPedido.precio;
     this.cerrarModal();
@@ -104,6 +104,7 @@ export class VistaMesaPage implements OnInit {
 
   finalizarPedido(){
     this.mesa.pedidos[this.mesa.pedidos.length-1].estado="finalizado";
+    this.mesa.pedidos[this.mesa.pedidos.length-1].horaSalida=moment().format('DD-MM-YY HH:mm:ss');
     this.mesa.ocupada=false;
     this.mesa.cuenta=0;
     this.cerrarModal();

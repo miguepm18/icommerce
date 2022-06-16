@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 
 @Component({
   selector: 'app-cesta',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CestaPage implements OnInit {
 
-  constructor() { }
+  constructor(private apiProvider: ApiServiceProvider) { }
 
   ngOnInit() {
   }

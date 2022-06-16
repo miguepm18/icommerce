@@ -36,7 +36,7 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="empleadoActual!=null && empleadoActual.esAdministrador">
   <ion-card *ngFor="let fichaje of fichajes" class="cardContentStyle">
     <div *ngIf="fichaje.activo || (!fichaje.activo && !activos)">
       <!--FICHAJE ABIERTO Y ACTIVO-->
@@ -124,4 +124,65 @@
     </ion-fab-button>
   </ion-fab>
 
+</ion-content>
+
+
+<!--CONTENT VISTA FICHAJE EMPLEADO TIENDA Y REPARTIDOR-->
+<ion-content *ngIf="empleadoActual!=null && !empleadoActual.esAdministrador">
+  <!--VISTA PARA CUANDO NO TENGA FICHAJE ABIERTO-->
+  <div *ngIf="fichajes!=null && fichajes.length>0 && fichajes[fichajes.length-1].horaSalida!=null" style="margin-top: 5%;">
+    <ion-label>No tienes ningún fichaje abierto. ¡Crea uno!</ion-label>
+    <ion-button expand="block" color="success" (click)="nuevoFichaje()">Iniciar</ion-button>
+  </div>
+  <!--VISTA PARA CUANDO EL EMPLEADO NO TENGA NINGUN FICHAJE ASOCIADO-->
+  <div *ngIf="fichajes!=null && fichajes.length==0">
+    <ion-label>No tienes ningún fichaje registrado. ¡Crea el primero!</ion-label>
+    <ion-button expand="block" color="success" (click)="nuevoFichaje()">Iniciar</ion-button>
+  </div>
+  
+  <!--VISTA PARA CUANDO TENGA UN FICHAJE ABIERTO-->
+  <ion-card *ngIf="fichajes!=null && fichajes.length>0 && fichajes[fichajes.length-1].horaEntrada!=null && fichajes[fichajes.length-1].horaSalida==null">
+    <ion-card-header style="background-color: greenyellow;">
+      <ion-label>Fichaje actual</ion-label>
+    </ion-card-header>
+    <ion-card-content style="background-color: white;">
+      <ion-row>
+        <ion-col size="5">
+          Fecha entrada:
+        </ion-col>
+        <ion-col size="7">
+          {{fichajes[fichajes.length-1].horaEntrada}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" color="danger" (click)="cerrarFichaje()">Cerrar fichaje</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!--HISTORIAL DE FICHAJES DEL EMPLEADO-->
+  <ion-card>
+    <ion-card-header style="background-color: white;">
+      Historial de fichajes
+    </ion-card-header>
+    <ion-card-content *ngIf="fichajes!=null && fichajes.length>0" style="background-color: azure;">
+      <div *ngFor="let fichaje of fichajes" style="background-color: azure;">
+        <ion-item-divider *ngIf="fichaje.horaSalida!=null" style="background-color: azure;">
+        <ion-row>
+          <ion-col size="12">
+            {{fichaje.horaEntrada}} - {{fichaje.horaSalida}}
+          </ion-col>
+        </ion-row>
+        </ion-item-divider>
+      </div>
+    </ion-card-content>
+    <ion-card-content *ngIf="fichajes!=null && fichajes.length==0" style="background-color: azure;">
+      Sin registro de fichajes.
+    </ion-card-content>
+    <ion-card-content *ngIf="fichajes!=null && fichajes.length==1 && fichajes[fichajes.length-1].horaSalida==null" style="background-color: azure;">
+      No tiene fichajes cerrados.
+    </ion-card-content>
+  </ion-card>
 </ion-content>

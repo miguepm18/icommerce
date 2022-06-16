@@ -80,5 +80,8 @@ export class AppComponent {
     this.navController.navigateForward("/cuenta");
     this.menu.close('empleado');
   }
-  
+  cestaPage(){
+    this.navController.navigateForward("/cesta");
+    this.menu.close('empleado');
+  }
 }

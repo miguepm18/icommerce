@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.icommerce.DTO.empleado.EmpleadoDTO;
+import com.icommerce.DTO.empleado.EmpleadoDTOConverter;
 import com.icommerce.DTO.fichaje.FichajeDTO;
 import com.icommerce.DTO.fichaje.FichajeDTOConverter;
 import com.icommerce.modelo.Fichaje;
@@ -24,11 +27,13 @@ import com.icommerce.service.FichajeService;
 public class FichajeController {
 
 	private final FichajeDTOConverter fichajeDTOConverter;
+	private final EmpleadoDTOConverter empleadoDTOConverter;
 	private final FichajeService fichajeService;
 	
-	public FichajeController(FichajeDTOConverter fichajeDTOConverter, FichajeService fichajeService) {
+	public FichajeController(FichajeDTOConverter fichajeDTOConverter, FichajeService fichajeService, EmpleadoDTOConverter empleadoDTOConverter) {
 		this.fichajeDTOConverter=fichajeDTOConverter;
 		this.fichajeService = fichajeService;
+		this.empleadoDTOConverter=empleadoDTOConverter;
 	}
 	
 	
@@ -81,6 +86,17 @@ public class FichajeController {
 		fichaje.setActivo(false);
 		this.fichajeService.insertarModificarFichaje(fichaje);
 		return ResponseEntity.ok(this.fichajeDTOConverter.convertirAFichajeDTO(fichaje));
+	}
+	
+	@GetMapping("/fichajes/empleado/{id}")
+	public ResponseEntity<?> obtenerFichajesDeEmpleado(@PathVariable Long id){
+		List<Fichaje> result = this.fichajeService.fichajesEmpleado(id);
+		if(result==null) {
+			return ResponseEntity.notFound().build();
+		}else {
+			List<FichajeDTO> dtoList = result.stream().map(fichajeDTOConverter::convertirAFichajeDTO).collect(Collectors.toList());
+			return ResponseEntity.ok(dtoList);
+		}		
 	}
 	
 }

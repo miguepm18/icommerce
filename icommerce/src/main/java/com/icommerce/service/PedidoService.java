@@ -1,5 +1,6 @@
 package com.icommerce.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +30,16 @@ public class PedidoService {
     
     public Pedido obtenerPedidoById(Long id) {
     	return this.pedidoRepository.findById(id).orElse(null);
+    }
+    public List<Pedido> obtenerPedidosDelCliente(Long idCliente){
+    	List<Pedido> todosLosPedidos = this.obtenerTodosLosPedidos();
+    	List<Pedido> pedidosDelCliente = new ArrayList<Pedido>();
+    	for (Pedido pedido : todosLosPedidos) {
+			if(pedido.getCliente()!=null && (idCliente==pedido.getCliente().getId())) {
+				pedidosDelCliente.add(pedido);
+			}
+		}
+    	return pedidosDelCliente;
     }
     
 }

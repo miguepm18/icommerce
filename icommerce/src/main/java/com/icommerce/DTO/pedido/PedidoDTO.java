@@ -28,4 +28,5 @@ public class PedidoDTO {
 	private ClienteDTO cliente;
 	private Double precio;
 	private EmpleadoDTO empleado;
+	private String direccion;
 }

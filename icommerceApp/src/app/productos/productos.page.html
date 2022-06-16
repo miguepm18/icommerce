@@ -60,7 +60,7 @@
             <p class="textoInfo">{{producto.precio | currency:'EUR'}}</p>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="empleadoActual.esAdministrador">
+        <ion-row *ngIf="empleadoActual!=null && empleadoActual.esAdministrador">
           <ion-col size="6">
             <ion-button (click)="anadirProducto(producto)" expand="full" *ngIf="(clienteActual==null && empleadoActual!=null && empleadoActual.esAdministrador)">
               <ion-icon name="create-outline"></ion-icon>
@@ -72,7 +72,11 @@
             </ion-button>
           </ion-col>
         </ion-row>
-        
+        <ion-row *ngIf="empleadoActual==null">
+          <ion-col size="12">
+            <ion-button (click)="anadirACesta(producto)" expand="block"><ion-icon name="cart"></ion-icon></ion-button> 
+          </ion-col>
+        </ion-row>
       </ion-card-content>
 
 
@@ -86,7 +90,7 @@
             
           </ion-col>
           <ion-col size="6">
-            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{producto.nombre}}</p>  
+            <ion-icon name="text-outline"></ion-icon><p class="textoInfo">{{producto.nombre}}</p> 
           </ion-col>
         </ion-row>
         <ion-row>
@@ -109,12 +113,11 @@
             </ion-button>
           </ion-col>
         </ion-row>
-        
       </ion-card-content>
     </div>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="empleadoActual!=null">
     <ion-fab-button (click)="mostrarActivos()">
       <ion-icon *ngIf="!activos" name="checkmark-circle-outline"></ion-icon>
       <ion-icon *ngIf="activos" name="checkmark-circle-sharp"></ion-icon>

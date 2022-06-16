@@ -16,6 +16,7 @@ export class Cliente {
     
     public static createFromJsonObject(jsonObject:any):Cliente
     {
+        
         let cliente:Cliente= new Cliente(jsonObject['id'],
             jsonObject['nombre'],
             jsonObject['apellidos'],
@@ -25,7 +26,6 @@ export class Cliente {
             jsonObject['email'],
             jsonObject['dni'],
             jsonObject['activo']);
-
             return cliente;
     }
                 

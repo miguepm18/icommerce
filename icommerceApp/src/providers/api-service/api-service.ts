@@ -536,7 +536,19 @@ export class ApiServiceProvider {
         });
         return promise;
     }
-    
+
+    getFichajesEmpleado(empleado:Empleado):Promise<Fichaje[]> {
+        let promise = new Promise<Fichaje[]>((resolve, reject) => {
+            this.http.get(this.URL+"fichajes/empleado/" + empleado.id).toPromise()
+                .then((data:any)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
+                });
+        });
+        return promise;
+    }
 
     getFichajeId(id:number):Promise<Fichaje> {
         let promise = new Promise<Fichaje>((resolve, reject) => {
@@ -785,6 +797,19 @@ export class ApiServiceProvider {
                 )
                 .catch((error: Error) => {
                    reject(error.message);
+                });
+        });
+        return promise;
+    }
+
+    getPedidosDelCliente(cliente:Cliente):Promise<Pedido[]> {
+        let promise = new Promise<Pedido[]>((resolve, reject) => {
+            this.http.get(this.URL+"pedidos/cliente/" + cliente.id).toPromise()
+                .then((data:any)=>{
+                    resolve(data);
+                })
+                .catch( (error:Error)=>{
+                    reject(error.message);
                 });
         });
         return promise;

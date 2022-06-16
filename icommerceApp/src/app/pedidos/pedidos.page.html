@@ -141,8 +141,16 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="12">
+          <ion-col size="12" *ngIf="pedido.empleado!=null && pedido.tipo==='online'">
             <ion-icon name="person-circle"></ion-icon>Empleado repartidor: {{pedido.empleado.usuario}}
+          </ion-col>
+          <ion-col size="12" *ngIf="pedido.empleado!=null && pedido.tipo==='tienda'">
+            <ion-icon name="person-circle"></ion-icon>Empleado responsable: {{pedido.empleado.usuario}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="pedido.tipo==='online'">
+          <ion-col size="12">
+            <ion-icon name="compass-outline"></ion-icon>{{pedido.direccion}}
           </ion-col>
         </ion-row>
       </ion-card-content>

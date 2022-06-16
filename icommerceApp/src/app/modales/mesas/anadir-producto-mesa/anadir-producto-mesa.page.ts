@@ -75,8 +75,10 @@ export class AnadirProductoMesaPage implements OnInit {
     this.pedido.precio+=pedidoProducto.producto.precio;
   }
   disminuyeCantidad(pedidoProducto:PedidoProducto){
-    this.productosPedido[this.productosPedido.indexOf(pedidoProducto)].cantidad--;
-    this.pedido.precio-=pedidoProducto.producto.precio;
+    if(this.productosPedido[this.productosPedido.indexOf(pedidoProducto)].cantidad!=1){
+      this.productosPedido[this.productosPedido.indexOf(pedidoProducto)].cantidad--;
+      this.pedido.precio-=pedidoProducto.producto.precio;
+    }
   }
 
 }

@@ -67,6 +67,8 @@ public class Pedido  {
     @Column(name = "activo")
     private Boolean activo;
     
+    @Column(name = "direccion")
+    private String direccion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
     private List<PedidoProducto> productos;
