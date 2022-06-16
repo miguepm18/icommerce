@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonFab, ModalController } from '@ionic/angular';
+import { IonFab, MenuController, ModalController } from '@ionic/angular';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { CrearEmpleadoPage } from '../modales/empleados/crear-empleado/crear-empleado.page';
 import { Empleado } from '../modelo/Empleado';
@@ -13,13 +13,13 @@ export class EmpleadosPage implements OnInit {
 
   empleados: Array<Empleado>;
   activos:boolean;
-  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController) {
+  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController, private menu:MenuController) {
     this.empleados = new Array<Empleado>();
     this.activos=false;
   }
 
   ngOnInit() {
-
+    this.menu.enable(true, 'empleado');
   }
   mostrarActivos(){
     this.activos=!this.activos;

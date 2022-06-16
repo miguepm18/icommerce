@@ -53,7 +53,7 @@ export class LoginEmpleadoPagePage implements OnInit {
                 this.mostrarAlert();
               }else{                
                 this.appComponent.setEmpleado(Empleado.createFromJsonObject(respuestaEmp));
-                this.navCtrl.navigateForward('/home-empleado/'+respuestaEmp['id']);
+                this.navCtrl.navigateForward('/empleados');
               }
             })
             .catch( (error:string) => {
@@ -61,7 +61,7 @@ export class LoginEmpleadoPagePage implements OnInit {
             });            
           }else{
             this.appComponent.setCliente(Cliente.createFromJsonObject(respuesta));
-            this.navCtrl.navigateForward('/home-cliente/'+respuesta['id']);
+            this.navCtrl.navigateForward('/menus');
           }
           
       })

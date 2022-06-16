@@ -72,7 +72,7 @@
           <ion-col size="6">
             <i class="material-icons" style="width: 15%;">local_mall</i><span style="margin-left: 5%; margin-bottom: 5%;">{{pedido.id}}</span>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="pedido.tipo==='online'">
             <ion-icon name="planet-outline"></ion-icon><span style="margin-left: 5%;">{{pedido.tipo}}</span>
           </ion-col>
         </ion-row>
@@ -80,14 +80,26 @@
           <ion-col size="6">
             <ion-icon name="arrow-forward-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>{{pedido.horaEntrada}}</span>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="pedido.horaSalida!=null">
             <ion-icon name="arrow-back-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>{{pedido.horaSalida}}</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.horaSalida==null">
+            <ion-icon name="arrow-back-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>Aún no se ha tramitado.</span>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="6">
-            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">{{pedido.estado}}</span>
+          <ion-col size="6" *ngIf="pedido.estado==='finalizado'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">Finalizado.</span>
           </ion-col>
+          <ion-col size="6" *ngIf="pedido.estado==='enCurso'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">En curso.</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.estado==='pendienteDeEntrega'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">Pendiente de entrega.</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.estado==='enReparto'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">En reparto.</span>
+          </ion-col>          
           <ion-col size="6">
             {{pedido.precio | currency:'EUR' }}
           </ion-col>
@@ -101,10 +113,20 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="12">
+          <ion-col size="12" *ngIf="pedido.empleado!=null">
             <ion-icon name="person-circle"></ion-icon>Empleado repartidor: {{pedido.empleado.usuario}}
           </ion-col>
+          <ion-col size="12" *ngIf="pedido.empleado==null">
+            <ion-icon name="person-circle"></ion-icon>Empleado repartidor: Sin empleado asignado.
+          </ion-col>
         </ion-row>
+        <ion-row *ngIf="pedido.tipo==='online'">
+          <ion-col size="12">
+            <ion-icon name="compass-outline"></ion-icon>{{pedido.direccion}}
+          </ion-col>
+        </ion-row>
+        <ion-button *ngIf="pedido.estado==='pendienteDeEntrega' && empleadoActual!=null && empleadoActual.esRepartidor" color="success" (click)="repartirPedido(pedido)">Repartir</ion-button>
+        <ion-button *ngIf="pedido.estado==='enReparto' && empleadoActual!=null && empleadoActual.esRepartidor" color="danger" (click)="entregarPedido(pedido)">Entregado</ion-button>
       </ion-card-content>
       <!--CONTENIDO TIENDA-->
       <ion-card-content style="background-color: white;" *ngIf="pedido.tipo=='tienda'">
@@ -113,20 +135,32 @@
             <i class="material-icons" style="width: 15%;">local_mall</i><span style="margin-left: 5%; margin-bottom: 5%;">{{pedido.id}}</span>
           </ion-col>
           <ion-col size="6">
-            <ion-icon name="planet-outline"></ion-icon><span style="margin-left: 5%;">{{pedido.tipo}}</span>
+            <ion-icon name="storefront-outline"></ion-icon><span style="margin-left: 5%;">{{pedido.tipo}}</span>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6">
             <ion-icon name="arrow-forward-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>{{pedido.horaEntrada}}</span>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="pedido.horaSalida!=null">
             <ion-icon name="arrow-back-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>{{pedido.horaSalida}}</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.horaSalida==null">
+            <ion-icon name="arrow-back-outline"></ion-icon><ion-icon name="time-outline"></ion-icon><span>Aún no se ha finalizado.</span>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="6">
-            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">{{pedido.estado}}</span>
+          <ion-col size="6" *ngIf="pedido.estado==='finalizado'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">Finalizado.</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.estado==='enCurso'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">En curso.</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.estado==='pendienteDeEntrega'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">Pendiente de entrega.</span>
+          </ion-col>
+          <ion-col size="6" *ngIf="pedido.estado==='enReparto'">
+            <ion-icon name="stats-chart"></ion-icon><span style="margin-left: 5%;">En reparto.</span>
           </ion-col>
           <ion-col size="6">
             {{pedido.precio | currency:'EUR' }}
@@ -146,11 +180,6 @@
           </ion-col>
           <ion-col size="12" *ngIf="pedido.empleado!=null && pedido.tipo==='tienda'">
             <ion-icon name="person-circle"></ion-icon>Empleado responsable: {{pedido.empleado.usuario}}
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="pedido.tipo==='online'">
-          <ion-col size="12">
-            <ion-icon name="compass-outline"></ion-icon>{{pedido.direccion}}
           </ion-col>
         </ion-row>
       </ion-card-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { AppComponent } from '../app.component';
@@ -22,7 +22,7 @@ export class MenusPage implements OnInit {
   clienteActual: Cliente;
   empleadoActual: Empleado;
 
-  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController, private appComponent: AppComponent) {
+  constructor(private apiProvider: ApiServiceProvider, private modalController: ModalController, private appComponent: AppComponent, private menu:MenuController) {
     this.menus = new Array<Menu>();
     this.activos = false;
     if (this.appComponent.cliente != null) {
@@ -37,6 +37,7 @@ export class MenusPage implements OnInit {
   }
 
   ngOnInit() {
+    this.menu.enable(true, 'empleado');
   }
 
   mostrarActivos() {

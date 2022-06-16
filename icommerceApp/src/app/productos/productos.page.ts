@@ -147,6 +147,7 @@ export class ProductosPage implements OnInit {
         } else {
           let productos: Array<PedidoProducto> = new Array<PedidoProducto>();
           let pedido: Pedido = new Pedido(null, "online", moment().format('DD-MM-YY HH:mm:ss'), null, "enCurso", true, null, 0, this.clienteActual.direccion, productos, this.clienteActual, null);
+          pedido.estado="enCurso";
           this.apiProvider.registrarPedido(pedido)
             .then((respuesta: any) => {
               pedido = Pedido.createFromJsonObject(respuesta);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import * as moment from 'moment';
 import { ApiServiceProvider } from 'src/providers/api-service/api-service';
 import { AppComponent } from '../app.component';
 import { CrearPedidoPage } from '../modales/pedidos/crear-pedido/crear-pedido.page';
@@ -39,7 +40,21 @@ export class PedidosPage implements OnInit {
 
 
   ionViewWillEnter() {
-    this.apiProvider.getPedidos()
+    if(this.empleadoActual.esRepartidor){
+      this.apiProvider.getPedidos()
+      .then((respuesta: any) => {
+        this.pedidos = new Array<Pedido>();
+        respuesta.forEach(pedidoJson => {
+
+          let pedido: Pedido = Pedido.createFromJsonObject(pedidoJson);
+          if((pedido.tipo==='online' && pedido.empleado==null && pedido.estado!=='enCurso' && pedido.estado!=='finalizado') || (pedido.tipo==='online' && pedido.empleado!=null && pedido.empleado.id == this.empleadoActual.id && pedido.estado!=='enCurso' && pedido.estado!=='finalizado')){
+            this.pedidos.push(pedido);
+          }
+          
+        });
+      });
+    }else{
+      this.apiProvider.getPedidos()
       .then((respuesta: any) => {
         this.pedidos = new Array<Pedido>();
         respuesta.forEach(pedidoJson => {
@@ -49,6 +64,7 @@ export class PedidosPage implements OnInit {
           this.pedidos.push(pedido);
         });
       });
+    }
 
   }
 
@@ -151,5 +167,23 @@ export class PedidosPage implements OnInit {
           });
       });
 
+  }
+
+  repartirPedido(pedido:Pedido){
+    pedido.horaSalida=moment().format('DD-MM-YY HH:mm:ss');
+    pedido.estado="enReparto";
+    pedido.empleado=this.empleadoActual;
+    this.apiProvider.modificarPedido(pedido)
+          .then((respuesta: any) => {
+            
+          });
+  }
+
+  entregarPedido(pedido:Pedido){
+    pedido.estado="finalizado";
+    this.apiProvider.modificarPedido(pedido)
+          .then((respuesta: any) => {
+            this.pedidos.splice(this.pedidos.indexOf(pedido), 1);
+          });
   }
 }

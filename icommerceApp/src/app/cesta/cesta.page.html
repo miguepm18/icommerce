@@ -34,5 +34,97 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header style="background-color: cornflowerblue;">
+      <ion-row>
+        <ion-col size="6">
+          <ion-title style="color: black;">Cesta</ion-title>
+        </ion-col>
+        <ion-col size="6" *ngIf="pedidosCliente[pedidosCliente.length-1]!=null && pedidosCliente[pedidosCliente.length-1].productos.length>0">
+          <ion-label style="color: black;" *ngIf="pedidosCliente[pedidosCliente.length-1].estado==='enCurso'">{{pedidosCliente[pedidosCliente.length-1].precio | currency:'EUR'}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content style="background-color: #c1d4f7;">
+      <!--CESTA VACÍA-->
+      <div *ngIf="pedidosCliente[pedidosCliente.length-1]!=null && (pedidosCliente[pedidosCliente.length-1].estado!=='enCurso' || (pedidosCliente[pedidosCliente.length-1].estado!=='enCurso' && pedidosCliente[pedidosCliente.length-1].productos.length==0)) || pedidosCliente.length==0">
+        <ion-label>La cesta está vacia.</ion-label>
+      </div>
+      <!--CESTA CON PRODUCTOS-->
+      <div *ngIf="pedidosCliente[pedidosCliente.length-1]!=null && pedidosCliente[pedidosCliente.length-1].estado==='enCurso' && pedidosCliente[pedidosCliente.length-1].productos.length>0">
+        <div *ngFor="let pedidoProducto of pedidosCliente[pedidosCliente.length-1].productos">
+          <ion-row>
+            <ion-col size="6">
+              <ion-avatar>
+                <img [src]="pedidoProducto.producto.imagen">
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="6" style="margin-top: 5%;">
+              <ion-label>{{pedidoProducto.producto.nombre}}&nbsp;x{{pedidoProducto.cantidad}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+      <ion-button expand="block" color="danger" (click)="tramitarPedido()" *ngIf="pedidosCliente[pedidosCliente.length-1]!=null && pedidosCliente[pedidosCliente.length-1].estado==='enCurso' && pedidosCliente[pedidosCliente.length-1].productos.length>0">Tramitar pedido</ion-button>
+    </ion-card-content>
+  </ion-card>
 
+  <!--HISTORIAL DE PEDIDOS-->
+  <ion-card>
+    <ion-card-header style="background-color: cornflowerblue;">
+      <span style="color: black;">Historial de pedidos</span>
+    </ion-card-header>
+
+    <!--CONTENIDO SI NO TIENE PEDIDOS FINALIZADOS-->
+    <ion-card-content *ngIf="pedidosCliente!=null && pedidosCliente.length==0" style="background-color: #c1d4f7;">
+      <ion-label style="color: black;">No tienes pedidos, ¡Añade productos a la cesta para comenzar!</ion-label>
+    </ion-card-content>
+
+    <!--CONTENIDO SI TIENE UN PEDIDO ASOCIADO Y NO ESTA FINALIZADO-->
+    <ion-card-content *ngIf="pedidosCliente!=null && pedidosCliente.length==1 && pedidosCliente[0].estado==='enCurso'" style="background-color: #c1d4f7;">
+      <ion-label style="color: black;">Finaliza tu pedido actual para ver la información.</ion-label>
+    </ion-card-content>
+
+    <!--CONTENIDO SI TIENE PEDIDOS FINALIZADOS-->
+    <ion-card-content *ngIf="pedidosCliente!=null && pedidosCliente.length>0" style="background-color: #c1d4f7;">
+      <div *ngFor="let pedido of pedidosCliente; let indice=index;">
+      <div *ngIf="pedido.estado!=='enCurso'">
+        <ion-item-divider style="color:black;">
+        <ion-row>
+          <ion-col size="12">
+            <h2>Pedido nº: {{indice+1}}</h2>
+          </ion-col>
+          <ion-col size="12">
+            Hora de entrada: {{pedido.horaEntrada}}
+          </ion-col>
+          <ion-col size="12" *ngIf="pedido.horaSalida!=null">
+            Hora de salida: {{pedido.horaSalida}}
+          </ion-col>
+          <ion-col size="12" *ngIf="pedido.horaSalida==null">
+            Hora de salida: Aún no está en reparto.
+          </ion-col>
+          <ion-col size="12" *ngIf="pedido.estado==='pendienteDeEntrega'">
+            Estado: Esperando repartidor.
+          </ion-col>
+          <ion-col size="12" *ngIf="pedido.estado==='finalizado'">
+            Estado: Finalizado.
+          </ion-col>
+          <ion-col size="12" *ngIf="pedido.estado==='enReparto'">
+            Estado: En reparto.
+          </ion-col>
+          <ion-col size="12">
+            Precio: {{pedido.precio | currency:'EUR'}}
+          </ion-col>
+          <ion-col size="12">
+            Dirección: {{pedido.direccion}}
+          </ion-col>
+          <ion-col size="12">
+            Nº de Productos: {{pedido.productos.length}}
+          </ion-col>
+        </ion-row>
+      </ion-item-divider>
+      </div>
+    </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
