@@ -62,7 +62,7 @@ export class RegistroClientePagePage implements OnInit {
       ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')
+        Validators.pattern('/^[_a-z0-9-]+(.[_a-z0-9-]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,3})$/')
       ])),
       dni: new FormControl('', Validators.compose([
         Validators.required,

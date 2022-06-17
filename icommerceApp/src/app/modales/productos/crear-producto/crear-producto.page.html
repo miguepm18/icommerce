@@ -23,9 +23,9 @@
     </ion-item>
     <ion-item>
       <p>Selecciona una imagen:</p>
-      <input type="file" (change)="uploadImage($event.target.files)"/>
+      <input type="file" 
+      accept="image/png, image/jpg, image/jpeg" (change)="uploadImage($event.target.files)"/>
     </ion-item>
     <ion-button color="primary" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid">Aceptar</ion-button>
   </form>
-
 </ion-content>

@@ -65,7 +65,7 @@ export class CrearFichajePage implements OnInit {
             Validators.required
           ])),
           horaSalida: new FormControl(this.parsearFechaBD(this.fichaje.horaSalida), Validators.compose([
-            Validators.required
+            
           ])),
           empleadoAsignado: new FormControl('', Validators.compose([
             Validators.required
@@ -82,7 +82,7 @@ export class CrearFichajePage implements OnInit {
           Validators.required
         ])),
         horaSalida: new FormControl('', Validators.compose([
-          Validators.required
+          
         ])),
         empleadoAsignado: new FormControl('', Validators.compose([
           Validators.required
